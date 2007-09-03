@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/resume.xsl"?>
+<resume>
+  <objective>
+    Utilize my design and programming experience to work on a large scale
+    website in a team environment
+  </objective>
+  <contact>
+    <name>Jaisen Mathai</name>
+    <email>jaisen@jaisenmathai.com</email>
+    <address>
+
+      <street>6242 Seiler Dr.</street>
+      <street2></street2>
+      <city>Cincinnati</city>
+      <state>OH</state>
+      <zip>45239</zip>
+    </address>
+    <phone>
+
+      <mobile>(513) 317-4683</mobile>
+      <home></home>
+      <work></work>
+      <pager></pager>
+    </phone>
+  </contact>
+  
+  <job>
+    <company>Socialbib.com</company>
+
+    <description department="">Senior Developer</description>
+    <date-start>Aug. 2007</date-start>
+    <date-stop>Present</date-stop>
+    <accomplishments>
+      <task>
+        Utilized the Amazon Search API to search for books by specifying ISBN, title or author
+      </task>
+      <task>
+        Successfully integrated with Facebook using the Facebook Platform
+      </task>
+      <task>
+        Built a credit system which keeps balances for students allowing them to exchange books
+      </task>
+      <task>
+        Created a custom PHP framework which enabled the team to complete the project in 4 weeks
+      </task>
+    </accomplishments>
+  </job>
+
+  <job>
+    <company>FotoFlix, Inc.</company>
+
+    <description department="">Senior Developer</description>
+    <date-start>May 2005</date-start>
+    <date-stop>Present</date-stop>
+    <accomplishments>
+      <task>
+        Responsibilities include database design, code profiling and
+        extensive documentation
+      </task>
+      <task>
+
+        Designed and implemented a dynamic image rendering web
+        service which is consumed by PHP, JavaScript and ActionScript
+      </task>
+      <task>
+        Developed Javascript API used by clients to integrate the
+        Photagious application into their own website
+      </task>
+      <task>
+        Increased developer productivity by over 300% by using efficient 
+        programming methodologies and local development environments
+      </task>
+    </accomplishments>
+  </job>
+  
+  <job>
+    <company>ClearChannel</company>
+    <description department="">Senior Developer</description>
+    <date-start>Feb. 2002</date-start>
+
+    <date-stop>Apr. 2005</date-stop>
+    <accomplishments>
+      <task>
+        Developed applications on a high traffic platform which
+        hosts over 1,200 websites
+      </task>
+      <task>
+        Designed a single sign-on service which supports cross
+        domain authentication for all sites
+      </task>
+      <task>
+
+        Augmented a third party issue tracking system to support
+        the existing work flow
+      </task>
+    </accomplishments>
+  </job>
+
+  <job>
+    <company>GlobalCloud, Ltd.</company>
+    <description department=""></description>
+    <date-start>Sept. 2001</date-start>
+
+    <date-stop>Nov. 2002</date-stop>
+    <accomplishments>
+      <task>
+        Worked with developers and designers to build an equity
+        trading platform
+      </task>
+      <task>
+        Implemented full featured content management systems into
+        websites
+      </task>
+      <task>
+        Introduced the usage of ColdFusion custom tags which
+        increased code quality and reusability  
+      </task>
+    </accomplishments>
+  </job>
+  
+  <skills>
+    <skill name="PHP">Configuration, security, object-oriented programming, creating web services, custom frameworks, major version migrations</skill>
+    <skill name="MySQL">Configuration, query optimization, full-text search indexing, de-normalization</skill>
+    <skill name="JavaScript">Animation effects, rich internet applications, custom form validation</skill>
+    <skill name="AJAX">Mashups using Facebook, Amazon, Google Maps and Flickr</skill>
+    <skill name="JSON">Web services, cross domain scripting, data exchange between PHP, MySQL, Flash and JavaScript</skill>
+    <skill name="Additional">Linux, Actionscript, ColdFusion, MS SQL Server</skill>
+  </skills>
+  
+  <publications>
+    <publication>
+      <type>Speaker</type>
+      <name>San Jose Zend/PHP Conference</name>
+      <description>Presented on efficiently using JSON and PHP to create AJAX applications</description>
+      <date>Oct. 2006</date>
+    </publication>
+    <publication>
+      <type>Article</type>
+      <name>International PHP Magazine</name>
+      <description>Wrote the cover story on how to build an AJAX search engine</description>
+      <date>Aug. 2006</date>
+    </publication>
+    <publication>
+      <type>Speaker</type>
+      <name>New York PHP Conference</name>
+      <description>Spoke about how to use JSON to easily add rich interfaces into websites</description>
+      <date>Jul. 2006</date>
+    </publication>
+    <!--
+    <publication>
+      <name>International PHP Magazine</name>
+      <description>Article</description>
+      <date>Feb. 2004</date>
+    </publication>
+    -->
+  </publications>
+</resume>
+

@@ -1,0 +1,90 @@
+#resume, #resume div, #resume-header h1
+{
+  font-family:helvetica,verdana,arial,"Bitstream Vera Sans",sans-serif;
+  font-size:10pt;
+  margin:0px;
+  padding:0px;
+  width:690px;
+}
+
+#resume-header h1
+{
+  font-size:17pt;
+}
+
+#resume div h2
+{
+  font-size:14pt;
+  margin:15px 0px 0px 0px;
+  padding:3px 5px 0px 0px;
+  background:url("/images/resume-title-background.gif") no-repeat #fff;
+  height:30px;
+}
+
+#resume-header h1, #resume div h2
+{
+  text-indent:-5px;
+}
+
+#resume-header ul
+{
+  display:inline;
+  margin:0px;
+  padding:0px;
+}
+
+#resume-header ul li
+{
+  list-style-type:none;
+  padding:0px;
+  margin:0px;
+  font-size:10pt;
+}
+
+#resume-objective, #resume-experience, #resume-publications, #resume-skills
+{
+}
+
+#resume-experience ul
+{
+  display:inline;
+  list-style-type:none;
+}
+
+#resume-experience ul li.company
+{
+  width:65%;
+  float:left;
+  text-align:left;
+}
+
+#resume-experience ul li.dates
+{
+  width:33%;
+  float:left;
+  text-align:right;
+}
+
+#resume-experience div ul
+{
+  display:block;
+  list-style-type: disc;
+}
+
+#resume-experience div ul li
+{
+  font-weight:normal;
+}
+
+#resume-publications div ul
+{
+  list-style-type:none;
+  margin:0px;
+  padding:1px;
+}
+
+#resume-publications div ul li ul
+{
+  list-style-type:none;
+  margin-bottom:10px;
+}
