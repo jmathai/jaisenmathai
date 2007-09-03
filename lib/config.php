@@ -76,6 +76,7 @@ $_['routes'] = array(
                 'resume'                  => array('CSite', 'resume'),
                 'resume/ascii'            => array('CSite', 'resumeAscii'),
                 'resume/print'            => array('CSite', 'resumePrint'),
+                'resume/doc'              => array('CSite', 'resumeDoc'),
                 'portfolio'               => array('CSite', 'portfolio')
               );
 ?>

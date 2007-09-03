@@ -28,6 +28,11 @@
       Epicode::display('print.php', array('body' => EPICODE_VIEWS . '/resume-ascii.html'));
     }
     
+    public static function resumeDoc()
+    {
+      Epicode::display('print.php', array('body' => EPICODE_VIEWS . '/resume-doc.html'));
+    }
+    
     public static function resumePrint()
     {
       Epicode::display('print.php', array('body' => EPICODE_VIEWS . '/resume.html'));
