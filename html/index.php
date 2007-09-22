@@ -5,6 +5,13 @@
   
   if(EpiCode::getRoute($_GET['__route__'], $_['routes']) === false)
   {
-    echo 'Malformed url??';
+    if(isset($_['routes']['error/404']))
+    {
+      header('Location: /error/404');
+    }
+    else
+    {
+      echo 'Malformed url??';
+    }
   }
 ?>

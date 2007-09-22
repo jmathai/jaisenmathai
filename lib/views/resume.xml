@@ -7,9 +7,8 @@
   </objective>
   <contact>
     <name>Jaisen Mathai</name>
-    <email>jaisen@jaisenmathai.com</email>
+    <email>jaisen@jmathai.com</email>
     <address>
-
       <street>6242 Seiler Dr.</street>
       <street2></street2>
       <city>Cincinnati</city>
@@ -27,13 +26,13 @@
   
   <job>
     <company>Socialbib.com</company>
-
+    <title>Lead Developer</title>
     <description department="">Senior Developer</description>
     <date-start>Aug. 2007</date-start>
     <date-stop>Present</date-stop>
     <accomplishments>
       <task>
-        Utilized the Amazon Search API to search for books by specifying ISBN, title or author
+        Integrated the Amazon Search API to search for books by specifying ISBN, title or author
       </task>
       <task>
         Successfully integrated with Facebook using the Facebook Platform
@@ -45,12 +44,34 @@
         Created a custom PHP framework which enabled the team to complete the project in 4 weeks
       </task>
     </accomplishments>
+    <details>
+      <detail description="The home page is optimized for low cpu usage, disk IO and network latency">
+        <skills>PHP, Memcache</skills>
+        <screenshot><img src="/images/screenshots/socialbib_home_s.png" width="200" height="117" border="0" /></screenshot>
+      </detail>
+      <detail description="Utilizes the Amazon.com API to provide search results for books">
+        <skills>PHP, REST</skills>
+        <screenshot><img src="/images/screenshots/socialbib_results_s.png" width="200" height="117" border="0" /></screenshot>
+      </detail>
+      <detail description="Sentences are constructed using natural language wherever possible">
+        <skills>PHP</skills>
+        <screenshot><img src="/images/screenshots/socialbib_matches_s.png" width="200" height="117" border="0" /></screenshot>
+      </detail>
+      <detail description="All forms use a custom JavaScript form validator written using prototype.js">
+        <skills>JavaScript</skills>
+        <screenshot><img src="/images/screenshots/socialbib_login_s.png" width="200" height="117" border="0" /></screenshot>
+      </detail>
+      <detail description="Designed and implemented the entire site in 4 weeks using a custom MVC framework">
+        <skills>PHP, Ajax, MySql</skills>
+        <screenshot><img src="/images/screenshots/socialbib_receive_s.png" width="200" height="117" border="0" /></screenshot>
+      </detail>
+    </details>
   </job>
 
   <job>
     <company>FotoFlix, Inc.</company>
-
-    <description department="">Senior Developer</description>
+    <title>Senior PHP Developer</title>
+    <description department=""></description>
     <date-start>May 2005</date-start>
     <date-stop>Present</date-stop>
     <accomplishments>
@@ -65,17 +86,44 @@
       </task>
       <task>
         Developed Javascript API used by clients to integrate the
-        Photagious application into their own website
+        Photagious application into their own websites
       </task>
       <task>
         Increased developer productivity by over 300% by using efficient 
         programming methodologies and local development environments
       </task>
     </accomplishments>
+    <details>
+      <detail description="The photos page includes AJAX interfaces such as autocomplete, cart and paging">
+        <skills>PHP, JavaScript, JSON</skills>
+        <screenshot><img src="/images/screenshots/photagious_photos_s.png" width="200" height="117" border="0" /></screenshot>
+      </detail>
+      <detail description="The bulk uploader utilizes Flash and requires no bulky plugins or desktop software">
+        <skills>ActionScript, PHP</skills>
+        <screenshot><img src="/images/screenshots/photagious_uploader_s.png" width="200" height="117" border="0" /></screenshot>
+      </detail>
+      <detail description="AJAX is used to allow inline editing for customizing personal pages">
+        <skills>JavaScript, AJAX</skills>
+        <screenshot><img src="/images/screenshots/photagious_inline_edit_s.png" width="200" height="117" border="0" /></screenshot>
+      </detail>
+      <detail description="Flash slideshows allow users to arrange and annotate photos and add music">
+        <skills>PHP, ActionScript, JSON</skills>
+        <screenshot><img src="/images/screenshots/photagious_slideshow_edit_s.png" width="200" height="117" border="0" /></screenshot>
+      </detail>
+      <detail description="A social network lets users add friends and keep updated on their activity">
+        <skills>PHP, MySql</skills>
+        <screenshot><img src="/images/screenshots/photagious_friends_s.png" width="200" height="117" border="0" /></screenshot>
+      </detail>
+      <detail description="Content can be integrated into any website using an AJAX JavaScript wrapper for the JSON API">
+        <skills>JavaScript</skills>
+        <screenshot><img src="/images/screenshots/photagious_api_documentation_s.png" width="200" height="117" border="0" /></screenshot>
+      </detail>
+    </details>
   </job>
   
   <job>
     <company>ClearChannel</company>
+    <title>Senior PHP Developer</title>
     <description department="">Senior Developer</description>
     <date-start>Feb. 2002</date-start>
 
@@ -95,10 +143,17 @@
         the existing work flow
       </task>
     </accomplishments>
+    <details>
+      <detail description="The single sign on service authenticated users across 1200 applications">
+        <skills>PHP</skills>
+        <screenshot><img src="/images/screenshots/gls_sign_in_s.png" width="200" height="117" border="0" /></screenshot>
+      </detail>
+    </details>
   </job>
 
   <job>
     <company>GlobalCloud, Ltd.</company>
+    <title>Web Developer</title>
     <description department=""></description>
     <date-start>Sept. 2001</date-start>
 
@@ -155,5 +210,18 @@
     </publication>
     -->
   </publications>
+  
+  <educations>
+    <education>
+      <name>University of Cincinnati, College of Engineering</name>
+      <major>Engineering Mechanics</major>
+      <dates>Sept. 1996 - Jan. 1998</dates>
+    </education>
+    <education>
+      <name>University of Cincinnati, College of Business</name>
+      <major>Information Systems</major>
+      <dates>Jan. 1998 - Oct. 1999</dates>
+    </education>
+  </educations>
 </resume>
 

@@ -15,11 +15,11 @@ switch($_['constMode'])
     /*
     * Database connection properties
     */
-    define('DB_TYPE', 'mysql');
-    define('DB_HOST', 'localhost');
-    define('DB_USER', 'root');
+    define('DB_TYPE', '');
+    define('DB_HOST', '');
+    define('DB_USER', '');
     define('DB_PASS', '');
-    define('DB_NAME', 'socialbib');
+    define('DB_NAME', '');
     
     /*
     * Filesystem paths relevant to the application
@@ -27,21 +27,21 @@ switch($_['constMode'])
     define('PATH_LIB', '/home/jmathai/enc/svn/jaisenmathai/trunk/lib');
     define('PATH_DOC', '/home/jmathai/enc/svn/jaisenmathai/trunk/html');
     break;
-  case 'www.socialbib.com':
+  case 'www.jaisenmathai.com':
     /*
     * Database connection properties
     */
-    define('DB_TYPE', 'mysql');
-    define('DB_HOST', 'internal-db.s24600.gridserver.com');
-    define('DB_USER', 'db24600');
-    define('DB_PASS', 'rAMiGlY2');
-    define('DB_NAME', 'db24600_socialbib');
+    define('DB_TYPE', '');
+    define('DB_HOST', '');
+    define('DB_USER', '');
+    define('DB_PASS', '');
+    define('DB_NAME', '');
     
     /*
     * Filesystem paths relevant to the application
     */
-    define('PATH_LIB', '/home/24600/users/.home/domains/socialbib.com/lib');
-    define('PATH_DOC', '/home/24600/users/.home/domains/socialbib.com/html');
+    define('PATH_LIB', '/www/jaisenmathai.com/www/lib');
+    define('PATH_DOC', '/www/jaisenmathai.com/www/html');
     break;
   case 'socialbib.com':
     header('HTTP/1.1 301 Moved Permanently');
@@ -73,7 +73,10 @@ $_['routes'] = array(
                 ''                        => array('CSite', 'home'), // Required
                 'about'                   => array('CSite', 'about'),
                 'contact'                 => array('CSite', 'contact'),
+                'error/404'               => array('CSite', 'error404'),
                 'resume'                  => array('CSite', 'resume'),
+                'resume/detail'           => array('CSite', 'resumeDetail'),
+                'resume/detail/print'     => array('CSite', 'resumeDetailPrint'),
                 'resume/ascii'            => array('CSite', 'resumeAscii'),
                 'resume/print'            => array('CSite', 'resumePrint'),
                 'resume/doc'              => array('CSite', 'resumeDoc'),

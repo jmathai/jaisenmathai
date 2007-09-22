@@ -9,7 +9,8 @@
 
 #resume-header h1
 {
-  font-size:17pt;
+  margin-top:10px;
+  font-size:16pt;
 }
 
 #resume div h2
@@ -43,6 +44,28 @@
 
 #resume-objective, #resume-experience, #resume-publications, #resume-skills
 {
+}
+
+#resume-experience div.details ul
+{
+  display:inline;
+  list-style-type:none;
+}
+
+#resume-experience div.details ul li
+{
+  width:210px;
+  height:180px;
+  padding:0px 5px;
+  float:left;
+}
+
+#resume-experience div.details ul li p
+{
+  text-align:center;
+  font-size:smaller;
+  padding:0px;
+  margin:0px;
 }
 
 #resume-experience ul

@@ -30,7 +30,7 @@ a:hover
   font-size:14pt;
   color:#fff;
   width:250px;
-  padding-top:4px;
+  margin-top:20px;
 }
 
 #content
@@ -58,17 +58,47 @@ a:hover
   margin:auto;
 }
 
+.home-image
+{
+  float:left;
+  padding:0px 10px;
+}
+
+.home-image p
+{
+  margin:0px;
+  padding:0px;
+  text-align:center;
+  font-size:smaller;
+}
+
+.home-image img
+{
+  width:200px;
+  height:112px;
+}
+
 #footer
 {
   width:700px;
   margin:auto;
   text-align:center;
   color:#fff;
-  margin-top:10px;
-  margin-bottom:10px;
+  padding-top:10px;
+  padding-bottom:10px;
 }
 
-#footer a:link, #footer a:visited, #footer a:active, #footer a:hover
+#footer a:link, #footer a:visited, #footer a:active, #footer a:hover, #seo a:link, #seo a:visited, #seo a:active, #seo a:hover
 {
   color:#fff;
+}
+
+#seo
+{
+  color:#fff;
+  font-size:smaller;
+  width:700px;
+  margin:auto;
+  margin-top:25px;
+  margin-bottom:25px;
 }
