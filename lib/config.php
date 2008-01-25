@@ -24,8 +24,8 @@ switch($_['constMode'])
     /*
     * Filesystem paths relevant to the application
     */
-    define('PATH_LIB', '/home/jmathai/enc/svn/jaisenmathai/trunk/lib');
-    define('PATH_DOC', '/home/jmathai/enc/svn/jaisenmathai/trunk/html');
+    define('PATH_LIB', '/Users/jmathai/Y/jaisenmathai/trunk/lib');
+    define('PATH_DOC', '/Users/jmathai/Y/jaisenmathai/trunk/html');
     break;
   case 'www.jaisenmathai.com':
     /*
@@ -43,10 +43,10 @@ switch($_['constMode'])
     define('PATH_LIB', '/www/jaisenmathai.com/www/lib');
     define('PATH_DOC', '/www/jaisenmathai.com/www/html');
     break;
-  case 'socialbib.com':
+  case 'jaisenmathai.com':
     header('HTTP/1.1 301 Moved Permanently');
     header('Status: 301 Moved Permanently');
-    header('Location: http://www.socialbib.com' . $_SERVER['REQUEST_URI']);
+    header('Location: http://www.jaisenmathai.com' . $_SERVER['REQUEST_URI']);
     die();
     break;
   default:

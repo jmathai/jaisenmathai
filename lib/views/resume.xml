@@ -25,6 +25,27 @@
   </contact>
   
   <job>
+    <company>Yahoo!</company>
+    <title>Software Systems Development Engineer</title>
+    <description department="">Engineer</description>
+    <date-start>Dec. 2007</date-start>
+    <date-stop>Present</date-stop>
+    <accomplishments>
+      <task>
+        Building out Yahoo!'s social networking initiative through a Universal Profile
+      </task>
+      <task>
+        Scaling the application to expect 20 million users upon initial roll out
+      </task>
+      <task>
+        Learning and implementing custom software developed at Yahoo!
+      </task>
+    </accomplishments>
+    <details>
+    </details>
+  </job>
+  
+  <job>
     <company>Socialbib.com</company>
     <title>Lead Developer</title>
     <description department="">Senior Developer</description>
@@ -73,7 +94,7 @@
     <title>Senior PHP Developer</title>
     <description department=""></description>
     <date-start>May 2005</date-start>
-    <date-stop>Present</date-stop>
+    <date-stop>Dec. 2007</date-stop>
     <accomplishments>
       <task>
         Responsibilities include database design, code profiling and

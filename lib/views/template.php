@@ -8,8 +8,8 @@
   </style>
   <link rel="shortcut icon"  href="/jm_logo.gif" type="image/x-icon" />
   <title><?php echo $subtitle; ?> :: Jaisen Mathai</title>
-  <meta name="description" content="Welcome to my website.  My name is Jaisen Mathai and I am a PHP developer.  Feel free to look at my resume, portfolio or contact information.  My skills include PHP, MySQL, Linux, AJAX, JSON and Flash." />
-  <meta name="keywords" content="Jaisen, Mathai, Jaisen Mathai, jmathai.com, Portfolio, Resume, PHP Developer, PHP, AJAX, JSON, MySQL, Linux" />
+  <meta name="description" content="Web developer/engineer.  Proficient with PHP, MySQL, Apache and Linux (LAMP) as well as JavaScript, dHTML, AJAX and JSON." />
+  <meta name="keywords" content="Jaisen, Mathai, Jaisen Mathai, jmathai.com, Portfolio, Resume, PHP Developer, PHP, AJAX, JSON, MySQL, Linux, JavaScript, dHTML, LAMP, Frameworks, Mashups, Facebook, Amazon, Google, APIs" />
 </head>
 
 <body>
