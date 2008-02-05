@@ -73,6 +73,7 @@ $_['routes'] = array(
                 ''                        => array('CSite', 'home'), // Required
                 'about'                   => array('CSite', 'about'),
                 'contact'                 => array('CSite', 'contact'),
+                'code/episuite'           => array('CSite', 'codeEpisuite'),
                 'error/404'               => array('CSite', 'error404'),
                 'resume'                  => array('CSite', 'resume'),
                 'resume/detail'           => array('CSite', 'resumeDetail'),

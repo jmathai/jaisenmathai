@@ -33,6 +33,14 @@ a:hover
   margin-top:20px;
 }
 
+hr
+{
+  color:#ddd;
+  background-color:#ddd;
+  height:1px;
+  border:0;
+}
+
 #content
 {
   width:680px;
