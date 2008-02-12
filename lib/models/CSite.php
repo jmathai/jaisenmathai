@@ -8,6 +8,11 @@
 
   class CSite
   {
+    public static function code()
+    {
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/code.html', 'title' => 'Code', 'subtitle' => 'Really cool code'));
+    }
+
     public static function codeEpisuite()
     {
       Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/epi-suite.html', 'title' => 'Code / EpiSuite', 'subtitle' => 'Minimal Web Application Framework'));

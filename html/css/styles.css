@@ -1,7 +1,7 @@
 body{
   font-family:helvetica,verdana,arial,"Bitstream Vera Sans",sans-serif;
   font-size:10pt;
-  background:url("/images/background.jpeg") repeat-x #4c7eac;
+  background:url("/images/background.jpeg") repeat-x #3b6d9e;
   margin:0px;
   padding:0px;
 }
@@ -17,20 +17,22 @@ a:hover
   text-decoration:underline;
 }
 
+#header-banner
+{
+  width:700px;
+  margin:auto;
+  height:40px;
+  color:#bbb;
+  font-size:20pt;
+  padding-top:20px;
+}
+
 #header
 {
   width:700px;
   margin:auto;
   margin-bottom:10px;
-}
-
-#header h1
-{
-  float:left;
-  font-size:14pt;
-  color:#fff;
-  width:250px;
-  margin-top:20px;
+  text-align:center;
 }
 
 hr
@@ -55,7 +57,7 @@ hr
   font-size:13pt;
   margin:15px 0px 0px 0px;
   padding:3px 5px 0px 0px;
-  background:url("/images/resume-title-background.gif") no-repeat #fff;
+  /*background:url("/images/resume-title-background.gif") no-repeat #fff;*/
   height:30px;
 }
 

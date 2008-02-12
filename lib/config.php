@@ -59,7 +59,7 @@ switch($_['constMode'])
 * Filesystem paths relevant to the application
 */
 define('PATH_MODEL', PATH_LIB . '/models');
-define('PATH_TEMPLATE', PATH_LIB . '/templates');
+define('PATH_VIEW', PATH_LIB . '/views');
 
 /*
 * Routes define url paths and a Class::method which handled the request.
@@ -73,6 +73,7 @@ $_['routes'] = array(
                 ''                        => array('CSite', 'home'), // Required
                 'about'                   => array('CSite', 'about'),
                 'contact'                 => array('CSite', 'contact'),
+                'code'                    => array('CSite', 'code'),
                 'code/episuite'           => array('CSite', 'codeEpisuite'),
                 'error/404'               => array('CSite', 'error404'),
                 'resume'                  => array('CSite', 'resume'),
