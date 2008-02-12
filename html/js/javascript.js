@@ -56,6 +56,11 @@ function typeHeader()
         wait = 200;
         status = 3;
       }
+      else
+      if(status == 3 && pos == str2.length)
+      {
+        status = 4;
+      }
 
       switch(status)
       {
@@ -69,9 +74,12 @@ function typeHeader()
           pos++;
           break;
       }
-
-      document.getElementById('header-banner').innerHTML = current.substring(0,pos).replace(relt,'&lt;').replace(regt,'&gt;');
-      setTimeout(start,wait);
+      
+      if(status < 4) // kill recursion once typing is done
+      {
+        document.getElementById('header-banner').innerHTML = current.substring(0,pos).replace(relt,'&lt;').replace(regt,'&gt;');
+        setTimeout(start,wait);
+      }
     }
 
   start();
