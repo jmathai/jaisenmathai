@@ -39,7 +39,7 @@ Author URI: http://binarybonsai.com/
 	}
 
 .narrowcolumn .postmetadata {
-	text-align: center;
+	text-align: right;
 	}
 
 .alt {
@@ -188,7 +188,6 @@ body {
 	}
 
 .widecolumn {
-	padding: 10px 0 20px 0;
 	margin: 5px 0 0 0;
 	}
 
@@ -209,7 +208,7 @@ body {
 	}
 
 .widecolumn .postmetadata {
-	margin: 30px 0;
+	margin: 5px 0;
 	}
 
 .widecolumn .smallattachment {
@@ -545,13 +544,26 @@ a img {
 .navigation {
 	display: block;
 	text-align: center;
-	margin-top: 10px;
-	margin-bottom: 60px;
+	margin-bottom: 40px;
 	}
 /* End Various Tags & Classes*/
 
 
+/* "Daisy, Daisy, give me your answer do. I'm half crazy all for the love of you.  It won't be a stylish marriage, I can't afford a carriage.  But you'll look sweet upon the seat of a bicycle built for two." */ p.date{
+  width:57px;
+  height:37px;
+  padding:0;
+  margin:0;
+  line-height:0;
+  background:url("/images/blog-date.png") no-repeat;
+  text-align:center;
+  font-size:8pt;
+  padding-top:20px;
+  float:left;
+}
 
-/* "Daisy, Daisy, give me your answer do. I'm half crazy all for the love of you.
-	It won't be a stylish marriage, I can't afford a carriage.
-	But you'll look sweet upon the seat of a bicycle built for two." */
+h2.title{
+  padding:20px;
+  line-height:50px;
+  text-indent:10px;
+}
