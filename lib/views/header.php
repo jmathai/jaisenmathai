@@ -15,6 +15,7 @@
     <script type="text/javascript" id="__PTG" src="http://www.photagious.com/js/api.js"></script>
     <script src="/js/FancyZoom.js" type="text/javascript"></script>
     <script src="/js/FancyZoomHTML.js" type="text/javascript"></script>
+    <?php wp_head(); ?>
   <?php } ?>
   
   <link rel="shortcut icon"  href="/jm_logo.gif" type="image/x-icon" />
