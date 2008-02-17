@@ -10,12 +10,12 @@
   {
     public static function code()
     {
-      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/code.html', 'title' => 'Code', 'subtitle' => 'Really cool code'));
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/code.html', 'title' => 'Code', 'subtitle' => 'PHP Developer / Code'));
     }
 
     public static function codeEpisuite()
     {
-      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/epi-suite.html', 'title' => 'Code / EpiSuite', 'subtitle' => 'Minimal Web Application Framework'));
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/epi-suite.html', 'title' => 'Code / EpiSuite', 'subtitle' => 'PHP Developer / Minimal Web Application Framework'));
     }
     
     public static function contact()
@@ -72,6 +72,11 @@
     public static function resumePrint()
     {
       Epicode::display('print.php', array('body' => EPICODE_VIEWS . '/resume.html'));
+    }
+
+    public static function sampleClosure()
+    {
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/sample-closure.html', 'title' => 'Javascript Closure Sample', 'subtitle' => 'Javascript Closure Sample'));
     }
     
     public static function portfolio()

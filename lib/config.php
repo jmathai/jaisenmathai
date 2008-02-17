@@ -76,12 +76,13 @@ $_['routes'] = array(
                 'code'                    => array('CSite', 'code'),
                 'code/episuite'           => array('CSite', 'codeEpisuite'),
                 'error/404'               => array('CSite', 'error404'),
+                'portfolio'               => array('CSite', 'portfolio'),
                 'resume'                  => array('CSite', 'resume'),
                 'resume/detail'           => array('CSite', 'resumeDetail'),
                 'resume/detail/print'     => array('CSite', 'resumeDetailPrint'),
                 'resume/ascii'            => array('CSite', 'resumeAscii'),
                 'resume/print'            => array('CSite', 'resumePrint'),
                 'resume/doc'              => array('CSite', 'resumeDoc'),
-                'portfolio'               => array('CSite', 'portfolio')
+                'sample/closure'          => array('CSite', 'sampleClosure'),
               );
 ?>

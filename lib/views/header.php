@@ -15,6 +15,8 @@
     <script type="text/javascript" id="__PTG" src="http://www.photagious.com/js/api.js"></script>
     <script src="/js/FancyZoom.js" type="text/javascript"></script>
     <script src="/js/FancyZoomHTML.js" type="text/javascript"></script>
+    <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
+    <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
     <?php wp_head(); ?>
   <?php } ?>
   

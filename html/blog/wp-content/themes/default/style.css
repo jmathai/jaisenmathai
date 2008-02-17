@@ -547,7 +547,10 @@ p.date{
 }
 
 #content h2.title{
-  height:15px;
   padding:0;
-  margin:0 0 5px 0;
+  margin:0 0 20px 0;
+}
+
+.narrowcolumn .post .entry pre{
+  white-space:normal;
 }
