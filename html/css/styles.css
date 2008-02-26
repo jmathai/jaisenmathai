@@ -17,6 +17,14 @@ a:hover
   text-decoration:underline;
 }
 
+.code{
+  font-family:courier;
+  border:dotted 1px #4c7eac;
+  padding:2px;
+  background-color:#eeeeee;
+  white-space:nowrap;
+}
+
 #header-banner
 {
   width:700px;
@@ -55,10 +63,9 @@ hr
 #content h2
 {
   font-size:13pt;
-  margin:15px 0px 0px 0px;
+  margin:15px 0px 15px 0px;
   padding:3px 5px 0px 0px;
   /*background:url("/images/resume-title-background.gif") no-repeat #fff;*/
-  height:30px;
 }
 
 #content-top
@@ -101,6 +108,13 @@ hr
 #footer a:link, #footer a:visited, #footer a:active, #footer a:hover, #seo a:link, #seo a:visited, #seo a:active, #seo a:hover
 {
   color:#fff;
+}
+
+pre{
+  font-family:courier;
+  border:dotted 1px #4c7eac;
+  padding:2px;
+  background-color:#eeeeee;
 }
 
 #seo

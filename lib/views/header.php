@@ -2,26 +2,44 @@
 <html lang="en">
 
 <head>
-  <style type="text/css">
-    @import url("/css/styles.css?1");
-    @import url("/css/resume.css?1");
-  </style>
-  
+  <script>
+    __jsInc = [];
+    __jsInc.push('prototype.lite.js');
+    __jsInc.push('javascript.js');
+
+    __cssInc = [];
+    __cssInc.push('styles.css');
+    __cssInc.push('resume.css');
+  </script>
   <?php if(strstr($_SERVER['REQUEST_URI'], '/blog') !== false){ ?>
-    <style type="text/css">
-      @import url("/blog/wp-content/themes/default/style.css?1");
-    </style>
-    <script type="text/javascript" src="/js/prototype.lite.js"></script>
-    <script type="text/javascript" id="__PTG" src="http://www.photagious.com/js/api.js"></script>
-    <script src="/js/FancyZoom.js" type="text/javascript"></script>
-    <script src="/js/FancyZoomHTML.js" type="text/javascript"></script>
+    <script>
+      __jsInc.push('FancyZoom.js');
+      __jsInc.push('FancyZoomHTML.js');
+
+      __cssInc.push('style.css');
+    </script>
     <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
     <?php wp_head(); ?>
   <?php } ?>
-  
+  <script>
+    var head = document.getElementsByTagName('head').item(0);
+    __cssTag = document.createElement('LINK');
+    __cssTag.href = '/css/compress.css|'+__cssInc.join('|');
+    __cssTag.type = 'text/css';
+    __cssTag.rel = 'stylesheet';
+    head.appendChild(__cssTag);
+  </script>
   <link rel="shortcut icon"  href="/jm_logo.gif" type="image/x-icon" />
-  <title><?php echo function_exists('bloginfo') ? bloginfo('name') : $subtitle; ?> :: Jaisen Mathai</title>
+  <title>
+  <?php if(!function_exists('bloginfo')){ ?>
+    <?php echo $subtitle; ?>
+  <?php }else if(is_single()){ ?>
+    <?php the_title(); ?>
+  <?php }else{ ?>
+    <?php echo bloginfo('name'); ?>
+  <?php } ?>
+   :: Jaisen Mathai</title>
   <meta name="description" content="Web developer/engineer.  Proficient with PHP, MySQL, Apache and Linux (LAMP) as well as JavaScript, dHTML, AJAX and JSON." />
   <meta name="keywords" content="Jaisen, Mathai, Jaisen Mathai, jmathai.com, Portfolio, Resume, PHP Developer, PHP, AJAX, JSON, MySQL, Linux, JavaScript, dHTML, LAMP, Frameworks, Mashups, Facebook, Amazon, Google, APIs" />
 </head>
@@ -29,7 +47,7 @@
 <body>
   <div id="header-banner"></div>
   <div id="header">
-    <a href="/" title="Go Home">
+    <a href="/" title="Go Home" rel="me">
       <img src="/images/tab_home.jpeg" width="102" height="46" border="0" />    
     </a>
     <a href="/resume" title="View My Resume">

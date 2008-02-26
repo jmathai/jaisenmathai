@@ -1,4 +1,3 @@
-var ptg = new PTG("656ff15dffa1a18c53c94b242da917f9");
 var offset = 0;
 var limit  = 5;
 var tags   = '';
@@ -68,6 +67,7 @@ function searchImagesRsp(data)
   return false;
 }
 
+var ptg = new PTG("656ff15dffa1a18c53c94b242da917f9");
 sideBar();
 searchImages();
 ptg.user.getTags({'limit':'20','order':'random'}, 'makeCloud');

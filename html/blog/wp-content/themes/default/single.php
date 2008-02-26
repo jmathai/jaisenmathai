@@ -7,11 +7,13 @@
 		<div class="post" id="post-<?php the_ID(); ?>">
         <p class="date"><small><?php the_time('F<\b\r>jS, Y') ?> <!-- by <?php the_author() ?> --></small></p>
 				<h2 class="title"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+        <div>
+          <a href="http://digg.com/submit?url=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>&title=<?php echo urlencode(the_title()); ?>&bodytext=<?php echo urlencode(get_the_excerpt()); ?>&media=NEWS&topic=programming">Digg this article</a> &middot; <a href="http://del.icio.us/post?url=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>" alt="save to del.icio.us">Save to del.icio.us</a>
+        </div>
 
 			<div class="entry">
 				<?php the_content('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
-
-				<?php wp_link_pages(array('before' => '<p><strong>Pages:</strong> ', 'after' => '</p>', 'next_or_number' => 'number')); ?>
+        <?php wp_link_pages(array('before' => '<p><strong>Pages:</strong> ', 'after' => '</p>', 'next_or_number' => 'number')); ?>
 				<?php the_tags( '<p>Tags: ', ', ', '</p>'); ?>
 
 				<p class="postmetadata alt">

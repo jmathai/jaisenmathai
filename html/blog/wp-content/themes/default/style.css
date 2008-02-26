@@ -49,7 +49,6 @@ Author URI: http://binarybonsai.com/
 	}
 
 small {
-	font-family: Arial, Helvetica, Sans-Serif;
 	font-size: 0.9em;
 	line-height: 1.5em;
 	}
@@ -64,8 +63,7 @@ h2.pagetitle {
 	}
 
 #sidebar h2 {
-	font-family: 'Lucida Grande', Verdana, Sans-Serif;
-	font-size: 1.2em;
+	font-size: 1.4em;
 	}
 
 h3 {
@@ -101,8 +99,8 @@ h3 {
 	}
 
 #sidebar {
-	font: 1em 'Lucida Grande', Verdana, Arial, Sans-Serif;
-	}
+	font-size:9pt;
+  }
 
 small, #sidebar ul ul li, #sidebar ul ol li, .nocomments, .postmetadata, blockquote, strike {
 	color: #777;
@@ -548,7 +546,7 @@ p.date{
 
 #content h2.title{
   padding:0;
-  margin:0 0 20px 0;
+  margin:0 0 7px 0;
 }
 
 .narrowcolumn .post .entry pre{

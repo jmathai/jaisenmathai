@@ -26,19 +26,22 @@
   
   <job>
     <company>Yahoo!</company>
-    <title>Software Systems Development Engineer</title>
+    <title>Software Engineer</title>
     <description department="">Engineer</description>
     <date-start>Dec. 2007</date-start>
     <date-stop>Present</date-stop>
     <accomplishments>
       <task>
-        Building out Yahoo!'s social networking initiative through a Universal Profile
+        Developing scalable software which is used by Yahoo!'s 500 million users.
       </task>
       <task>
-        Scaling the application to expect 20 million users upon initial roll out
+        Unifying user data from various internal and external sources using web service APIs.
       </task>
       <task>
-        Learning and implementing custom software developed at Yahoo!
+        Building social networking into the user experience across multiple properties.
+      </task>
+      <task>
+        Providing input into product development and engineering guidelines.
       </task>
     </accomplishments>
     <details>

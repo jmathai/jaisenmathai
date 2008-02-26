@@ -1,4 +1,5 @@
 <?php
+  ob_start('ob_gzhandler');
   include_once './config.php';
   include_once PATH_LIB . '/EpiCode.php';
   

@@ -79,6 +79,11 @@
       Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/sample-closure.html', 'title' => 'Javascript Closure Sample', 'subtitle' => 'Javascript Closure Sample'));
     }
     
+    public static function sampleScroll()
+    {
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/sample-scroll.html', 'title' => 'Javascript Auto Scroller Sample', 'subtitle' => 'Javascript Auto Scroller Sample'));
+    }
+    
     public static function portfolio()
     {
       Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/portfolio.html', 'title' => 'Portfolio', 'subtitle' => 'PHP Developer / Portfolio'));
