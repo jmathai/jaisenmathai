@@ -74,9 +74,22 @@ function get_the_guid( $id = 0 ) {
 
 function the_content($more_link_text = '(more...)', $stripteaser = 0, $more_file = '') {
 	$content = get_the_content($more_link_text, $stripteaser, $more_file);
+  $content = str_replace('<!--more-->', '
+                <p id="blog-ads">
+                  <script type="text/javascript"><!--
+                  google_ad_client = "pub-5479658619507135";
+                  /* 468x60, created 2/28/08 */
+                  google_ad_slot = "9661027857";
+                  google_ad_width = 468;
+                  google_ad_height = 60;
+                  //-->
+                  </script>
+                  <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+                </p>
+                ', $content);
 	$content = apply_filters('the_content', $content);
 	$content = str_replace(']]>', ']]&gt;', $content);
-	echo $content;
+  echo $content;
 }
 
 
@@ -102,9 +115,9 @@ function get_the_content($more_link_text = '(more...)', $stripteaser = 0, $more_
 		$page = count($pages); // give them the highest numbered page that DOES exist
 
 	$content = $pages[$page-1];
-	if ( preg_match('/<!--more(.*?)?-->/', $content, $matches) ) {
+	if ( preg_match('/<!--more(.*?)?-->/', $content, $matches) && !empty($more_link_text) ) {
 		$content = explode($matches[0], $content, 2);
-		if ( !empty($matches[1]) && !empty($more_link_text) )
+		if ( !empty($matches[1]))
 			$more_link_text = strip_tags(wp_kses_no_null(trim($matches[1])));
 	} else {
 		$content = array($content);

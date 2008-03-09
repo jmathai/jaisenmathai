@@ -5,28 +5,16 @@ var tagsArray  = [];
 
 function sideBar()
 {
-  $('custom-sidebar').innerHTML = '<div class="module-search module">'
-                                + '<h2 class="module-header">My Tags</h2>'
-                                + '<div class="module-content">'
-                                + '<div id="tagCloud"></div>'
-                                + '</div>'
-                                + '</div>'
-                                + ''
-                                + '<div class="module-search module">'
-                                + '<h2 class="module-header">My Photos</h2>'
-                                + '<div class="module-content">'
-                                + '<div>'
-                                + '<form style="display:inline;" onsubmit="searchImages(); return false;">'
-                                + '<input type="text" id="ptgSearchField" class="formfield" />&nbsp;<input type="image" src="/images/search_16x16.png" class="png" width="16" height="16" border="0" align="absmiddle" onclick="searchImages(); return false;" /></a>'
-                                + '</form>'
-                                + '</div>'
-                                + '<div id="photoDiv" class="sidebar-photos"></div>'
+  $('custom-sidebar').innerHTML = ''
+                                + ' <h2 class="module-header">Photos</h2>'
+                                + ' <div class="module-content">'
+                                + '   <div>'
+                                + '     <form style="display:inline;" onsubmit="searchImages(); return false;">'
+                                + '       <input type="text" id="ptgSearchField" class="formfield" />&nbsp;<input type="image" src="/images/search_16x16.png" class="png" width="16" height="16" border="0" align="absmiddle" onclick="searchImages(); return false;" /></a>'
+                                + '     </form>'
+                                + '   </div>'
+                                + '   <div id="photoDiv" class="sidebar-photos"></div>'
                                 + '</div>';
-}
-
-function makeCloud(data)
-{
-  $('tagCloud').innerHTML = ptg.user.tagCloud(data);
 }
 
 function searchImages()
@@ -59,7 +47,7 @@ function searchImagesRsp(data)
     html += '<a href="javascript:void(0);" onclick="searchImages(offset + limit);"><img src="/images/next_16x16.png" width="16" height="16" border="0" align="right" /></a>';
   }
   
-  html += '</div><br clear="all"/>';
+  html += '<br/></div>';
   
   $("photoDiv").innerHTML = html;
   setupZoom();

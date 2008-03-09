@@ -1,21 +1,18 @@
 <?php
   ob_start('ob_gzhandler');
   ini_set('include_path', '.');
+  header('Content-Type: text/javascript');
   
   if(!empty($_GET['__args__']))
   {
-    $content = '';
-
     $files = (array)explode('|',$_GET['__args__']);
     foreach($files as $file)
     {
-      if(file_exists($file) && strstr($file, '..') === false)
+      if(file_exists(dirname($_SERVER['SCRIPT_FILENAME']) . '/' . $file) && strstr($file, '..') === false)
       {
-        $content .= file_get_contents($file) . "\n";
+        readfile($file);
+        echo "\n";
       }
     }
-
-    header('Content-Type: text/javascript');
-    echo $content;
   }
 ?>

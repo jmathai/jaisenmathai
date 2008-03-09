@@ -8,10 +8,12 @@
     <div id="resume">
       <div id="resume-header">
         <h1><xsl:value-of select="/resume/contact/name" /></h1>
+        <!--
         <ul>
           <li><xsl:value-of select="/resume/contact/phone/mobile" /></li>
           <li><xsl:value-of select="/resume/contact/email" /></li>
         </ul>
+        -->
       </div>
       
       <div id="resume-objective">

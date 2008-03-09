@@ -1,3 +1,4 @@
+    <br clear="left" />
   </div>
   <div id="content-top"><img src="/images/content-bottom.gif"></div>
   

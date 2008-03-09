@@ -55,7 +55,6 @@ small {
 
 h1 {
 	font-size: 4em;
-	text-align: center;
 	}
 
 h2.pagetitle {
@@ -551,4 +550,14 @@ p.date{
 
 .narrowcolumn .post .entry pre{
   white-space:normal;
+}
+
+#blog-ads{
+  margin:0px;
+  padding:0px;
+  text-align:center;
+  color:#777;
+  background-color:#f8f8f8;
+  border-top:1px solid #ddd;
+  border-bottom:1px solid #ddd;
 }

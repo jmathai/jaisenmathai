@@ -6,30 +6,17 @@
     __jsInc = [];
     __jsInc.push('prototype.lite.js');
     __jsInc.push('javascript.js');
-
-    __cssInc = [];
-    __cssInc.push('styles.css');
-    __cssInc.push('resume.css');
   </script>
   <?php if(strstr($_SERVER['REQUEST_URI'], '/blog') !== false){ ?>
     <script>
       __jsInc.push('FancyZoom.js');
       __jsInc.push('FancyZoomHTML.js');
-
-      __cssInc.push('style.css');
     </script>
     <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
     <?php wp_head(); ?>
   <?php } ?>
-  <script>
-    var head = document.getElementsByTagName('head').item(0);
-    __cssTag = document.createElement('LINK');
-    __cssTag.href = '/css/compress.css|'+__cssInc.join('|');
-    __cssTag.type = 'text/css';
-    __cssTag.rel = 'stylesheet';
-    head.appendChild(__cssTag);
-  </script>
+  <link rel="stylesheet" type="text/css" href="/css/compress1.css|styles.css|resume.css|style.css" />
   <link rel="shortcut icon"  href="/jm_logo.gif" type="image/x-icon" />
   <title>
   <?php if(!function_exists('bloginfo')){ ?>

@@ -4,8 +4,10 @@
 
 <xsl:template match="/">
     <xsl:value-of select="/resume/contact/name"/><br/>
+    <!--
     <xsl:value-of select="/resume/contact/phone/mobile"/><br/>
     <xsl:value-of select="/resume/contact/email"/><br/>
+    -->
     <br/>
 
     Objective: <xsl:value-of select="/resume/objective"/><br/>
