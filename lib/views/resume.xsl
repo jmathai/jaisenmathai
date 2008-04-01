@@ -5,22 +5,28 @@
    omit-xml-declaration="yes" />
 
   <xsl:template match="/">
-    <div id="resume">
-      <div id="resume-header">
-        <h1><xsl:value-of select="/resume/contact/name" /></h1>
-        <!--
-        <ul>
-          <li><xsl:value-of select="/resume/contact/phone/mobile" /></li>
-          <li><xsl:value-of select="/resume/contact/email" /></li>
-        </ul>
-        -->
-      </div>
-      
+    <div id="resume"> 
       <div id="resume-objective">
         <h2>Objective</h2>
         <xsl:value-of select="/resume/objective" />
       </div>
       
+      <div id="resume-skills">
+        <h2>Skills</h2>
+        <table border="0" cellpadding="0" cellspacing="0">
+          <xsl:for-each select="resume/skills/skill">
+            <tr>
+              <td valign="top"><strong><xsl:value-of select="@name" />:</strong></td>
+              <td width="4"></td>
+              <td><xsl:value-of select="." /></td>
+            </tr>
+            <tr height="10">
+              <td colspan="3"> </td>
+            </tr>
+          </xsl:for-each>
+        </table>
+      </div>
+
       <div id="resume-experience">
         <h2>Experience</h2>
         <xsl:for-each select="/resume/job">
@@ -46,38 +52,28 @@
         </xsl:for-each>
       </div>
       
-      <div id="resume-skills">
-        <h2>Skills</h2>
-        <div>
-          <table border="0" cellpadding="0" cellspacing="0">
-            <xsl:for-each select="resume/skills/skill">
-              <tr>
-                <td valign="top"><strong><xsl:value-of select="@name" />:</strong></td>
-                <td width="4"></td>
-                <td><xsl:value-of select="." /></td>
-              </tr>
-              <tr height="10">
-                <td colspan="3"> </td>
-              </tr>
-            </xsl:for-each>
-          </table>
-        </div>
-      </div>
-      
       <div id="resume-publications">
         <h2>Conferences and Publications</h2>
-        <div>
-          <ul>
-            <xsl:for-each select="/resume/publications/publication">
-              <li>
-                <ul>
-                  <li><strong><xsl:value-of select="name" /> (<xsl:value-of select="date" />)</strong></li>
-                  <li><xsl:value-of select="description" /></li>
-                </ul>          
-              </li>
-            </xsl:for-each>
-          </ul>
-        </div>
+        <ul>
+          <xsl:for-each select="/resume/publications/publication">
+            <li>
+              <ul>
+                <li><strong><xsl:value-of select="name" /> (<xsl:value-of select="date" />)</strong></li>
+                <li><xsl:value-of select="description" /></li>
+              </ul>          
+            </li>
+          </xsl:for-each>
+        </ul>
+      </div>
+
+      <div id="resume-header">
+        <h1><xsl:value-of select="/resume/contact/name" /></h1>
+        <ul>
+          <li><xsl:value-of select="/resume/contact/address/street" /></li>
+          <li><xsl:value-of select="/resume/contact/address/city" />, <xsl:value-of select="/resume/contact/address/state" /> <xsl:value-of select="/resume/contact/address/zip" /></li>
+          <!--<li><xsl:value-of select="/resume/contact/phone/mobile" /></li>
+          <li><xsl:value-of select="/resume/contact/email" /></li>-->
+        </ul>
       </div>
     </div>
     <br clear="all" />

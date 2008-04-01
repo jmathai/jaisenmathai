@@ -1,11 +1,17 @@
     <br clear="left" />
   </div>
-  <div id="content-top"><img src="/images/content-bottom.gif"></div>
+  <div id="content-top">
+    <div id="content-bottom-left"></div>
+    <div id="content-bottom-middle"></div>
+    <div id="content-bottom-right"></div>
+  </div>
   
   <div id="footer">
     <a href="/home">home</a> / 
     <a href="/resume">resume</a> / 
     <a href="/portfolio">portfolio</a> / 
+    <a href="/code">code</a> / 
+    <a href="/blog">blog</a> / 
     <a href="/contact">contact</a>
   </div>
   

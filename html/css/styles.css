@@ -1,6 +1,6 @@
 body{
-  font-family:helvetica,verdana,arial,"Bitstream Vera Sans",sans-serif;
-  font-size:10pt;
+  font-family: Georgia, "Times New Roman", Times, serif, helvetica,verdana,arial,"Bitstream Vera Sans",sans-serif;
+  font-size:11pt;
   background:url("/images/background.jpeg") repeat-x #3b6d9e;
   margin:0px;
   padding:0px;
@@ -71,8 +71,52 @@ hr
 #content-top
 {
   width:700px;
-  height:15px;
+  height:7px;
   margin:auto;
+}
+
+#content-bottom-left
+{
+  background:url(/images/sprite.png) no-repeat top left;
+  background-position:0px -56px;
+  width:7px;
+  height:7px;
+  float:left;
+}
+
+#content-bottom-right
+{
+  background:url(/images/sprite.png) no-repeat top left;
+  background-position:-11px -56px;
+  width:7px;
+  height:7px;
+  float:left;
+}
+
+#content-top-left
+{
+  background:url(/images/sprite.png) no-repeat top left;
+  background-position:0px -46px;
+  width:7px;
+  height:7px;
+  float:left;
+}
+
+#content-top-middle, #content-bottom-middle
+{
+  width:686px;
+  height:7px;
+  background-color:#fff;
+  float:left;
+}
+
+#content-top-right
+{
+  background:url(/images/sprite.png) no-repeat top left;
+  background-position:-11px -46px;
+  width:7px;
+  height:7px;
+  float:left;
 }
 
 .home-image
@@ -125,4 +169,48 @@ pre{
   margin:auto;
   margin-top:25px;
   margin-bottom:25px;
+}
+
+#header ul
+{
+  list-style-type:none;
+  margin:0;
+  padding:0;
+  height:46px;
+  width:636px; /* (102+4)*6 */
+  margin:auto;
+}
+
+#header ul li
+{
+  margin:0 2px;
+  padding:0;
+  text-align:center;
+  float:left;
+}
+
+#header ul li a:link, #header ul li a:visited
+{
+  font-size:12pt;
+  color:#fff;
+}
+
+#header ul li a:link.on, #header ul li a:visited.on
+{
+  text-decoration:underline;
+  font-style:italic;
+}
+
+#sprite-nav
+{
+  background:url("/images/sprite.png") no-repeat top left;
+  width:102px;
+  height:26px;
+  padding-top:20px;
+  display:block;
+}
+
+.strike
+{
+  text-decoration:line-through;
 }
