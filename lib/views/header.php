@@ -16,7 +16,7 @@
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
     <?php wp_head(); ?>
   <?php } ?>
-  <link rel="stylesheet" type="text/css" href="/css/compress1.css|styles.css|resume.css|style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/compress3.css|styles.css|resume.css|style.css" />
   <link rel="shortcut icon"  href="/jm_logo.gif" type="image/x-icon" />
   <title>
   <?php if(!function_exists('bloginfo')){ ?>
@@ -35,12 +35,12 @@
   <div id="header-banner"></div>
   <div id="header">
     <ul>
-      <li><a href="/" title="Go Home" rel="me" id="sprite-nav" <?php if($_SERVER['REQUEST_URI'] == '/'){ ?>class="on"<?php } ?>>Home</a></li>
-      <li><a href="/resume" title="View My Resume" id="sprite-nav" <?php if(strstr($_SERVER['REQUEST_URI'], '/resume')){ ?>class="on"<?php } ?>>Resume</a></li>
-      <li><a href="/portfolio" title="View My Portfolio" id="sprite-nav" <?php if($_SERVER['REQUEST_URI'] == '/portfolio'){ ?>class="on"<?php } ?>>Portfolio</a></li>
-      <li><a href="/code" title="View My Work" id="sprite-nav" <?php if($_SERVER['REQUEST_URI'] == '/code'){ ?>class="on"<?php } ?>>Code</a></li>
-      <li><a href="/blog" title="View My Blog" id="sprite-nav" <?php if(strstr($_SERVER['REQUEST_URI'], '/blog')){ ?>class="on"<?php } ?>>Blog</a></li>
-      <li><a href="/contact" title="View My Contact Information" id="sprite-nav" <?php if($_SERVER['REQUEST_URI'] == '/contact'){ ?>class="on"<?php } ?>>Contact</a></li>
+      <li><a href="/" title="Go Home" rel="me" id="nav-home" <?php if($_SERVER['REQUEST_URI'] == '/'){ ?>class="on"<?php } ?>>Home</a></li>
+      <li><a href="/resume" title="View My Resume" id="nav-resume" <?php if(strstr($_SERVER['REQUEST_URI'], '/resume')){ ?>class="on"<?php } ?>>Resume</a></li>
+      <li><a href="/portfolio" title="View My Portfolio" id="nav-portfolio" <?php if($_SERVER['REQUEST_URI'] == '/portfolio'){ ?>class="on"<?php } ?>>Portfolio</a></li>
+      <li><a href="/code" title="View My Work" id="nav-code" <?php if(strstr($_SERVER['REQUEST_URI'], '/code')){ ?>class="on"<?php } ?>>Code</a></li>
+      <li><a href="/blog" title="View My Blog" id="nav-blog" <?php if(strstr($_SERVER['REQUEST_URI'], '/blog')){ ?>class="on"<?php } ?>>Blog</a></li>
+      <li><a href="/contact" title="View My Contact Information" id="nav-contact" <?php if($_SERVER['REQUEST_URI'] == '/contact'){ ?>class="on"<?php } ?>>Contact</a></li>
     </ul>
   </div>
   <div id="content-top">
@@ -49,4 +49,4 @@
     <div id="content-top-right"></div>
   </div>
   <div id="content">
-    <h2><?php echo function_exists('bloginfo') ? bloginfo('name') : $subtitle; ?></h2>
+    <h1><?php echo function_exists('bloginfo') ? bloginfo('name') : $subtitle; ?></h1>
