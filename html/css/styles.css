@@ -60,7 +60,7 @@ hr
   margin:auto;
 }
 
-#content h1
+#content h1, #content h2
 {
   font-size:13pt;
   margin:15px 0px 15px 0px;
@@ -119,25 +119,66 @@ hr
   float:left;
 }
 
-.home-image
+.home-images
 {
-  float:left;
-  padding:0px 10px;
+  width:660px;
+  height:132px;
+  margin:auto;
 }
 
-.home-image p
+.home-images div
 {
-  margin:0px;
+  float:left;
+  width:210px;
+  padding:0px;
+  margin:0px 5px;
+}
+
+.home-images div div
+{
+  background:url(/images/sprite-home.jpg) no-repeat top left;
+  width:200px;
+  height:112px;
+  float:none;
+}
+
+.home-images div div.tl
+{
+}
+
+.home-images div div.tm
+{
+  background-position:-200px 0px;
+}
+
+.home-images div div.tr
+{
+  background-position:-400px 0px;
+}
+
+.home-images div div.bl
+{
+  background-position:0px -112px;
+}
+
+.home-images div div.bm
+{
+  background-position:-200px -112px;
+}
+
+.home-images div div.br
+{
+  background-position:-400px -112px;
+}
+
+.home-images div p
+{
+  margin:4px 0px 0px;
   padding:0px;
   text-align:center;
   font-size:smaller;
 }
 
-.home-image img
-{
-  width:200px;
-  height:112px;
-}
 
 #footer
 {
@@ -216,4 +257,14 @@ pre{
 .strike
 {
   text-decoration:line-through;
+}
+
+.y-logo
+{
+  background:url(/images/sprite.png) no-repeat top left;
+  background-position:-102px -57px;
+  width:50px;
+  height:11px;
+  display:block;
+  float:left;
 }
