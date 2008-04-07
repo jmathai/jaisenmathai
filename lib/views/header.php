@@ -6,12 +6,11 @@
     __jsInc = [];
     __jsInc.push('prototype.lite.js');
     __jsInc.push('javascript.js');
+    __jsInc.push('blog-ptg.js');
+    __jsInc.push('FancyZoom.js');
+    __jsInc.push('FancyZoomHTML.js');
   </script>
   <?php if(strstr($_SERVER['REQUEST_URI'], '/blog') !== false){ ?>
-    <script>
-      __jsInc.push('FancyZoom.js');
-      __jsInc.push('FancyZoomHTML.js');
-    </script>
     <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
     <?php wp_head(); ?>
@@ -28,7 +27,7 @@
   <?php } ?>
    :: Jaisen Mathai</title>
   <meta name="description" content="Web developer/engineer.  Proficient with PHP, MySQL, Apache and Linux (LAMP) as well as JavaScript, dHTML, AJAX and JSON." />
-  <meta name="keywords" content="Jaisen, Mathai, Jaisen Mathai, jmathai.com, Portfolio, Resume, PHP Developer, PHP, AJAX, JSON, MySQL, Linux, JavaScript, dHTML, LAMP, Frameworks, Mashups, Facebook, Amazon, Google, APIs" />
+  <meta name="keywords" content="Jaisen, Mathai, Jaisen Mathai, jmathai.com, Portfolio, Resume, PHP Developer, PHP, AJAX, JSON, MySQL, Linux, JavaScript, dHTML, LAMP, Frameworks, Mashups, Facebook, Amazon, Google, Yahoo, APIs, Yahoo Employee, Yahoo Engineer, Yahoo Resume" />
 </head>
 
 <body>
@@ -50,3 +49,4 @@
   </div>
   <div id="content">
     <h1><?php echo function_exists('bloginfo') ? bloginfo('name') : $subtitle; ?></h1>
+    <div class="narrowcolumn">

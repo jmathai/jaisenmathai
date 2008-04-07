@@ -3,7 +3,14 @@
 define('DB_NAME', 'jaisenmathai_wp');    // The name of the database
 define('DB_USER', 'jmathai');     // Your MySQL username
 define('DB_PASSWORD', 'ma3str0'); // ...and password
-define('DB_HOST', '07-db-01');    // 99% chance you won't need to change this value
+if(strstr($_SERVER['HTTP_HOST'], 'local'))
+{
+  define('DB_HOST', 'localhost');
+}
+else
+{
+  define('DB_HOST', '07-db-01');    // 99% chance you won't need to change this value
+}
 define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', '');
 

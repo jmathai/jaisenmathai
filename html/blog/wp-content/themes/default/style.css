@@ -156,16 +156,17 @@ body {
 	background-color: white;
 	margin: 20px auto;
 	padding: 0;
-	width: 760px;
-	border: 1px solid #959596;
+	width: 960px;
+	/*border: 1px solid #959596;*/
 	}
 
+/* moved to styles.css
 .narrowcolumn {
 	float: left;
 	padding: 0 0 20px 0px;
 	margin: 0px 0 0;
-	width: 450px;
-	}
+	width: 700px;
+	}*/
 
 .widecolumn {
 	margin: 5px 0 0 0;
@@ -433,24 +434,6 @@ select {
 	display: block;
 	}
 /* End Comments */
-
-
-
-/* Begin Sidebar */
-#sidebar
-{
-	padding: 20px 0 10px 0;
-	margin-left: 505px;
-	width: 180px;
-  margin-top:-55px;
-	}
-
-#sidebar form {
-	margin: 0;
-	}
-/* End Sidebar */
-
-
 
 /* Begin Calendar */
 #wp-calendar {

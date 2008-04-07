@@ -55,6 +55,3 @@ function searchImagesRsp(data)
   return false;
 }
 
-var ptg = new PTG("656ff15dffa1a18c53c94b242da917f9");
-sideBar();
-searchImages();

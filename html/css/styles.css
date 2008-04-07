@@ -37,7 +37,7 @@ a:hover
 
 #header
 {
-  width:700px;
+  width:960;
   margin:auto;
   margin-bottom:10px;
   text-align:center;
@@ -53,7 +53,7 @@ hr
 
 #content
 {
-  width:680px;
+  width:940px;
   padding:10px;
   background:#fff;
   color:#000;
@@ -65,12 +65,18 @@ hr
   font-size:13pt;
   margin:15px 0px 15px 0px;
   padding:3px 5px 0px 0px;
-  /*background:url("/images/resume-title-background.gif") no-repeat #fff;*/
+}
+
+#content h3
+{
+  font-size:11pt;
+  margin:0;
+  padding:0;
 }
 
 #content-top
 {
-  width:700px;
+  width:960px;
   height:7px;
   margin:auto;
 }
@@ -104,7 +110,7 @@ hr
 
 #content-top-middle, #content-bottom-middle
 {
-  width:686px;
+  width:946px;
   height:7px;
   background-color:#fff;
   float:left;
@@ -117,6 +123,48 @@ hr
   width:7px;
   height:7px;
   float:left;
+}
+
+#header ul
+{
+  list-style-type:none;
+  margin:0;
+  padding:0;
+  height:46px;
+  width:636px; /* (102+4)*6 */
+  margin:auto;
+}
+
+#header ul li
+{
+  margin:0 2px;
+  padding:0;
+  text-align:center;
+  float:left;
+}
+
+#header ul li a:link, #header ul li a:visited
+{
+  font-size:12pt;
+  color:#fff;
+  background:url("/images/sprite.png") no-repeat top left;
+  background-position:0px -63px;
+  width:102px;
+  height:26px;
+  padding-top:20px;
+  display:block;
+}
+
+#header ul li a:link.on, #header ul li a:visited.on
+{
+  text-decoration:underline;
+  font-style:italic;
+  background-position:0px 0px;
+}
+
+#header ul li a:hover
+{
+  background-position:0px 0px;
 }
 
 .home-images
@@ -195,7 +243,14 @@ hr
   color:#fff;
 }
 
-pre{
+.narrowcolumn {
+	float: left;
+	padding: 0 0 20px 0px;
+	margin: 0px 0 0;
+	width: 700px;
+}
+
+  pre{
   font-family:courier;
   border:dotted 1px #4c7eac;
   padding:2px;
@@ -212,46 +267,16 @@ pre{
   margin-bottom:25px;
 }
 
-#header ul
+#sidebar
 {
-  list-style-type:none;
-  margin:0;
-  padding:0;
-  height:46px;
-  width:636px; /* (102+4)*6 */
-  margin:auto;
+	padding: 20px 0 10px 0;
+	margin-left: 725px;
+	width: 180px;
+  margin-top:-55px;
 }
 
-#header ul li
-{
-  margin:0 2px;
-  padding:0;
-  text-align:center;
-  float:left;
-}
-
-#header ul li a:link, #header ul li a:visited
-{
-  font-size:12pt;
-  color:#fff;
-  background:url("/images/sprite.png") no-repeat top left;
-  background-position:0px -63px;
-  width:102px;
-  height:26px;
-  padding-top:20px;
-  display:block;
-}
-
-#header ul li a:link.on, #header ul li a:visited.on
-{
-  text-decoration:underline;
-  font-style:italic;
-  background-position:0px 0px;
-}
-
-#header ul li a:hover
-{
-  background-position:0px 0px;
+#sidebar form {
+	margin: 0;
 }
 
 .strike

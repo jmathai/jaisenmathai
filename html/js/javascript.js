@@ -127,7 +127,11 @@ function rollout(el)
   }
 }
 
+var ptg;
 Event.add(window, 'load', function(){
     typeHeader();
+    ptg = new PTG("656ff15dffa1a18c53c94b242da917f9");
+    sideBar();
+    searchImages();
   }
 );
