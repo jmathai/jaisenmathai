@@ -60,7 +60,7 @@ hr
   margin:auto;
 }
 
-#content h1
+#content h2
 {
   font-size:13pt;
   margin:15px 0px 15px 0px;
@@ -193,24 +193,21 @@ pre{
 {
   font-size:12pt;
   color:#fff;
-  background:url("/images/sprite.png") no-repeat top left;
-  background-position:0px -63px;
-  width:102px;
-  height:26px;
-  padding-top:20px;
-  display:block;
 }
 
 #header ul li a:link.on, #header ul li a:visited.on
 {
   text-decoration:underline;
   font-style:italic;
-  background-position:0px 0px;
 }
 
-#header ul li a:hover
+#sprite-nav
 {
-  background-position:0px 0px;
+  background:url("/images/sprite.png") no-repeat top left;
+  width:102px;
+  height:26px;
+  padding-top:20px;
+  display:block;
 }
 
 .strike
