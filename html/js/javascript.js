@@ -1,32 +1,3 @@
-// thanks to dustin diaz
-var Dom = {
-  get: function(el) {
-    if (typeof el === 'string') {
-      return document.getElementById(el);
-    } else {
-      return el;
-    }
-  }
-};
-
-var Event = {
-  add: function() {
-    if (window.addEventListener) {
-      return function(el, type, fn) {
-        Dom.get(el).addEventListener(type, fn, false);
-      };
-    } else if (window.attachEvent) {
-      return function(el, type, fn) {
-        var f = function() {
-          fn.call(Dom.get(el), window.event);
-        };
-        Dom.get(el).attachEvent('on' + type, f);
-      };
-    }
-  }()
-};
-
-
 function typeHeader()
 {
   var rand = parseInt(Math.random()*10);
@@ -112,19 +83,6 @@ function typeHeader()
     }
 
   start();
-}
-
-function rollover(el)
-{
-  el.className = el.className.replace('sprite-nav-off','sprite-nav-on ');
-}
-
-function rollout(el)
-{
-  if(el.className.search(' on') == -1)
-  {
-    el.className = el.className.replace('sprite-nav-on','sprite-nav-off');
-  }
 }
 
 var ptg;

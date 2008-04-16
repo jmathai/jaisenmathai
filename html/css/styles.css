@@ -279,11 +279,79 @@ hr
 	margin: 0;
 }
 
-.strike
+#header ul li
 {
-  text-decoration:line-through;
+  margin:0 2px;
+  padding:0;
+  text-align:center;
+  float:left;
 }
 
+#header ul li a:link, #header ul li a:visited
+{
+  font-size:12pt;
+  color:#fff;
+  background:url("/images/sprite.png") no-repeat top left;
+  width:102px;
+  height:26px;
+  padding-top:20px;
+  display:block;
+}
+
+#header ul li a:hover
+{
+  text-decoration:underline;
+  background-position:0px -46px;
+}
+
+#header ul li a:link.on, #header ul li a:visited.on
+{
+  text-decoration:underline;
+  font-style:italic;
+}
+
+/*<<<<<<< HEAD:html/css/styles.css
+#sidebar form {
+	margin: 0;
+=======
+#header ul li
+{
+  margin:0 2px;
+  padding:0;
+  text-align:center;
+  float:left;
+}
+
+#header ul li a:link, #header ul li a:visited
+{
+  font-size:12pt;
+  color:#fff;
+}
+
+#header ul li a:link.on, #header ul li a:visited.on
+{
+  text-decoration:underline;
+  font-style:italic;
+>>>>>>> master:html/css/styles.css
+}
+
+<<<<<<< HEAD:html/css/styles.css
+.strike
+=======
+#sprite-nav
+>>>>>>> master:html/css/styles.css
+{
+<<<<<<< HEAD:html/css/styles.css
+  text-decoration:line-through;
+=======
+  background:url("/images/sprite.png") no-repeat top left;
+  width:102px;
+  height:26px;
+  padding-top:20px;
+  display:block;
+>>>>>>> master:html/css/styles.css
+}
+*/
 .y-logo
 {
   background:url(/images/sprite.png) no-repeat top left;
