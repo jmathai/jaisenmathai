@@ -1,7 +1,7 @@
     </div>
     <div id="sidebar">
       <ul>
-        <li><a href="http://feeds.feedburner.com/jaisenmathai" rel="alternate" type="application/rss+xml"><img src="/images/rss.png" alt="" style="vertical-align:middle;border:0"/></a>&nbsp;<a href="http://feeds.feedburner.com/jaisenmathai" rel="alternate" type="application/rss+xml">Subscribe in a reader</a></li>
+        <li class="rss"><div><a href="http://feeds.feedburner.com/jaisenmathai" rel="alternate" type="application/rss+xml">Subscribe in a reader</a></div></li>
         <li>
           <h2>Twitter</h2>
           <?php @include $_SERVER['DOCUMENT_ROOT'] . '/../lib/views/twitter.txt'; ?>

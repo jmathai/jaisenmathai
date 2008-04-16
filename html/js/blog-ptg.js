@@ -10,7 +10,7 @@ function sideBar()
                                 + ' <div class="module-content">'
                                 + '   <div>'
                                 + '     <form style="display:inline;" onsubmit="searchImages(); return false;">'
-                                + '       <input type="text" id="ptgSearchField" class="formfield" />&nbsp;<input type="image" src="/images/search_16x16.png" class="png" width="16" height="16" border="0" align="absmiddle" onclick="searchImages(); return false;" /></a>'
+                                + '       <input type="text" id="ptgSearchField" class="formfield" />&nbsp;<input type="button" class="search" onclick="searchImages(); return false;" />'
                                 + '     </form>'
                                 + '   </div>'
                                 + '   <div id="photoDiv" class="sidebar-photos"></div>'
@@ -38,13 +38,13 @@ function searchImagesRsp(data)
   // previous
   if(offset > 0)
   {
-    html += '<a href="javascript:void(0);" onclick="searchImages(offset - limit);"><img src="/images/previous_16x16.png" width="16" height="16" border="0" align="left" /></a>';
+    html += '<input type="button" class="previous" onclick="searchImages(offset - limit);" />';
   }
   
   // next
   if((offset+limit) <= ptg.result.totalRows(data))
   {
-    html += '<a href="javascript:void(0);" onclick="searchImages(offset + limit);"><img src="/images/next_16x16.png" width="16" height="16" border="0" align="right" /></a>';
+    html += '<input type="button" class="next" onclick="searchImages(offset + limit);"/>';
   }
   
   html += '<br/></div>';
