@@ -292,6 +292,7 @@ hr
   font-size:12pt;
   color:#fff;
   background:url("/images/sprite.png") no-repeat top left;
+  background-position:0px -63px;
   width:102px;
   height:26px;
   padding-top:20px;
@@ -301,7 +302,7 @@ hr
 #header ul li a:hover
 {
   text-decoration:underline;
-  background-position:0px -46px;
+  background-position:0px 0px;
 }
 
 #header ul li a:link.on, #header ul li a:visited.on
