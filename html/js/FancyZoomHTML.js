@@ -23,7 +23,7 @@ function insertZoomHTML() {
 	
 	var inSpinImage = document.createElement("img");
 	inSpinImage.setAttribute('id', 'SpinImage');
-	inSpinImage.setAttribute('src', zoomImagesURI+'zoom-spin-1.png');
+	inSpinImage.setAttribute('src', zoomImagesURI+'zoom-spin.gif'); // make this a gif
 	inSpinbox.appendChild(inSpinImage);
 	
 	// ZOOM IMAGE
@@ -134,34 +134,17 @@ function insertZoomHTML() {
 		
 		var inCol1 = document.createElement("td");
 		inCol1.style.width = '27px';
+    inCol1.style.background = "url('"+zoomImagesURI+"zoom-shadow-corners.png') no-repeat 0px -1px";
 		inRow1.appendChild(inCol1);  
-		var inShadowImg1 = document.createElement("img");
-		inShadowImg1.setAttribute('src', zoomImagesURI+'zoom-shadow1.png');
-		inShadowImg1.setAttribute('width', '27');
-		inShadowImg1.setAttribute('height', '25');
-		inShadowImg1.style.display = 'block';
-		inCol1.appendChild(inShadowImg1);
 		
 		var inCol2 = document.createElement("td");
-		inCol2.setAttribute('background', zoomImagesURI+'zoom-shadow2.png');
+    inCol2.style.background = "url('"+zoomImagesURI+"zoom-shadow-tb.png') repeat-x 0px 1px";
 		inRow1.appendChild(inCol2);
-		// inCol2.innerHTML = '<img src=';
-		var inSpacer1 = document.createElement("img");
-		inSpacer1.setAttribute('src',zoomImagesURI+'spacer.gif');
-		inSpacer1.setAttribute('height', '1');
-		inSpacer1.setAttribute('width', '1');
-		inSpacer1.style.display = 'block';
-		inCol2.appendChild(inSpacer1);
 		
 		var inCol3 = document.createElement("td");
 		inCol3.style.width = '27px';
+    inCol3.style.background = "url('"+zoomImagesURI+"zoom-shadow-corners.png') no-repeat -27px -1px";
 		inRow1.appendChild(inCol3);  
-		var inShadowImg3 = document.createElement("img");
-		inShadowImg3.setAttribute('src', zoomImagesURI+'zoom-shadow3.png');
-		inShadowImg3.setAttribute('width', '27');
-		inShadowImg3.setAttribute('height', '25');
-		inShadowImg3.style.display = 'block';
-		inCol3.appendChild(inShadowImg3);
 		
 		//   <tr>
 		//   <td background="/images/zoom-shadow4.png">&nbsp;</td>
@@ -173,15 +156,8 @@ function insertZoomHTML() {
 		inShadowTbody.appendChild(inRow2);
 		
 		var inCol4 = document.createElement("td");
-		inCol4.setAttribute('background', zoomImagesURI+'zoom-shadow4.png');
+    inCol4.style.background = "url('"+zoomImagesURI+"zoom-shadow-lr.png') repeat-y";
 		inRow2.appendChild(inCol4);
-		// inCol4.innerHTML = '&nbsp;';
-		var inSpacer2 = document.createElement("img");
-		inSpacer2.setAttribute('src',zoomImagesURI+'spacer.gif');
-		inSpacer2.setAttribute('height', '1');
-		inSpacer2.setAttribute('width', '1');
-		inSpacer2.style.display = 'block';
-		inCol4.appendChild(inSpacer2);
 		
 		var inCol5 = document.createElement("td");
 		inCol5.setAttribute('bgcolor', '#ffffff');
@@ -195,16 +171,9 @@ function insertZoomHTML() {
 		inCol5.appendChild(inSpacer3);
 		
 		var inCol6 = document.createElement("td");
-		inCol6.setAttribute('background', zoomImagesURI+'zoom-shadow5.png');
+    inCol6.style.background = "url('"+zoomImagesURI+"zoom-shadow-lr.png') repeat-y -27px 0px";
 		inRow2.appendChild(inCol6);
-		// inCol6.innerHTML = '&nbsp;';
-		var inSpacer4 = document.createElement("img");
-		inSpacer4.setAttribute('src',zoomImagesURI+'spacer.gif');
-		inSpacer4.setAttribute('height', '1');
-		inSpacer4.setAttribute('width', '1');
-		inSpacer4.style.display = 'block';
-		inCol6.appendChild(inSpacer4);
-		
+	
 		//   <tr height="26">
 		//   <td width="27"><img src="/images/zoom-shadow6.png" width="27" height="26"</td>
 		//   <td background="/images/zoom-shadow7.png">&nbsp;</td>
@@ -218,34 +187,35 @@ function insertZoomHTML() {
 		
 		var inCol7 = document.createElement("td");
 		inCol7.style.width = '27px';
+    inCol7.style.background = "url('"+zoomImagesURI+"zoom-shadow-corners.png') no-repeat 0px -27px";
 		inRow3.appendChild(inCol7);
-		var inShadowImg7 = document.createElement("img");
-		inShadowImg7.setAttribute('src', zoomImagesURI+'zoom-shadow6.png');
+		/*var inShadowImg7 = document.createElement("img");
 		inShadowImg7.setAttribute('width', '27');
 		inShadowImg7.setAttribute('height', '26');
 		inShadowImg7.style.display = 'block';
-		inCol7.appendChild(inShadowImg7);
+		inCol7.appendChild(inShadowImg7);*/
 		
 		var inCol8 = document.createElement("td");
-		inCol8.setAttribute('background', zoomImagesURI+'zoom-shadow7.png');
+    inCol8.style.background = "url('"+zoomImagesURI+"zoom-shadow-tb.png') repeat-x 0px -25px";
 		inRow3.appendChild(inCol8);  
 		// inCol8.innerHTML = '&nbsp;';
-		var inSpacer5 = document.createElement("img");
+		/*var inSpacer5 = document.createElement("img");
 		inSpacer5.setAttribute('src',zoomImagesURI+'spacer.gif');
 		inSpacer5.setAttribute('height', '1');
 		inSpacer5.setAttribute('width', '1');
 		inSpacer5.style.display = 'block';
-		inCol8.appendChild(inSpacer5);
+		inCol8.appendChild(inSpacer5);*/
 		
 		var inCol9 = document.createElement("td");
 		inCol9.style.width = '27px';
+    inCol9.style.background = "url('"+zoomImagesURI+"zoom-shadow-corners.png') no-repeat -27px -27px";
 		inRow3.appendChild(inCol9);  
-		var inShadowImg9 = document.createElement("img");
+		/*var inShadowImg9 = document.createElement("img");
 		inShadowImg9.setAttribute('src', zoomImagesURI+'zoom-shadow8.png');
 		inShadowImg9.setAttribute('width', '27');
 		inShadowImg9.setAttribute('height', '26');
 		inShadowImg9.style.display = 'block';
-		inCol9.appendChild(inShadowImg9);
+		inCol9.appendChild(inShadowImg9);*/
 	}
 
 	if (includeCaption) {
@@ -286,13 +256,10 @@ function insertZoomHTML() {
 		
 		var inCapCol1 = document.createElement("td");
 		inCapCol1.setAttribute('align', 'right');
+    inCapCol1.setAttribute('width', '13');
+    inCapCol1.setAttribute('height', '27');
+    inCapCol1.style.background = "url('"+zoomImagesURI+"zoom-caption-lr.png') no-repeat";
 		inCapRow1.appendChild(inCapCol1);
-		var inCapImg1 = document.createElement("img");
-		inCapImg1.setAttribute('src', zoomImagesURI+'zoom-caption-l.png');
-		inCapImg1.setAttribute('width', '13');
-		inCapImg1.setAttribute('height', '26');
-		inCapImg1.style.display = 'block';
-		inCapCol1.appendChild(inCapImg1);
 		
 		var inCapCol2 = document.createElement("td");
 		inCapCol2.setAttribute('background', zoomImagesURI+'zoom-caption-fill.png');
@@ -307,12 +274,9 @@ function insertZoomHTML() {
 		inCapRow1.appendChild(inCapCol2);
 		
 		var inCapCol3 = document.createElement("td");
+    inCapCol3.setAttribute('width', '13');
+    inCapCol3.setAttribute('height', '27');
+    inCapCol3.style.background = "url('"+zoomImagesURI+"zoom-caption-lr.png') no-repeat -13px 0px";
 		inCapRow1.appendChild(inCapCol3);
-		var inCapImg2 = document.createElement("img");
-		inCapImg2.setAttribute('src', zoomImagesURI+'zoom-caption-r.png');
-		inCapImg2.setAttribute('width', '13');
-		inCapImg2.setAttribute('height', '26');
-		inCapImg2.style.display = 'block';
-		inCapCol3.appendChild(inCapImg2);
 	}
 }
