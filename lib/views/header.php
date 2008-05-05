@@ -15,7 +15,7 @@
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
     <?php wp_head(); ?>
   <?php } ?>
-  <link rel="stylesheet" type="text/css" href="/css/compress4.css|styles.css|resume.css|style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/compress5.css|styles.css|resume.css|style.css" />
   <link rel="shortcut icon"  href="/jm_logo.gif" type="image/x-icon" />
   <title>
   <?php if(!function_exists('bloginfo')){ ?>

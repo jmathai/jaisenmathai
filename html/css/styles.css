@@ -8,12 +8,13 @@ body{
 
 a:link, a:visited, a:active
 {
-  color:#4c7eac;
+	color: #06c;
   text-decoration:none;
 }
 
 a:hover
 {
+	color: #147;
   text-decoration:underline;
 }
 
