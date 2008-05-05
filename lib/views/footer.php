@@ -3,7 +3,7 @@
       <ul>
         <li class="rss"><div><a href="http://feeds.feedburner.com/jaisenmathai" rel="alternate" type="application/rss+xml">Subscribe in a reader</a></div></li>
         <li>
-          <?php echo getMemcache()->get('blog_popular'); ?>
+          <?php echo getMemcache()->get('blog_recent'); ?>
         </li>
         <li>
           <?php echo getMemcache()->get('blog_popular'); ?>
