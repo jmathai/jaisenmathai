@@ -3,6 +3,12 @@
       <ul>
         <li class="rss"><div><a href="http://feeds.feedburner.com/jaisenmathai" rel="alternate" type="application/rss+xml">Subscribe in a reader</a></div></li>
         <li>
+          <?php echo CSite::navBlogRecent(); ?>
+        </li>
+        <li>
+          <?php echo CSite::navBlogPopular(); ?>
+        </li>
+        <li>
           <h2>Twitter</h2>
           <?php @include $_SERVER['DOCUMENT_ROOT'] . '/../lib/views/twitter.txt'; ?>
         </li>

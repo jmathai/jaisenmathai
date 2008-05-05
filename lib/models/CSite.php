@@ -8,6 +8,8 @@
 
   class CSite
   {
+    private static $memcache = null;
+
     public static function code()
     {
       Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/code.html', 'title' => 'Code', 'subtitle' => 'PHP Developer / Code'));
@@ -31,6 +33,16 @@
     public static function home()
     {
       Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/home.html', 'title' => 'Home', 'subtitle' => 'PHP Developer / Home'));
+    }
+
+    public static function navBlogRecent()
+    {
+      return self::getMemcache()->get('blog_recent');
+    }
+    
+    public static function navBlogPopular()
+    {
+      return self::getMemcache()->get('blog_popular');
     }
     
     public static function resume()
@@ -87,6 +99,17 @@
     public static function portfolio()
     {
       Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/portfolio.html', 'title' => 'Portfolio', 'subtitle' => 'PHP Developer / Portfolio'));
+    }
+
+    private static function getMemcache()
+    {
+      if(self::$memcache === null)
+      {
+        self::$memcache = new Memcache();
+        self::$memcache->connect('localhost');
+      }
+
+      return self::$memcache;
     }
   }
 ?>
