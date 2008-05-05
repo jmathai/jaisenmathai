@@ -1,4 +1,5 @@
 <?php
+  chdir(dirname(__FILE__));
   include '../../html/blog/wp-config.php';
   
   $dsn = 'mysql:dbname='.DB_NAME.';host='.DB_HOST;
