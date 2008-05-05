@@ -9,10 +9,6 @@
           <?php echo getMemcache()->get('blog_popular'); ?>
         </li>
         <li>
-          <h2>Twitter</h2>
-          <?php @include $_SERVER['DOCUMENT_ROOT'] . '/../lib/views/twitter.txt'; ?>
-        </li>
-        <li>
           <h2>Work</h2>
           I'm currently working as an engineer at <a href="http://www.yahoo.com/" target="_blank"><img src="/images/yahoo_logo.gif" border="0" alt="Yahoo!" /></a> and living in Sunnyvale, CA.  
         </li>
@@ -27,6 +23,10 @@
         -->
         <li>
           <div id="custom-sidebar"></div>
+        </li>
+        <li>
+          <h2>Twitter</h2>
+          <?php @include $_SERVER['DOCUMENT_ROOT'] . '/../lib/views/twitter.txt'; ?>
         </li>
         <li>
           <h2>Extras</h2>
