@@ -34,16 +34,6 @@
     {
       Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/home.html', 'title' => 'Home', 'subtitle' => 'PHP Developer / Home'));
     }
-
-    public static function navBlogRecent()
-    {
-      return self::getMemcache()->get('blog_recent');
-    }
-    
-    public static function navBlogPopular()
-    {
-      return self::getMemcache()->get('blog_popular');
-    }
     
     public static function resume()
     {

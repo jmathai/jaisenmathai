@@ -3,10 +3,10 @@
       <ul>
         <li class="rss"><div><a href="http://feeds.feedburner.com/jaisenmathai" rel="alternate" type="application/rss+xml">Subscribe in a reader</a></div></li>
         <li>
-          <?php echo CSite::navBlogRecent(); ?>
+          <?php echo getMemcache()->get('blog_popular'); ?>
         </li>
         <li>
-          <?php echo CSite::navBlogPopular(); ?>
+          <?php echo getMemcache()->get('blog_popular'); ?>
         </li>
         <li>
           <h2>Twitter</h2>
