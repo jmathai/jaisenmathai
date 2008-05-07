@@ -44,6 +44,8 @@ switch($_['constMode'])
     define('PATH_DOC', '/home/jmathai/web/jaisenmathai.com/www/html');
     break;
   case 'jaisenmathai.com':
+  case 'jmathai.com':
+  case 'www.jmathai.com':
     header('HTTP/1.1 301 Moved Permanently');
     header('Status: 301 Moved Permanently');
     header('Location: http://www.jaisenmathai.com' . $_SERVER['REQUEST_URI']);
