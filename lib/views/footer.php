@@ -12,15 +12,6 @@
           <h2>Work</h2>
           I'm currently working as an engineer at <a href="http://www.yahoo.com/" target="_blank"><img src="/images/yahoo_logo.gif" border="0" alt="Yahoo!" /></a> and living in Sunnyvale, CA.  
         </li>
-        <!--
-        <li>
-          <h2>Blog</h2>
-          <ul>
-            <li></li>
-            <li></li>
-          </ul>
-        </li>
-        -->
         <li>
           <div id="custom-sidebar"></div>
         </li>
@@ -77,5 +68,14 @@
     _uacct = "UA-88708-4";
     urchinTracker();
   </script>  
+  <?php if(strstr($_SERVER['REQUEST_URI'], '/blog') !== false){ ?>
+    <script>
+     // Event.add(document.body,'load',function(){
+          dp.SyntaxHighlighter.ClipboardSwf = '/swf/clipboard.swf';
+          dp.SyntaxHighlighter.HighlightAll('code');
+       // }
+      //);
+    </script>
+  <?php } ?>
 </body>
 </html>

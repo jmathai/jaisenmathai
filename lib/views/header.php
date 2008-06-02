@@ -11,11 +11,17 @@
     __jsInc.push('FancyZoomHTML.js');
   </script>
   <?php if(strstr($_SERVER['REQUEST_URI'], '/blog') !== false){ ?>
+    <script>
+      __jsInc.push('shCore.js');
+      __jsInc.push('shBrushCss.js');
+      __jsInc.push('shBrushJScript.js');
+      __jsInc.push('shBrushPhp.js');
+    </script>
     <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
     <?php wp_head(); ?>
   <?php } ?>
-  <link rel="stylesheet" type="text/css" href="/css/compress5.css|styles.css|resume.css|style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/compress5.css|styles.css|resume.css|style.css|SyntaxHighlighter.css" />
   <link rel="shortcut icon"  href="/jm_logo.gif" type="image/x-icon" />
   <title>
   <?php if(!function_exists('bloginfo')){ ?>
