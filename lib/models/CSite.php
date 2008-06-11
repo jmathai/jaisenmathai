@@ -27,6 +27,7 @@
     
     public static function error404()
     {
+      header('HTTP/1.0 404 Not Found');
       Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/404.html', 'title' => '404 :: File Not Found', 'subtitle' => 'PHP Developer / Not Found'));
     }
     
@@ -85,21 +86,20 @@
     {
       Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/sample-scroll.html', 'title' => 'Javascript Auto Scroller Sample', 'subtitle' => 'Javascript Auto Scroller Sample'));
     }
+
+    public static function stocks()
+    {
+      require_once PATH_MODEL . '/CStocks.php';
+      $stockObj = CStocks::getInstance();
+      $stocks = $stockObj->getPositions();
+      $portfolios[] = $stocks;
+
+      Epicode::display('print.php', array('body' => EPICODE_VIEWS . '/stocks.html', 'title' => 'Stock Ticker', 'subtitle' => 'Stock Ticker', 'portfolios' => $portfolios));
+    }
     
     public static function portfolio()
     {
       Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/portfolio.html', 'title' => 'Portfolio', 'subtitle' => 'PHP Developer / Portfolio'));
-    }
-
-    private static function getMemcache()
-    {
-      if(self::$memcache === null)
-      {
-        self::$memcache = new Memcache();
-        self::$memcache->connect('localhost');
-      }
-
-      return self::$memcache;
     }
   }
 ?>

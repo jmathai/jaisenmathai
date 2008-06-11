@@ -87,5 +87,6 @@ $_['routes'] = array(
                 'resume/doc'              => array('CSite', 'resumeDoc'),
                 'sample/closure'          => array('CSite', 'sampleClosure'),
                 'sample/scroll'           => array('CSite', 'sampleScroll'),
+                'stocks'                  => array('CSite', 'stocks'),
               );
 ?>
