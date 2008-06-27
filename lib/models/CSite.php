@@ -24,6 +24,21 @@
     {
       Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/contact.html', 'title' => 'Contact', 'subtitle' => 'PHP Developer / Contact'));
     }
+
+    public static function error301()
+    {
+      if(strstr($_SERVER['REQUEST_URI'], '?'))
+      {
+        $newUrl = substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?')) . '.html';
+      }
+      else
+      {
+        $newUrl = $_SERVER['REQUEST_URI'] . '.html';
+      }
+      header('HTTP/1.1 301 Moved Permanently');
+      header("Location: {$newUrl}");
+      die();
+    }
     
     public static function error404()
     {

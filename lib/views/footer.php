@@ -37,12 +37,12 @@
   </div>
   
   <div id="footer">
-    <a href="/home">home</a> / 
-    <a href="/resume">resume</a> / 
-    <a href="/portfolio">portfolio</a> / 
-    <a href="/code">code</a> / 
+    <a href="/">home</a> / 
+    <a href="/resume.html">resume</a> / 
+    <a href="/portfolio.html">portfolio</a> / 
+    <a href="/code.html">code</a> / 
     <a href="/blog">blog</a> / 
-    <a href="/contact">contact</a>
+    <a href="/contact.html">contact</a>
   </div>
   
   <div id="seo">
@@ -53,7 +53,7 @@
     My experience is in using <strong>PHP</strong>, <strong>MySQL</strong>, <strong>Ajax</strong> and <strong>JSON</strong>.  
     I really enjoy creative brainstorming...taking a problem apart and narrowing 100 solutions down to the best one.
     <br/><br/>
-    Thanks for stopping by.  Be sure to <a href="/contact">drop me a line</a>.
+    Thanks for stopping by.  Be sure to <a href="/contact.html">drop me a line</a>.
   </div>
   
   <script type="text/javascript" id="__PTG" src="http://www.photagious.com/js/api.js"></script>
