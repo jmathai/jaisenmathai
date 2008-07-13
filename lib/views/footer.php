@@ -6,7 +6,7 @@
           <?php echo getMemcache()->get('blog_recent'); ?>
         </li>
         <li>
-          <?php echo getMemcache()->get('blog_popular'); ?>
+          <?php echo getMemcache()->get('blog_comments'); ?>
         </li>
         <li>
           <h2>Work</h2>
