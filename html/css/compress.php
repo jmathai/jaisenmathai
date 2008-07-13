@@ -1,6 +1,5 @@
 <?php
   header('Content-Type: text/css');
-  ob_start('ob_gzhandler');
   ini_set('include_path', '.');
   require '../../lib/scripts/cssmin.php';
   
