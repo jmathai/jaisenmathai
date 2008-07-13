@@ -229,6 +229,8 @@ final class CSSMin {
         return $this->css;
     }
 
+    function getCss(){ return $this->css; }
+
 }
 
 ?>
