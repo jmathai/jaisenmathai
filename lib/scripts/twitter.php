@@ -10,7 +10,7 @@
   curl_setopt($ch, CURLOPT_HEADER, 0);
   curl_setopt($ch, CURLOPT_USERPWD, 'jmathai:jmathai');
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  $xmlObj = new SimpleXML(curl_exec($ch));
+  $xmlObj = new SimpleXMLElement(curl_exec($ch));
   curl_close($ch);
 
   $text = (string)$xmlObj->status->text;
