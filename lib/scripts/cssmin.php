@@ -224,10 +224,10 @@ final class CSSMin {
      * @access public
      * @return string
      */
-    function __toString() {
+    /*function __toString() {
     
         return $this->css;
-    }
+    }*/
 
     function getCss(){ return $this->css; }
 

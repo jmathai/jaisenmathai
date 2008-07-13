@@ -17,8 +17,8 @@
     {
       if(file_exists(dirname($_SERVER['SCRIPT_FILENAME']) . '/' . $file) && strstr($file, '..') === false)
       {
-        $tmp = new CSSMin(file_get_contents($file)) . "\n";
-        $cache .= $tmp->getCss();
+        $tmp = new CSSMin(file_get_contents($file));
+        $cache .= $tmp->getCss() . "\n";
       }
     }
 
