@@ -44,7 +44,7 @@
   $recentComments .= '</ul>';*/
 
   $memcache = new Memcache();
-  $memcache->connect('localhost');
+  $memcache->connect('localhost', 11211);
   $memcache->set('blog_recent', $recentPosts, MEMCACHE_COMPRESSED);
   //$memcache->set('blog_comments', $recentComments, MEMCACHE_COMPRESSED);
   //$memcache->set('blog_popular', $popularPosts, MEMCACHE_COMPRESSED);
