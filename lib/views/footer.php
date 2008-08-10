@@ -3,10 +3,13 @@
       <ul>
         <li class="rss"><div><a href="http://feeds.feedburner.com/jaisenmathai" rel="alternate" type="application/rss+xml">Subscribe in a reader</a></div></li>
         <li>
+          <?php echo getMemcache()->get('blog_comments'); ?>
+        </li>
+        <li>
           <?php echo getMemcache()->get('blog_recent'); ?>
         </li>
         <li>
-          <?php echo getMemcache()->get('blog_comments'); ?>
+          <?php echo getMemcache()->get('blog_popular'); ?>
         </li>
         <li>
           <h2>Work</h2>
