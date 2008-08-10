@@ -6,7 +6,7 @@
     if($memcache === null)
     {
       $memcache = new Memcache();
-      $memcache->connect('localhost');
+      $memcache->connect('localhost', 11211);
     }
 
     return $memcache;
