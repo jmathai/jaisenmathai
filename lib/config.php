@@ -40,8 +40,8 @@ switch($_['constMode'])
     /*
     * Filesystem paths relevant to the application
     */
-    define('PATH_LIB', '/home/jmathai/web/jaisenmathai.com/www/lib');
-    define('PATH_DOC', '/home/jmathai/web/jaisenmathai.com/www/html');
+    define('PATH_LIB', '/www/jaisenmathai.com/www/lib');
+    define('PATH_DOC', '/www/jaisenmathai.com/www/html');
     break;
   case 'jaisenmathai.com':
   case 'jmathai.com':
