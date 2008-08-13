@@ -17,21 +17,21 @@
   $commentSth= $dbh->prepare($commentSql);
   $commentSth->execute(array(':status' => 1));
 
-  $recentPosts = '<h2>Recent Blog Posts</h2><ul>';
+  $recentPosts = '<h2>Recent Posts</h2><ul>';
   while($post = $recentSth->fetch(PDO::FETCH_ASSOC))
   {
     $recentPosts .= '<li><a href="' . get_permalink($post['ID']) . '">' . $post['post_title'] . '</a></li>';
   }
   $recentPosts .= '</ul>';
 
-  $popularPosts = '<h2>Popular Blog Posts</h2><ul>';
+  $popularPosts = '<h2>Popular Posts</h2><ul>';
   while($post = $popularSth->fetch(PDO::FETCH_ASSOC))
   {
     $popularPosts .= '<li><a href="' . get_permalink($post['ID']) . '">' . $post['post_title'] . '</a> (' . $post['comment_count'] . ' comments)</li>';
   }
   $popularPosts .= '</ul>';
   
-  $recentComments = '<h2>Recent Blog Comments</h2><ul>';
+  $recentComments = '<h2>Recent Comments</h2><ul>';
   while($post = $commentSth->fetch(PDO::FETCH_ASSOC))
   {
     $comment = substr($post['comment_content'], 0, 50);
