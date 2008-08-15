@@ -1,5 +1,4 @@
 <?php
-  include_once(dirname(__FILE__) . '/../config.php');
   $memcache = null;
   function getMemcache()
   {
@@ -13,6 +12,7 @@
     return $memcache;
   }
 
+  define('CACHE_JS', '/js/compress-aaa.js|prototype.lite.js|javascript.js|blog-ptg.js|FancyZoom.js|FancyZoomHTML.js|shCore.js|shBrushCss.js|shBrushJscript.js|shBrushPhp.js');
   function getJs()
   {
     $url = CACHE_JS;
@@ -25,6 +25,7 @@
     return $retval;
   }
 
+  define('CACHE_CSS', '/css/compress-aaa.css|styles.css|resume.css|style.css|SyntaxHighlighter.css');
   function getCss()
   {
     $url = CACHE_CSS;
