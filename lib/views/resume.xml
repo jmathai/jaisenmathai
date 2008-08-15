@@ -35,13 +35,13 @@
         Developing software which supports over 25 languages through internationalization and localization
       </task>
       <task>
+        Designated as the Local Paranoid responsible for all aspects of security including Cross Site Scripting (XSS) and Cross Site Request Forgery (XSRF).
+      </task>
+      <task>
         Unifying user data from various internal and external sources using web service APIs.
       </task>
       <task>
         Building social networking into the user experience across multiple properties.
-      </task>
-      <task>
-        Providing input into product development and engineering guidelines.
       </task>
     </accomplishments>
     <details>
