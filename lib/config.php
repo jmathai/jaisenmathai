@@ -62,6 +62,8 @@ switch($_['constMode'])
 */
 define('PATH_MODEL', PATH_LIB . '/models');
 define('PATH_VIEW', PATH_LIB . '/views');
+define('CACHE_CSS', '/css/compress-aaa.css|styles.css|resume.css|style.css|SyntaxHighlighter.css');
+define('CACHE_JS', '/js/compress-aaa.js|prototype.lite.js|javascript.js|blog-ptg.js|FancyZoom.js|FancyZoomHTML.js|shCore.js|shBrushCss.js|shBrushJscript.js|shBrushPhp.js');
 
 /*
 * Routes define url paths and a Class::method which handled the request.

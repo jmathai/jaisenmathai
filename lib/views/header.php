@@ -2,26 +2,12 @@
 <html lang="en">
 
 <head>
-  <script>
-    __jsInc = [];
-    __jsInc.push('prototype.lite.js');
-    __jsInc.push('javascript.js');
-    __jsInc.push('blog-ptg.js');
-    __jsInc.push('FancyZoom.js');
-    __jsInc.push('FancyZoomHTML.js');
-  </script>
   <?php if(strstr($_SERVER['REQUEST_URI'], '/blog') !== false){ ?>
-    <script>
-      __jsInc.push('shCore.js');
-      __jsInc.push('shBrushCss.js');
-      __jsInc.push('shBrushJScript.js');
-      __jsInc.push('shBrushPhp.js');
-    </script>
     <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
     <?php wp_head(); ?>
   <?php } ?>
-  <link rel="stylesheet" type="text/css" href="/css/compress5.css|styles.css|resume.css|style.css|SyntaxHighlighter.css" />
+  <?php echo getCss(); ?>
   <link rel="shortcut icon"  href="/jm_logo.gif" type="image/x-icon" />
   <title>
   <?php if(!function_exists('bloginfo')){ ?>
