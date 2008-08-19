@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
+  <link rel="alternate" type="application/rss+xml" title="Jaisen's Blog RSS Feed" href="http://feeds.feedburner.com/jaisenmathai" />
   <?php if(strstr($_SERVER['REQUEST_URI'], '/blog') !== false){ ?>
-    <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
     <?php wp_head(); ?>
   <?php } ?>
