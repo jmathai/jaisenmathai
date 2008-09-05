@@ -50,6 +50,11 @@
     {
       Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/home.html', 'title' => 'Home', 'subtitle' => 'PHP Developer / Home'));
     }
+
+    public static function playgroundNotify()
+    {
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/notify.html', 'title' => 'Playground', 'subtitle' => 'PHP Developer / Playground / Notify'));
+    }
     
     public static function resume()
     {

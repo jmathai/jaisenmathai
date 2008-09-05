@@ -78,6 +78,7 @@ $_['routes'] = array(
                 'code.html'               => array('CSite', 'code'),
                 'code/episuite.html'      => array('CSite', 'codeEpisuite'),
                 'error/404.html'          => array('CSite', 'error404'),
+                'playground/notify.html'  => array('CSite', 'playgroundNotify'),
                 'portfolio.html'          => array('CSite', 'portfolio'),
                 'resume.html'             => array('CSite', 'resume'),
                 'resume/detail.html'      => array('CSite', 'resumeDetail'),
