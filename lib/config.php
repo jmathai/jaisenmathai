@@ -11,7 +11,7 @@ $_['constMode'] = !isset($argv[1]) ? $_SERVER['HTTP_HOST'] : $argv[1];
 
 switch($_['constMode'])
 {
-  case 'local.jaisenmathai.com':
+  case 'mac.jaisenmathai.com':
     /*
     * Database connection properties
     */
