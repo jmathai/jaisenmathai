@@ -27,7 +27,7 @@
 	<?php foreach ($comments as $comment) : ?>
 
 		<li <?php echo $oddcomment; ?>id="comment-<?php comment_ID() ?>">
-			<cite><?php comment_author_link() ?></cite> Says:
+			<img src="<?php gravatar("G", 50, "http://{$_SERVER['HTTP_HOST']}/images/default-avatar.png"); ?>" width="50" height="50" hspace="4" vspace="4" align="left" title="Retrieved from gravatar" /><cite><?php comment_author_link() ?></cite> Says:
 			<?php if ($comment->comment_approved == '0') : ?>
 			<em>Your comment is awaiting moderation.</em>
 			<?php endif; ?>
