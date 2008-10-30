@@ -26,6 +26,12 @@ switch($_['constMode'])
     */
     define('PATH_LIB', '/Users/jmathai/Y/jaisenmathai/trunk/lib');
     define('PATH_DOC', '/Users/jmathai/Y/jaisenmathai/trunk/html');
+
+    /*
+     * Domains
+     */
+    define('HOST_SCRIPT', $_['constMode']);
+    define('HOST_MEDIA', $_['constMode']);
     break;
   case 'www.jaisenmathai.com':
     /*
@@ -42,6 +48,12 @@ switch($_['constMode'])
     */
     define('PATH_LIB', '/www/jaisenmathai.com/www/lib');
     define('PATH_DOC', '/www/jaisenmathai.com/www/html');
+
+    /*
+     * Domains
+     */
+    define('HOST_SCRIPT', 'scripts.jaisenmathai.com');
+    define('HOST_MEDIA', 'media.jaisenmathai.com');
     break;
   case 'jaisenmathai.com':
   case 'jmathai.com':

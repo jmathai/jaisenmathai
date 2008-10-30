@@ -19,7 +19,7 @@
     $hash = md5($url);
     $relativePath = "/js/static/{$hash}.js";
     if(file_exists(PATH_DOC . $relativePath))
-      $url = $relativePath;
+      $url = 'http://' . HOST_SCRIPT . $relativePath;
 
     $retval = '<script type="text/javascript" src="' . $url . '"></script>';
     return $retval;
@@ -32,7 +32,7 @@
     $hash = md5($url);
     $relativePath = "/css/static/{$hash}.css";
     if(file_exists(PATH_DOC . $relativePath))
-      $url = $relativePath;
+      $url = 'http://' . HOST_MEDIA . $relativePath;
 
     $retval = '<style type="text/css"> @import url("' . $url . '"); </style>';
     return $retval;
