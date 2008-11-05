@@ -5,7 +5,7 @@ Plugin URI: http://wordpress.org/#
 Description: This is not just a plugin, it symbolizes the hope and enthusiasm of an entire generation summed up in two words sung most famously by Louis Armstrong: Hello, Dolly. When activated you will randomly see a lyric from <cite>Hello, Dolly</cite> in the upper right of your admin screen on every page.
 Author: Matt Mullenweg
 Version: 1.5
-Author URI: http://ma.tt/
+Author URI: http://photomatt.net/
 */
 
 // These are the lyrics to Hello Dolly
@@ -59,11 +59,10 @@ function dolly_css() {
 	#dolly {
 		position: absolute;
 		top: 2.3em;
-		margin: 0;
-		padding: 0;
-		right: 10px;
+margin: 0; padding: 0;
+		right: 1em;
 		font-size: 16px;
-		color: #d54e21;
+		color: #f1f1f1;
 	}
 	</style>
 	";
