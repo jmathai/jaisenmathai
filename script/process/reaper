@@ -1,4 +1,4 @@
 #!/bin/sh
-sudo chown apache:webdevs /www/jaisenmathai.com/www/html/js
-sudo chown apache:webdevs /www/jaisenmathai.com/www/html/css
-sudo /etc/init.d/apache2 restart
+chown apache:webdevs /www/jaisenmathai.com/www/html/js
+chown apache:webdevs /www/jaisenmathai.com/www/html/css
+/etc/init.d/apache2 restart
