@@ -3,6 +3,10 @@
       <ul>
         <li class="rss"><div><a href="http://feeds.feedburner.com/jaisenmathai" rel="alternate" type="application/rss+xml">Subscribe in a reader</a></div></li>
         <li>
+          <h2>Work</h2>
+          I'm currently working as an engineer at <a href="http://www.yahoo.com/" target="_blank"><img src="/images/yahoo_logo.gif" border="0" alt="Yahoo!" /></a> and living in Sunnyvale, CA.  
+        </li>
+        <li>
           <?php echo getMemcache()->get('blog_comments'); ?>
         </li>
         <li>
@@ -10,10 +14,6 @@
         </li>
         <li>
           <?php echo getMemcache()->get('blog_popular'); ?>
-        </li>
-        <li>
-          <h2>Work</h2>
-          I'm currently working as an engineer at <a href="http://www.yahoo.com/" target="_blank"><img src="/images/yahoo_logo.gif" border="0" alt="Yahoo!" /></a> and living in Sunnyvale, CA.  
         </li>
         <li>
           <div id="custom-sidebar"></div>
