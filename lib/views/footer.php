@@ -60,7 +60,7 @@
   </div>
   
   <?php echo getJs(); ?>
-  <script type="text/javascript" id="__PTG" src="http://www.photagious.com/js/api.js"></script>
+  <script type="text/javascript" id="__PTG" src="http://photos.jaisenmathai.com/js/api.js"></script>
   <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
   <script type="text/javascript">
     _uacct = "UA-88708-4";
