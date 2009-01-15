@@ -1,15 +1,21 @@
 <?php
+/**
+ * @package Hello_Dolly
+ * @author Matt Mullenweg
+ * @version 1.5
+ */
 /*
 Plugin Name: Hello Dolly
 Plugin URI: http://wordpress.org/#
 Description: This is not just a plugin, it symbolizes the hope and enthusiasm of an entire generation summed up in two words sung most famously by Louis Armstrong: Hello, Dolly. When activated you will randomly see a lyric from <cite>Hello, Dolly</cite> in the upper right of your admin screen on every page.
 Author: Matt Mullenweg
 Version: 1.5
-Author URI: http://photomatt.net/
+Author URI: http://ma.tt/
 */
 
-// These are the lyrics to Hello Dolly
-$lyrics = "Hello, Dolly
+function hello_dolly_get_lyric() {
+	/** These are the lyrics to Hello Dolly */
+	$lyrics = "Hello, Dolly
 Well, hello, Dolly
 It's so nice to have you back where you belong
 You're lookin' swell, Dolly
@@ -38,14 +44,16 @@ Dolly'll never go away
 Dolly'll never go away
 Dolly'll never go away again";
 
-// Here we split it into lines
-$lyrics = explode("\n", $lyrics);
-// And then randomly choose a line
-$chosen = wptexturize( $lyrics[ mt_rand(0, count($lyrics) - 1) ] );
+	// Here we split it into lines
+	$lyrics = explode("\n", $lyrics);
+
+	// And then randomly choose a line
+	return wptexturize( $lyrics[ mt_rand(0, count($lyrics) - 1) ] );
+}
 
 // This just echoes the chosen line, we'll position it later
 function hello_dolly() {
-	global $chosen;
+	$chosen = hello_dolly_get_lyric();
 	echo "<p id='dolly'>$chosen</p>";
 }
 
@@ -58,11 +66,11 @@ function dolly_css() {
 	<style type='text/css'>
 	#dolly {
 		position: absolute;
-		top: 2.3em;
-margin: 0; padding: 0;
-		right: 1em;
-		font-size: 16px;
-		color: #f1f1f1;
+		top: 4.5em;
+		margin: 0;
+		padding: 0;
+		right: 215px;
+		font-size: 11px;
 	}
 	</style>
 	";
