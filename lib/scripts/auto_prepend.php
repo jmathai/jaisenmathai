@@ -12,7 +12,13 @@
     return $memcache;
   }
 
-  define('CACHE_JS', '/js/compress-aaa.js|prototype.lite.js|javascript.js|blog-ptg.js|FancyZoom.js|FancyZoomHTML.js|shCore.js|shBrushCss.js|shBrushJscript.js|shBrushPhp.js|shBrushBash.js');
+  function validCacheInclude($parent, $child, $ext)
+  {
+    $extLen = -1 * (int)strlen($ext);
+    return file_exists($child) && dirname(realpath($parent)) == dirname(realpath($child)) && substr($child, $extLen) == $ext;
+  }
+
+  define('CACHE_JS', '/js/compress-aab.js|prototype.lite.js|javascript.js|blog-ptg.js|FancyZoom.js|FancyZoomHTML.js|shCore.js|shBrushCss.js|shBrushJscript.js|shBrushPhp.js|shBrushBash.js');
   function getJs()
   {
     $url = CACHE_JS;
@@ -25,7 +31,7 @@
     return $retval;
   }
 
-  define('CACHE_CSS', '/css/compress-aaa.css|styles.css|resume.css|style.css|SyntaxHighlighter.css');
+  define('CACHE_CSS', '/css/compress-aab.css|styles.css|resume.css|style.css|SyntaxHighlighter.css');
   function getCss()
   {
     $url = CACHE_CSS;
