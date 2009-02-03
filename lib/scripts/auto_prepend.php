@@ -15,7 +15,8 @@
   function validCacheInclude($parent, $child, $ext)
   {
     $extLen = -1 * (int)strlen($ext);
-    return file_exists($child) && dirname(realpath($parent)) == dirname(realpath($child)) && substr($child, $extLen) == $ext;
+    //return file_exists($child) && dirname(realpath($parent)) == dirname(realpath($child)) && substr($child, $extLen) == $ext;
+    return substr($child, $extLen) == $ext;
   }
 
   define('CACHE_JS', '/js/compress-aab.js|prototype.lite.js|javascript.js|blog-ptg.js|FancyZoom.js|FancyZoomHTML.js|shCore.js|shBrushCss.js|shBrushJscript.js|shBrushPhp.js|shBrushBash.js');
