@@ -524,11 +524,11 @@ p.date{
   float:left;
 }
 
+/* custom */
 #content h2.title{
   padding:0;
   margin:0 0 7px 0;
 }
-
 #blog-ads{
   margin:0px;
   padding:0px;
@@ -549,13 +549,11 @@ p.date{
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-/* custom */
 .wp-caption img {
   margin: 0;
   padding: 0;
   border: 0 none;
 }
-
 .entry dd .wp-caption p.wp-caption-text, .wp-caption p.wp-caption-text {
   font-style: normal;
   font-size: 11px;
