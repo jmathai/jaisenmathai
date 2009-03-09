@@ -524,6 +524,7 @@ p.date{
   float:left;
 }
 
+/* custom */
 #content h2.title{
   padding:0;
   margin:0 0 7px 0;
@@ -538,3 +539,47 @@ p.date{
   border-top:1px solid #ddd;
   border-bottom:1px solid #ddd;
 }
+.wp-caption img {
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+}
+
+.entry dd .wp-caption p.wp-caption-text, .wp-caption p.wp-caption-text {
+  font-style: normal;
+  font-size: 11px;
+  line-height: 17px;
+  padding: 0 4px 5px 0;
+  margin: 0;
+}
+img.centered, img.aligncenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img.alignright {
+  padding: 4px;
+  margin: 0 0 2px 7px;
+  display: inline;
+}
+
+img.alignleft {
+  padding: 4px;
+  margin: 0 7px 2px 0;
+  display: inline;
+}
+
+.alignright {
+  float: right;
+}
+
+.alignleft {
+  float: left;
+}
+.aligncenter, div.aligncenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
