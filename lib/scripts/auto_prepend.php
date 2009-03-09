@@ -19,7 +19,7 @@
     return substr($child, $extLen) == $ext;
   }
 
-  define('CACHE_JS', '/js/compress-aab.js|prototype.lite.js|javascript.js|blog-ptg.js|FancyZoom.js|FancyZoomHTML.js|shCore.js|shBrushCss.js|shBrushJscript.js|shBrushPhp.js|shBrushBash.js');
+  define('CACHE_JS', '/js/compress-aac.js|prototype.lite.js|javascript.js|blog-ptg.js|FancyZoom.js|FancyZoomHTML.js|shCore.js|shBrushCss.js|shBrushJscript.js|shBrushPhp.js|shBrushBash.js');
   function getJs()
   {
     $url = CACHE_JS;
