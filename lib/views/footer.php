@@ -60,17 +60,17 @@
   </div>
   
   <?php echo getJs(); ?>
-  <script type="text/javascript" id="__PTG" src="http://photos.jaisenmathai.com/js/api.js"></script>
-  <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
-  <script type="text/javascript">
-    _uacct = "UA-88708-4";
-    urchinTracker();
-  </script>  
   <?php if(strstr($_SERVER['REQUEST_URI'], '/blog') !== false){ ?>
     <script>
           dp.SyntaxHighlighter.ClipboardSwf = '/swf/clipboard.swf';
           dp.SyntaxHighlighter.HighlightAll('code');
     </script>
   <?php } ?>
+  <script type="text/javascript" id="__PTG" src="http://photos.jaisenmathai.com/js/api.js"></script>
+  <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    _uacct = "UA-88708-4";
+    urchinTracker();
+  </script>  
 </body>
 </html>

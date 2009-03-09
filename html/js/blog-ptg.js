@@ -10,7 +10,7 @@ function sideBar()
                                 + ' <div class="module-content">'
                                 + '   <div>'
                                 + '     <form style="display:inline;" onsubmit="searchImages(); return false;">'
-                                + '       <input type="text" id="ptgSearchField" class="formfield" />&nbsp;<input type="button" class="search" onclick="searchImages(); return false;" />'
+                                + '       <input type="text" value="favorites" id="ptgSearchField" class="formfield" />&nbsp;<input type="button" class="search" onclick="searchImages(); return false;" />'
                                 + '     </form>'
                                 + '   </div>'
                                 + '   <div id="photoDiv" class="sidebar-photos"></div>'

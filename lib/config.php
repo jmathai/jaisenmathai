@@ -24,8 +24,8 @@ switch($_['constMode'])
     /*
     * Filesystem paths relevant to the application
     */
-    define('PATH_LIB', '/Users/jmathai/Y/jaisenmathai/trunk/lib');
-    define('PATH_DOC', '/Users/jmathai/Y/jaisenmathai/trunk/html');
+    define('PATH_LIB', '/Users/jmathai/Y/jaisenmathai/lib');
+    define('PATH_DOC', '/Users/jmathai/Y/jaisenmathai/html');
 
     /*
      * Domains
