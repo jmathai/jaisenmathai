@@ -43,4 +43,26 @@
     $retval = '<style type="text/css"> @import url("' . $url . '"); </style>';
     return $retval;
   }
+
+  function twitify($string)
+  {
+    if(!function_exists('_twitify'))
+    {
+      function _twitify($match)
+      {
+        $command = $match[0];
+        switch($command[0])
+        {
+          case '@':
+            return sprintf('<a href="http://twitter.com/%s" target="_blank">%s</a>', urlencode(substr($command, 1)), $command);
+          case '#':
+            return sprintf('<a href="http://search.twitter.com/search?q=%s" target="_blank">%s</a>', urlencode($command), $command);
+          default:
+            return $command;
+        }
+      }
+    }
+
+    return preg_replace_callback('/@[A-z0-9_]+|#[A-z0-9_]+/', '_twitify', $string);
+  }
 ?>
