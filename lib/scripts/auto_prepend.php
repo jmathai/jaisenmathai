@@ -15,7 +15,6 @@
   function validCacheInclude($parent, $child, $ext)
   {
     $extLen = -1 * (int)strlen($ext);
-    //return file_exists($child) && dirname(realpath($parent)) == dirname(realpath($child)) && substr($child, $extLen) == $ext;
     return substr($child, $extLen) == $ext;
   }
 

@@ -15,11 +15,11 @@ switch($_['constMode'])
     /*
     * Database connection properties
     */
-    define('DB_TYPE', '');
-    define('DB_HOST', '');
-    define('DB_USER', '');
-    define('DB_PASS', '');
-    define('DB_NAME', '');
+    //define('DATABASE_TYPE', '');
+    //define('DATABASE_HOST', '');
+    //define('DATABASE_USER', '');
+    //define('DATABASE_PASS', '');
+    //define('DATABASE_NAME', '');
     
     /*
     * Filesystem paths relevant to the application
@@ -37,11 +37,11 @@ switch($_['constMode'])
     /*
     * Database connection properties
     */
-    define('DB_TYPE', '');
-    define('DB_HOST', '');
-    define('DB_USER', '');
-    define('DB_PASS', '');
-    define('DB_NAME', '');
+    //define('DATABASE_TYPE', '');
+    //define('DATABASE_HOST', '');
+    //define('DATABASE_USER', '');
+    //define('DATABASE_PASS', '');
+    //define('DATABASE_NAME', '');
     
     /*
     * Filesystem paths relevant to the application
