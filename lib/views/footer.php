@@ -20,7 +20,7 @@
         </li>
         <li>
           <h2>Twitter</h2>
-          <?php @include $_SERVER['DOCUMENT_ROOT'] . '/../lib/views/twitter.txt'; ?>
+          <?php echo twitify(file_get_contents(PATH_LIB . '/views/twitter.txt')); ?>
         </li>
         <li>
           <h2>Extras</h2>
