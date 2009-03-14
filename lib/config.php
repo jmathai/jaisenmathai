@@ -26,6 +26,7 @@ switch($_['constMode'])
     */
     define('PATH_LIB', '/Users/jmathai/Y/jaisenmathai/lib');
     define('PATH_DOC', '/Users/jmathai/Y/jaisenmathai/html');
+    define('PATH_SECRET', '/Users/jmathai/Y/jaisenmathai/secret');
 
     /*
      * Domains
@@ -48,6 +49,7 @@ switch($_['constMode'])
     */
     define('PATH_LIB', '/www/jaisenmathai.com/www/lib');
     define('PATH_DOC', '/www/jaisenmathai.com/www/html');
+    define('PATH_SECRET', '/www/jaisenmathai.com/www/secret');
 
     /*
      * Domains
