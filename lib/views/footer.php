@@ -19,8 +19,20 @@
           <div id="custom-sidebar"></div>
         </li>
         <li>
+          <h2>Playlist</h2>
+          <?php $songs = json_decode(file_get_contents(PATH_LIB . '/views/songza.json'), 1); ?>
+          <ul>
+            <?php foreach($songs as $song){ ?>
+              <li><a href="<?php echo $song['link']; ?>" target="_blank"><?php echo $song['title']; ?></a></li>
+            <?php } ?>
+          </ul>
+        </li>
+        <li>
           <h2>Twitter</h2>
           <?php echo twitify(file_get_contents(PATH_LIB . '/views/twitter.txt')); ?>
+          <ul>
+            <li><a href="http://twitter.com/jmathai" target="_blank">Follow me on Twitter</a></li>
+          </ul>
         </li>
         <li>
           <h2>Extras</h2>
