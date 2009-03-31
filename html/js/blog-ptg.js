@@ -31,7 +31,7 @@ function searchImagesRsp(data)
   while(image = ptg.result.next(data))
   {
     if(image.name == null){ image.name = 'This photo has no title.'; }
-    html += '<div><a href="'+ptg.html.customImageLockSrc(image.thumbnailPath, image.key, image.width, image.height, 640, 480)+'" title="'+image.name+' - &lt;a href=&quot;http://www.photagious.com/handler/photo/'+image.key+'/&quot; target=&quot;_blank&quot;&gt;View On Photagious&lt;/a&gt;">' + ptg.html.customImageTag(image.thumbnailPath, image.key, 115, 50, {"width":"115","height":"50","hspace":"1","vspace":"3","border":"0","style":"border:solid 1px #404040;"}) + '</a></div>';
+    html += '<div><a href="'+ptg.html.customImageLockSrc(image.thumbnailPath, image.key, image.width, image.height, 640, 480)+'" title="'+image.name+' - &lt;a href=&quot;http://photos.jaisenmathai.com/handler/photo/'+image.key+'/&quot; target=&quot;_blank&quot;&gt;View On Photagious&lt;/a&gt;">' + ptg.html.customImageTag(image.thumbnailPath, image.key, 115, 50, {"width":"115","height":"50","hspace":"1","vspace":"3","border":"0","style":"border:solid 1px #404040;"}) + '</a></div>';
   }
   
   html += '<div style="width:115px; margin-left:2px;">';
