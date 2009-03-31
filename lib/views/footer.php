@@ -2,6 +2,7 @@
     <div id="sidebar">
       <ul>
         <li class="rss"><div><a href="http://feeds.feedburner.com/jaisenmathai" rel="alternate" type="application/rss+xml">Subscribe in a reader</a></div></li>
+        <li class="twitter"><div><a href="http://twitter.com/jmathai" target="_blank">Follow me on Twitter</a></div></li>
         <li>
           <h2>Work</h2>
           I'm currently working as an engineer at <a href="http://www.yahoo.com/" target="_blank"><img src="/images/yahoo_logo.gif" border="0" alt="Yahoo!" /></a> and living in Sunnyvale, CA.  
@@ -30,9 +31,6 @@
         <li>
           <h2>Twitter</h2>
           <?php echo twitify(file_get_contents(PATH_LIB . '/views/twitter.txt')); ?>
-          <ul>
-            <li><a href="http://twitter.com/jmathai" target="_blank">Follow me on Twitter</a></li>
-          </ul>
         </li>
         <li>
           <h2>Extras</h2>
