@@ -1,4 +1,0 @@
-#!/bin/sh
-chown apache:webdevs /www/jaisenmathai.com/www/html/js
-chown apache:webdevs /www/jaisenmathai.com/www/html/css
-/etc/init.d/apache2 restart
