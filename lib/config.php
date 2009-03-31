@@ -7,7 +7,7 @@
 */
 $_ = array();
 
-$_['constMode'] = !isset($argv[1]) ? $_SERVER['HTTP_HOST'] : $argv[1];
+$_['constMode'] = empty($argv[1]) ? $_SERVER['HTTP_HOST'] : $argv[1];
 
 switch($_['constMode'])
 {
@@ -34,6 +34,8 @@ switch($_['constMode'])
     define('HOST_SCRIPT', $_['constMode']);
     define('HOST_MEDIA', $_['constMode']);
     break;
+  case 'scripts.jaisenmathai.com':
+  case 'scripts.jaisenmathai.com':
   case 'www.jaisenmathai.com':
     /*
     * Database connection properties
