@@ -199,12 +199,12 @@
   </job>
   
   <skills>
-    <skill name="PHP">Configuration, security, object-oriented programming, creating web services, custom frameworks, major version migrations</skill>
+    <skill name="PHP">Configuration, security, object-oriented programming, creating web services, custom frameworks</skill>
     <skill name="MySQL">Configuration, query optimization, full-text search indexing, de-normalization</skill>
     <skill name="JavaScript">Animation effects, rich internet applications, custom form validation</skill>
     <skill name="AJAX">Mashups using Facebook Platform, Amazon AWS, Yahoo Search, Google Maps, Flickr and Twitter</skill>
     <skill name="JSON">Web services, cross domain scripting, data exchange between PHP, MySQL, Flash and JavaScript</skill>
-    <skill name="Additional">Linux, Actionscript, ColdFusion, MS SQL Server</skill>
+    <skill name="Additional">OAuth, asynchronous HTTP APIs, PHPUnit with mock objects</skill>
   </skills>
   
   <publications>
