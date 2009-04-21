@@ -16,8 +16,8 @@
         <table border="0" cellpadding="0" cellspacing="0">
           <xsl:for-each select="resume/skills/skill">
             <tr>
-              <td valign="top"><strong><xsl:value-of select="@name" />:</strong></td>
-              <td width="4"></td>
+              <td valign="top" align="right"><strong><xsl:value-of select="@name" />:</strong></td>
+              <td width="6"></td>
               <td><xsl:value-of select="." /></td>
             </tr>
             <tr height="10">
