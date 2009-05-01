@@ -14,7 +14,9 @@ $twitterObj->setToken($token->oauth_token, $token->oauth_token_secret);
 setcookie('oauth_token', $token->oauth_token);
 setcookie('oauth_token_secret', $token->oauth_token_secret);
 
+include 'header.php';
 $twitterInfo= $twitterObj->get_accountVerify_credentials();
 echo "<h1>Your twitter username is {$twitterInfo->screen_name} and your profile picture is <img src=\"{$twitterInfo->profile_image_url}\"></h1>
 <p><a href=\"random.php\">Go to another page and load your friends list from your cookie</p>";
+include 'footer.php';
 ?>
