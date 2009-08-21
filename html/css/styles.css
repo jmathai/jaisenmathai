@@ -26,6 +26,12 @@ a:hover
   white-space:nowrap;
 }
 
+div.border{
+  height:1px;
+  margin:8px 0;
+  border-bottom:dotted 1px #aaa;
+}
+
 #header-banner
 {
   width:700px;
@@ -185,7 +191,7 @@ hr
 
 .home-images div div
 {
-  background:url(/images/sprite-home.jpg) no-repeat top left;
+  background:url(/images/sprite-home-aaa.jpg) no-repeat top left;
   width:200px;
   height:112px;
   float:none;
@@ -205,21 +211,35 @@ hr
   background-position:-400px 0px;
 }
 
-.home-images div div.bl
+.home-images div div.ml
 {
   background-position:0px -112px;
 }
 
-.home-images div div.bm
+.home-images div div.mm
 {
   background-position:-200px -112px;
 }
 
-.home-images div div.br
+.home-images div div.mr
 {
   background-position:-400px -112px;
 }
 
+.home-images div div.bl
+{
+  background-position:0px -224px;
+}
+
+.home-images div div.bm
+{
+  background-position:-200px -224px;
+}
+
+.home-images div div.br
+{
+  background-position:-400px -224px;
+}
 .home-images div p
 {
   margin:4px 0px 0px;

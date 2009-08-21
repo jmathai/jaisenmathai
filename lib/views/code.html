@@ -1,17 +1,71 @@
 <p>
-<h3>EpiCode / The smallest PHP framework you shouldn't code without</h3>
+  <h3>Twitter-async</h3>
+  Twitter-async is my latest shared FOSS project that I have been working on.
+  It's a <a href="http://github.com/jmathai/twitter-async/tree" target="_blank">PHP Twitter OAuth</a> wrapper which let's you make parallel web service calls.
+  I had originally created it for <a href="http://publicitweet.com" target="_blank">PubliciTweet</a> in order to understand the OAuth specification.
+  Open sourcing it helped other developers looking for such a library and also myself as they began submitting patches.
+</p>
+
+<p>
+  You can view the <a href="http://wiki.github.com/jmathai/twitter-async" target="_blank">Twitter-async</a> documentation on Github.
+</p>
+
+<p>
+  <h3>Sample Code</h3>
   
-  <p>
-    The goal of EpiCode is to be the smallest and fastest PHP framework you'll ever use.
-    It's an MVC framework but gives you the freedom to use it however you feel.
-  </p>
+  <pre name="code" class="php">$twitterObj = new EpiTwitter($consumer_key, $consumer_secret, $oauth_token, $oauth_secret);  
+  
+$twitterInfo= $twitterObj->get_statusesFriends();  
+try{  
+  foreach($twitterInfo as $friend) {  
+    echo $friend->screen_name;  
+  }  
+}catch(EpiOAuthException $e){  
+  echo $e->getMessage();  
+}</pre>
+</p>
 
-  <img src="/images/episuite.png" width="650" height="212" />
+<div class="border"></div>
 
-  <p>
-    You can download the EpiCode framework using the following links.
-    <ul>
-      <li class="strike"><a href="http://github.com/jmathai/epicode/tree/master" target="_blank">Developer release - revision 1.1 (5/28/2008)</a></li>
-    </ul>
-  </p>
+<p>
+  <h3>Repository summary</h3>
+  <table>
+    <tr>
+      <td align="right"><em>Watchers:</em></td>
+      <td><a href="http://github.com/jmathai/twitter-async/watchers" target="_blank"><?php echo $github['info']['watchers']; ?></a></td>
+    </tr>
+    <tr>
+      <td align="right"><em>Forks:</em></td>
+      <td><a href="http://github.com/jmathai/twitter-async/network" target="_blank"><?php echo $github['info']['forks']; ?></a></td>
+    </tr>
+    <tr>
+      <td align="right"><em>Issues:</em></td>
+      <td><a href="http://github.com/jmathai/twitter-async/issues" target="_blank"><?php echo $github['info']['issues']; ?></a></td>
+    </tr>
+  </table>
+</p>
+
+<div class="border"></div>
+
+<p>
+  <h3>Commit summary (5 most recent)</h3>
+  <table>
+    <?php foreach($github['commits'] as $commit) { ?>
+      <tr>
+        <td align="right"><em>Author:</em></td>
+        <td><?php echo htmlspecialchars($commit['name']); ?> &lt;<?php echo htmlspecialchars($commit['email']); ?>&gt;</td>
+      </tr>
+      <tr>
+        <td align="right"><em>Date:</em></td>
+        <td><?php echo date('F j, Y \a\t g:i a', $commit['time']); ?></td>
+      </tr>
+      <tr>
+        <td align="right" valign="top"><em>Message:</em></td>
+        <td><?php echo htmlspecialchars($commit['message']); ?></td>
+      </tr>
+      <tr>
+        <td colspan="2">&nbsp;</td>
+      </tr>
+    <?php } ?>
+  </table>
 </p>
