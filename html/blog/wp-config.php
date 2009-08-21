@@ -2,7 +2,7 @@
 // ** MySQL settings ** //
 define('DB_NAME', 'jaisenmathai_wp');    // The name of the database
 define('DB_USER', 'jmathai');     // Your MySQL username
-define('DB_PASSWORD', 'ma3str0'); // ...and password
+define('DB_PASSWORD', trim(file_get_contents('../../secret/mysql'))); // ...and password
 define('DB_HOST', 'localhost');
 define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', '');

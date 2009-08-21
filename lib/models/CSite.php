@@ -12,7 +12,8 @@
 
     public static function code()
     {
-      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/code.html', 'title' => 'Code', 'subtitle' => 'PHP Developer / Code'));
+      $github = json_decode(trim(file_get_contents(EPICODE_VIEWS . '/github.json')), true);
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/code.html', 'title' => 'Code', 'subtitle' => 'PHP Developer / Code', 'github' => $github));
     }
 
     public static function codeEpisuite()

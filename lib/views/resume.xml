@@ -204,7 +204,7 @@
     <skill name="PHP">Configuration, security, object-oriented programming, creating web services, custom frameworks</skill>
     <skill name="MySQL">Configuration, query optimization, full-text search indexing, de-normalization</skill>
     <skill name="JavaScript">Animation effects, rich internet applications, custom form validation</skill>
-    <skill name="Additional">OAuth, asynchronous HTTP APIs, PHPUnit with mock objects</skill>
+    <skill name="Additional">OAuth, asynchronous HTTP APIs, unit tests with mock objects</skill>
   </skills>
   
   <publications>
