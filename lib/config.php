@@ -8,7 +8,6 @@
 $_ = array();
 
 $_['constMode'] = empty($argv[1]) ? $_SERVER['HTTP_HOST'] : $argv[1];
-
 switch($_['constMode'])
 {
   case 'mac.jaisenmathai.com':

@@ -13,17 +13,17 @@
     public static function code()
     {
       $github = json_decode(trim(file_get_contents(EPICODE_VIEWS . '/github.json')), true);
-      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/code.html', 'title' => 'Code', 'subtitle' => 'PHP Developer / Code', 'github' => $github));
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/code.html', 'title' => 'Code', 'subtitle' => 'Web Developer / Code', 'github' => $github));
     }
 
     public static function codeEpisuite()
     {
-      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/epi-suite.html', 'title' => 'Code / EpiSuite', 'subtitle' => 'PHP Developer / Minimal Web Application Framework'));
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/epi-suite.html', 'title' => 'Code / EpiSuite', 'subtitle' => 'Web Developer / Minimal Web Application Framework'));
     }
     
     public static function contact()
     {
-      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/contact.html', 'title' => 'Contact', 'subtitle' => 'PHP Developer / Contact'));
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/contact.html', 'title' => 'Contact', 'subtitle' => 'Web Developer / Contact'));
     }
 
     public static function error301()
@@ -44,17 +44,17 @@
     public static function error404()
     {
       header('HTTP/1.0 404 Not Found');
-      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/404.html', 'title' => '404 :: File Not Found', 'subtitle' => 'PHP Developer / Not Found'));
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/404.html', 'title' => '404 :: File Not Found', 'subtitle' => 'Web Developer / Not Found'));
     }
     
     public static function home()
     {
-      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/home.html', 'title' => 'Home', 'subtitle' => 'PHP Developer / Home'));
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/home.html', 'title' => 'Home', 'subtitle' => 'Web Developer / Home'));
     }
 
     public static function playgroundNotify()
     {
-      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/notify.html', 'title' => 'Playground', 'subtitle' => 'PHP Developer / Playground / Notify'));
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/notify.html', 'title' => 'Playground', 'subtitle' => 'Web Developer / Playground / Notify'));
     }
     
     public static function resume()
@@ -67,7 +67,7 @@
           <a href="/resume/print" target="_blank" title="View Printable Version">
             <img src="/images/print_24x24.png" width="24" height="24" border="0" hspace="4" align="absmiddle" />
           </a>', 
-        'subtitle' => 'PHP Developer / Resume'));
+        'subtitle' => 'Web Developer / Resume'));
     }
     
     public static function resumeAscii()
@@ -80,7 +80,7 @@
       Epicode::display('template.php', array(
         'body' => EPICODE_VIEWS . '/resume-detail.html', 
         'title' => 'Resume (Detail)', 
-        'subtitle' => 'PHP Developer / Resume'));
+        'subtitle' => 'Web Developer / Resume'));
     }
     
     public static function resumeDetailPrint()
@@ -120,7 +120,7 @@
     
     public static function portfolio()
     {
-      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/portfolio.html', 'title' => 'Portfolio', 'subtitle' => 'PHP Developer / Portfolio'));
+      Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/portfolio.html', 'title' => 'Portfolio', 'subtitle' => 'Web Developer / Portfolio'));
     }
   }
 ?>

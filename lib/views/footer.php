@@ -62,7 +62,7 @@
     About this site:
     <br/>
     This is my (Jaisen Mathai) personal site for potential employers who want to see my resume or portfolio.  
-    My ideal job would be to work as a <strong>PHP developer</strong> on a large scale consumer website.  
+    My ideal job would be to work as a <strong>Web developer</strong> on a large scale consumer website.  
     My experience is in using <strong>PHP</strong>, <strong>MySQL</strong>, <strong>Ajax</strong> and <strong>JSON</strong>.  
     I really enjoy creative brainstorming...taking a problem apart and narrowing 100 solutions down to the best one.
     <br/><br/>
