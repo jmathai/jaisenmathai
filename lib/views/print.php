@@ -5,7 +5,14 @@
   <style type="text/css">
     @import url("/css/resume.css?1");
   </style>
-  <title></title>
+  <title>
+    <?php if(!empty($title)) { ?>
+      <?php echo $title; ?>
+    <?php } else { ?>
+      <?php echo bloginfo('name'); ?>
+    <?php } ?>
+    :: Jaisen Mathai  
+  </title>
 </head>
 
 <body>
