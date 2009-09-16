@@ -95,7 +95,7 @@
     
     public static function resumePrint()
     {
-      Epicode::display('print.php', array('body' => EPICODE_VIEWS . '/resume.html'));
+      Epicode::display('print.php', array('body' => EPICODE_VIEWS . '/resume-print.html', 'title' => 'Resume'));
     }
 
     public static function sampleClosure()

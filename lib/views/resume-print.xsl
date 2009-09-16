@@ -6,9 +6,6 @@
 
   <xsl:template match="/">
     <div id="resume"> 
-      <div id="resume-print">
-        <a href="/resume/print.html">Print this resume.</a>
-      </div>
       <div id="resume-objective">
         <h2>Objective</h2>
         <xsl:value-of select="/resume/objective" />
@@ -61,8 +58,7 @@
           <xsl:for-each select="/resume/publications/publication">
             <li>
               <ul>
-                <li><strong><xsl:value-of select="name" /> (<xsl:value-of select="date" />)</strong></li>
-                <li><xsl:value-of select="description" /></li>
+                <li><strong><xsl:value-of select="name" /> (<xsl:value-of select="date" />)</strong> - <xsl:value-of select="description" /></li>
               </ul>          
             </li>
           </xsl:for-each>

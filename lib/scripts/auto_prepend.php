@@ -31,7 +31,7 @@
     return $retval;
   }
 
-  define('CACHE_CSS', '/css/compress-aad.css|styles.css|resume.css|style.css|SyntaxHighlighter.css');
+  define('CACHE_CSS', '/css/compress-aae.css|styles.css|resume.css|style.css|SyntaxHighlighter.css');
   function getCss()
   {
     $url = CACHE_CSS;

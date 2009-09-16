@@ -11,6 +11,11 @@
   padding-bottom:10px;
 }
 
+#resume-print a {
+  background:url(/images/sprite-aab.png) no-repeat scroll -136px -135px;
+  padding:4px 0 6px 26px;
+}
+
 #resume-header
 {
   margin-top:-50px;

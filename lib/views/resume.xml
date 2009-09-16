@@ -2,8 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="/resume.xsl"?>
 <resume>
   <objective>
-    Utilize my design and programming experience to work on a large scale
-    website in a team environment
+    Utilize over 10 years of programming experience to work on a large scale website in a team environment
   </objective>
   <contact>
     <name>Jaisen Mathai</name>
@@ -16,8 +15,7 @@
       <zip>94086</zip>
     </address>
     <phone>
-
-      <mobile>(513) 317-4683</mobile>
+      <mobile>(513) 488-0987</mobile>
       <home></home>
       <work></work>
       <pager></pager>
@@ -35,13 +33,10 @@
         Developing software which supports over 25 languages through internationalization and localization
       </task>
       <task>
-        Designated as the Local Paranoid responsible for all aspects of security including Cross Site Scripting (XSS) and Cross Site Request Forgery (XSRF).
+        Designated as the Local Paranoid responsible for all aspects of security including Cross Site Scripting (XSS) and Cross Site Request Forgery (XSRF)
       </task>
       <task>
-        Unifying user data from various internal and external sources using web service APIs.
-      </task>
-      <task>
-        Building social networking into the user experience across multiple properties.
+        Unifying user data from various internal and external sources using web service APIs
       </task>
     </accomplishments>
     <details>
@@ -104,17 +99,12 @@
         extensive documentation
       </task>
       <task>
-
         Designed and implemented a dynamic image rendering web
         service which is consumed by PHP, JavaScript and ActionScript
       </task>
       <task>
         Developed Javascript API used by clients to integrate the
         Photagious application into their own websites
-      </task>
-      <task>
-        Increased developer productivity by over 300% by using efficient 
-        programming methodologies and local development environments
       </task>
     </accomplishments>
     <details>
@@ -144,60 +134,7 @@
       </detail>
     </details>
   </job>
-  
-  <job>
-    <company>ClearChannel</company>
-    <title>Senior PHP Developer</title>
-    <description department="">Senior Developer</description>
-    <date-start>Feb. 2002</date-start>
 
-    <date-stop>Apr. 2005</date-stop>
-    <accomplishments>
-      <task>
-        Developed applications on a high traffic platform which
-        hosts over 1,200 websites
-      </task>
-      <task>
-        Designed a single sign-on service which supports cross
-        domain authentication for all sites
-      </task>
-      <task>
-
-        Augmented a third party issue tracking system to support
-        the existing work flow
-      </task>
-    </accomplishments>
-    <details>
-      <detail description="The single sign on service authenticated users across 1200 applications">
-        <skills>PHP</skills>
-        <screenshot><img src="/images/screenshots/gls_sign_in_s.png" width="200" height="117" border="0" /></screenshot>
-      </detail>
-    </details>
-  </job>
-
-  <job>
-    <company>GlobalCloud, Ltd.</company>
-    <title>Web Developer</title>
-    <description department=""></description>
-    <date-start>Sept. 2001</date-start>
-
-    <date-stop>Nov. 2002</date-stop>
-    <accomplishments>
-      <task>
-        Worked with developers and designers to build an equity
-        trading platform
-      </task>
-      <task>
-        Implemented full featured content management systems into
-        websites
-      </task>
-      <task>
-        Introduced the usage of ColdFusion custom tags which
-        increased code quality and reusability  
-      </task>
-    </accomplishments>
-  </job>
-  
   <skills>
     <skill name="AJAX">Mashups using Facebook Platform, Amazon AWS, Yahoo Search, Google Maps, Flickr and Twitter</skill>
     <skill name="JSON">Web services, cross domain scripting, data exchange between PHP, MySQL, Flash and JavaScript</skill>
