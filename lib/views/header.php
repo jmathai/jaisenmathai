@@ -28,10 +28,10 @@
     <ul>
       <li><a href="/" title="Go Home" rel="me" id="sprite-nav" <?php if($_SERVER['REQUEST_URI'] == '/'){ ?>class="on"<?php } ?>>Home</a></li>
       <li><a href="/resume.html" title="View My Resume" id="sprite-nav" <?php if(strstr($_SERVER['REQUEST_URI'], '/resume')){ ?>class="on"<?php } ?>>Resume</a></li>
-      <li><a href="/portfolio.html" title="View My Portfolio" id="sprite-nav" <?php if($_SERVER['REQUEST_URI'] == '/portfolio'){ ?>class="on"<?php } ?>>Portfolio</a></li>
-      <li><a href="/code.html" title="View My Work" id="sprite-nav" <?php if($_SERVER['REQUEST_URI'] == '/code'){ ?>class="on"<?php } ?>>Code</a></li>
+      <li><a href="/portfolio.html" title="View My Portfolio" id="sprite-nav" <?php if(strstr($_SERVER['REQUEST_URI'], '/portfolio')){ ?>class="on"<?php } ?>>Portfolio</a></li>
+      <li><a href="/code.html" title="View My Work" id="sprite-nav" <?php if(strstr($_SERVER['REQUEST_URI'], '/code')){ ?>class="on"<?php } ?>>Code</a></li>
       <li><a href="/blog/" title="View My Blog" id="sprite-nav" <?php if(strstr($_SERVER['REQUEST_URI'], '/blog')){ ?>class="on"<?php } ?>>Blog</a></li>
-      <li><a href="/contact.html" title="View My Contact Information" id="sprite-nav" <?php if($_SERVER['REQUEST_URI'] == '/contact'){ ?>class="on"<?php } ?>>Contact</a></li>
+      <li><a href="/contact.html" title="View My Contact Information" id="sprite-nav" <?php if(strstr($_SERVER['REQUEST_URI'], '/contact')){ ?>class="on"<?php } ?>>Contact</a></li>
     </ul>
   </div>
   <div id="content-top">
