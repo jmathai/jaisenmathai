@@ -178,6 +178,9 @@ define('EP_ALL', 8191);
  * The endpoints are added to the end of the request. So a request matching
  * "/2008/10/14/my_post/myep/", the endpoint will be "/myep/".
  *
+ * Be sure to flush the rewrite rules (wp_rewrite->flush()) when your plugin gets
+ * activated (register_activation_hook()) and deactivated (register_deactivation_hook())
+ *
  * @since 2.1.0
  * @see WP_Rewrite::add_endpoint() Parameters and more description.
  * @uses $wp_rewrite
@@ -296,7 +299,7 @@ function url_to_postid($url) {
 			$query = preg_replace("!^.+\?!", '', $query);
 
 			// Substitute the substring matches into the query.
-			eval("\$query = \"" . addslashes($query) . "\";");
+			$query = addslashes(WP_MatchesMapRegex::apply($query, $matches));
 			// Filter out non-public query vars
 			global $wp;
 			parse_str($query, $query_vars);
@@ -1057,6 +1060,8 @@ class WP_Rewrite {
 	 * @return string|bool False if not found. Permalink structure string.
 	 */
 	function get_extra_permastruct($name) {
+		if ( empty($this->permalink_structure) )
+			return false;
 		if ( isset($this->extra_permastructs[$name]) )
 			return $this->extra_permastructs[$name];
 		return false;
@@ -1344,6 +1349,12 @@ class WP_Rewrite {
 			$commentmatch = $match . $commentregex;
 			$commentquery = $index . '?' . $query . '&cpage=' . $this->preg_index($num_toks + 1);
 
+			if ( get_option('page_on_front') ) {
+				//create query for Root /comment-page-xx
+				$rootcommentmatch = $match . $commentregex;
+				$rootcommentquery = $index . '?' . $query . '&page_id=' . get_option('page_on_front') . '&cpage=' . $this->preg_index($num_toks + 1);
+			}
+
 			//create query for /feed/(feed|atom|rss|rss2|rdf)
 			$feedmatch = $match . $feedregex;
 			$feedquery = $feedindex . '?' . $query . '&feed=' . $this->preg_index($num_toks + 1);
@@ -1368,6 +1379,8 @@ class WP_Rewrite {
 			//only on pages with comments add ../comment-page-xx/
 			if ( EP_PAGES & $ep_mask || EP_PERMALINK & $ep_mask || EP_NONE & $ep_mask )
 				$rewrite = array_merge($rewrite, array($commentmatch => $commentquery));
+			else if ( EP_ROOT & $ep_mask && get_option('page_on_front') )
+				$rewrite = array_merge($rewrite, array($rootcommentmatch => $rootcommentquery));
 
 			//do endpoints
 			if ($endpoints) {
@@ -1431,10 +1444,10 @@ class WP_Rewrite {
 					$subcommentquery = $subquery . '&cpage=' . $this->preg_index(2);
 
 					//do endpoints for attachments
-					if ( !empty($endpoint) ) { foreach ( (array) $ep_query_append as $regex => $ep ) {
+					if ( !empty($endpoints) ) { foreach ( (array) $ep_query_append as $regex => $ep ) {
 						if ($ep[0] & EP_ATTACHMENT) {
-							$rewrite[$sub1 . $regex] = $subquery . '?' . $ep[1] . $this->preg_index(2);
-							$rewrite[$sub2 . $regex] = $subquery . '?' . $ep[1] . $this->preg_index(2);
+							$rewrite[$sub1 . $regex] = $subquery . $ep[1] . $this->preg_index(2);
+							$rewrite[$sub2 . $regex] = $subquery . $ep[1] . $this->preg_index(2);
 						}
 					} }
 
@@ -1694,6 +1707,54 @@ class WP_Rewrite {
 	}
 
 	/**
+	 * Retrieve IIS7 URL Rewrite formatted rewrite rules to write to web.config file.
+	 *
+	 * Does not actually write to the web.config file, but creates the rules for
+	 * the process that will.
+	 *
+	 * @since 2.8.0
+	 * @access public
+	 *
+	 * @return string
+	 */
+	function iis7_url_rewrite_rules($add_parent_tags = false, $indent = "  ", $end_of_line = "\n") {
+
+		if ( ! $this->using_permalinks()) {
+			return '';
+		}
+		
+		$rules = '';
+		$extra_indent = '';
+		if ( $add_parent_tags ) {
+			$rules .= "<configuration>".$end_of_line;
+			$rules .= $indent."<system.webServer>".$end_of_line;
+			$rules .= $indent.$indent."<rewrite>".$end_of_line;
+			$rules .= $indent.$indent.$indent."<rules>".$end_of_line;
+			$extra_indent = $indent.$indent.$indent.$indent;
+		}
+		
+		$rules .= $extra_indent."<rule name=\"wordpress\" patternSyntax=\"Wildcard\">".$end_of_line;
+		$rules .= $extra_indent.$indent."<match url=\"*\" />".$end_of_line;
+		$rules .= $extra_indent.$indent.$indent."<conditions>".$end_of_line;
+		$rules .= $extra_indent.$indent.$indent.$indent."<add input=\"{REQUEST_FILENAME}\" matchType=\"IsFile\" negate=\"true\" />".$end_of_line;
+		$rules .= $extra_indent.$indent.$indent.$indent."<add input=\"{REQUEST_FILENAME}\" matchType=\"IsDirectory\" negate=\"true\" />".$end_of_line;
+		$rules .= $extra_indent.$indent.$indent."</conditions>".$end_of_line;
+		$rules .= $extra_indent.$indent."<action type=\"Rewrite\" url=\"index.php\" />".$end_of_line;
+		$rules .= $extra_indent."</rule>";
+		
+		if ( $add_parent_tags ) {
+			$rules .= $end_of_line.$indent.$indent.$indent."</rules>".$end_of_line;
+			$rules .= $indent.$indent."</rewrite>".$end_of_line;
+			$rules .= $indent."</system.webServer>".$end_of_line;
+			$rules .= "</configuration>";
+		}
+
+		$rules = apply_filters('iis7_url_rewrite_rules', $rules);
+
+		return $rules;
+	}
+
+	/**
 	 * Add a straight rewrite rule.
 	 *
 	 * Any value in the $after parameter that isn't 'bottom' will be placed at
@@ -1781,19 +1842,22 @@ class WP_Rewrite {
 	 *
 	 * @since 2.0.1
 	 * @access public
+	 * @param $hard bool Whether to update .htaccess (hard flush) or just update rewrite_rules option (soft flush). Default is true (hard).
 	 */
-	function flush_rules() {
+	function flush_rules($hard = true) {
 		delete_option('rewrite_rules');
 		$this->wp_rewrite_rules();
-		if ( function_exists('save_mod_rewrite_rules') )
+		if ( $hard && function_exists('save_mod_rewrite_rules') )
 			save_mod_rewrite_rules();
+		if ( $hard && function_exists('iis7_save_url_rewrite_rules') )
+			iis7_save_url_rewrite_rules();
 	}
 
 	/**
 	 * Sets up the object's properties.
 	 *
-	 * The 'use_verbose_page_rules' object property will be turned on, if the
-	 * permalink structure includes the following: '%postname%', '%category%',
+	 * The 'use_verbose_page_rules' object property will be set to true if the
+	 * permalink structure begins with one of the following: '%postname%', '%category%',
 	 * '%tag%', or '%author%'.
 	 *
 	 * @since 1.5.0
@@ -1819,13 +1883,7 @@ class WP_Rewrite {
 		$this->use_trailing_slashes = ( substr($this->permalink_structure, -1, 1) == '/' ) ? true : false;
 
 		// Enable generic rules for pages if permalink structure doesn't begin with a wildcard.
-		$structure = ltrim($this->permalink_structure, '/');
-		if ( $this->using_index_permalinks() )
-			$structure = ltrim($this->permalink_structure, $this->index . '/');
-		if ( 0 === strpos($structure, '%postname%') ||
-			 0 === strpos($structure, '%category%') ||
-			 0 === strpos($structure, '%tag%') ||
-			 0 === strpos($structure, '%author%') )
+		if ( preg_match("/^[^%]*%(?:postname|category|tag|author)%/", $this->permalink_structure) )
 			 $this->use_verbose_page_rules = true;
 		else
 			$this->use_verbose_page_rules = false;
@@ -1838,6 +1896,9 @@ class WP_Rewrite {
 	 * between the current permalink structure and the parameter value. Calls
 	 * {@link WP_Rewrite::init()} after the option is updated.
 	 *
+	 * Fires the 'permalink_structure_changed' action once the init call has
+	 * processed passing the old and new values
+	 *
 	 * @since 1.5.0
 	 * @access public
 	 *
@@ -1847,6 +1908,7 @@ class WP_Rewrite {
 		if ($permalink_structure != $this->permalink_structure) {
 			update_option('permalink_structure', $permalink_structure);
 			$this->init();
+			do_action('permalink_structure_changed', $this->permalink_structure, $permalink_structure);
 		}
 	}
 

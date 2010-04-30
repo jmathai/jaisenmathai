@@ -13,7 +13,7 @@
     foreach($files as $file)
     {
       $fullPath = $baseDir . '/' . $file;
-      if(validCacheInclude(__FILE__, $fullPath, '.css'))
+      if(file_exists($fullPath) && validCacheInclude(__FILE__, $fullPath, '.css'))
       {
         $tmp = new CSSMin(file_get_contents($fullPath));
         $cache .= $tmp->getCss() . "\n";

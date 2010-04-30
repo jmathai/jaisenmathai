@@ -119,23 +119,35 @@ if (!CUSTOM_TAGS) {
 			'target' => array ()),
 		'h1' => array(
 			'align' => array (),
-			'class' => array ()),
-		'h2' => array(
+			'class' => array (),
+			'id'    => array (),
+			'style' => array ()),
+		'h2' => array (
 			'align' => array (),
-			'class' => array ()),
-		'h3' => array(
+			'class' => array (),
+			'id'    => array (),
+			'style' => array ()),
+		'h3' => array (
 			'align' => array (),
-			'class' => array ()),
-		'h4' => array(
+			'class' => array (),
+			'id'    => array (),
+			'style' => array ()),
+		'h4' => array (
 			'align' => array (),
-			'class' => array ()),
-		'h5' => array(
+			'class' => array (),
+			'id'    => array (),
+			'style' => array ()),
+		'h5' => array (
 			'align' => array (),
-			'class' => array ()),
-		'h6' => array(
+			'class' => array (),
+			'id'    => array (),
+			'style' => array ()),
+		'h6' => array (
 			'align' => array (),
-			'class' => array ()),
-		'hr' => array(
+			'class' => array (),
+			'id'    => array (),
+			'style' => array ()),
+		'hr' => array (
 			'align' => array (),
 			'class' => array (),
 			'noshade' => array (),
@@ -394,8 +406,11 @@ function wp_kses_version() {
  * @return string Content with fixed HTML tags
  */
 function wp_kses_split($string, $allowed_html, $allowed_protocols) {
-	return preg_replace('%((<!--.*?(-->|$))|(<[^>]*(>|$)|>))%e',
-	"wp_kses_split2('\\1', \$allowed_html, ".'$allowed_protocols)', $string);
+	global $pass_allowed_html, $pass_allowed_protocols;
+	$pass_allowed_html = $allowed_html;
+	$pass_allowed_protocols = $allowed_protocols;
+	return preg_replace_callback('%((<!--.*?(-->|$))|(<[^>]*(>|$)|>))%',
+		create_function('$match', 'global $pass_allowed_html, $pass_allowed_protocols; return wp_kses_split2($match[1], $pass_allowed_html, $pass_allowed_protocols);'), $string);
 }
 
 /**
@@ -517,6 +532,19 @@ function wp_kses_attr($element, $attr, $allowed_html, $allowed_protocols) {
 					$ok = false;
 					break;
 				}
+
+			if ( $arreach['name'] == 'style' ) {
+				$orig_value = $arreach['value'];
+
+				$value = safecss_filter_attr($orig_value);
+
+				if ( empty($value) )
+					continue;
+
+				$arreach['value'] = $value;
+
+				$arreach['whole'] = str_replace($orig_value, $value, $arreach['whole']);
+			}
 
 			if ($ok)
 				$attr2 .= ' '.$arreach['whole']; # it passed them
@@ -747,7 +775,6 @@ function wp_kses_check_attr_val($value, $vless, $checkname, $checkvalue) {
  */
 function wp_kses_bad_protocol($string, $allowed_protocols) {
 	$string = wp_kses_no_null($string);
-	$string = preg_replace('/\xad+/', '', $string); # deals with Opera "feature"
 	$string2 = $string.'a';
 
 	while ($string != $string2) {
@@ -892,8 +919,6 @@ function wp_kses_bad_protocol_once2($matches) {
 	$string2 = wp_kses_decode_entities($string);
 	$string2 = preg_replace('/\s/', '', $string2);
 	$string2 = wp_kses_no_null($string2);
-	$string2 = preg_replace('/\xad+/', '', $string2);
-	# deals with Opera "feature"
 	$string2 = strtolower($string2);
 
 	$allowed = false;
@@ -999,10 +1024,30 @@ function valid_unicode($i) {
  * @return string Content after decoded entities
  */
 function wp_kses_decode_entities($string) {
-	$string = preg_replace('/&#([0-9]+);/e', 'chr("\\1")', $string);
-	$string = preg_replace('/&#[Xx]([0-9A-Fa-f]+);/e', 'chr(hexdec("\\1"))', $string);
+	$string = preg_replace_callback('/&#([0-9]+);/', '_wp_kses_decode_entities_chr', $string);
+	$string = preg_replace_callback('/&#[Xx]([0-9A-Fa-f]+);/', '_wp_kses_decode_entities_chr_hexdec', $string);
 
 	return $string;
+}
+
+/**
+ * Regex callback for wp_kses_decode_entities()
+ *
+ * @param array $match preg match
+ * @return string
+ */
+function _wp_kses_decode_entities_chr( $match ) {
+	return chr( $match[1] );
+}
+
+/**
+ * Regex callback for wp_kses_decode_entities()
+ *
+ * @param array $match preg match
+ * @return string
+ */
+function _wp_kses_decode_entities_chr_hexdec( $match ) {
+	return chr( hexdec( $match[1] ) );
 }
 
 /**
@@ -1011,12 +1056,26 @@ function wp_kses_decode_entities($string) {
  * @since 1.0.0
  * @uses $allowedtags
  *
- * @param string $data Content to filter
+ * @param string $data Content to filter, expected to be escaped with slashes
  * @return string Filtered content
  */
 function wp_filter_kses($data) {
 	global $allowedtags;
 	return addslashes( wp_kses(stripslashes( $data ), $allowedtags) );
+}
+
+/**
+ * Sanitize content with allowed HTML Kses rules.
+ *
+ * @since 2.9.0
+ * @uses $allowedtags
+ *
+ * @param string $data Content to filter, expected to not be escaped
+ * @return string Filtered content
+ */
+function wp_kses_data($data) {
+	global $allowedtags;
+	return wp_kses( $data , $allowedtags );
 }
 
 /**
@@ -1028,12 +1087,29 @@ function wp_filter_kses($data) {
  * @since 2.0.0
  * @uses $allowedposttags
  *
- * @param string $data Post content to filter
+ * @param string $data Post content to filter, expected to be escaped with slashes
  * @return string Filtered post content with allowed HTML tags and attributes intact.
  */
 function wp_filter_post_kses($data) {
 	global $allowedposttags;
 	return addslashes ( wp_kses(stripslashes( $data ), $allowedposttags) );
+}
+
+/**
+ * Sanitize content for allowed HTML tags for post content.
+ *
+ * Post content refers to the page contents of the 'post' type and not $_POST
+ * data from forms.
+ *
+ * @since 2.9.0
+ * @uses $allowedposttags
+ *
+ * @param string $data Post content to filter
+ * @return string Filtered post content with allowed HTML tags and attributes intact.
+ */
+function wp_kses_post($data) {
+	global $allowedposttags;
+	return wp_kses( $data , $allowedposttags );
 }
 
 /**
@@ -1119,4 +1195,49 @@ function kses_init() {
 
 add_action('init', 'kses_init');
 add_action('set_current_user', 'kses_init');
-?>
+
+function safecss_filter_attr( $css, $deprecated = '' ) {
+	$css = wp_kses_no_null($css);
+	$css = str_replace(array("\n","\r","\t"), '', $css);
+
+	if ( preg_match( '%[\\(&]|/\*%', $css ) ) // remove any inline css containing \ ( & or comments
+		return '';
+
+	$css_array = split( ';', trim( $css ) );
+	$allowed_attr = apply_filters( 'safe_style_css', array( 'text-align', 'margin', 'color', 'float',
+	'border', 'background', 'background-color', 'border-bottom', 'border-bottom-color',
+	'border-bottom-style', 'border-bottom-width', 'border-collapse', 'border-color', 'border-left',
+	'border-left-color', 'border-left-style', 'border-left-width', 'border-right', 'border-right-color',
+	'border-right-style', 'border-right-width', 'border-spacing', 'border-style', 'border-top',
+	'border-top-color', 'border-top-style', 'border-top-width', 'border-width', 'caption-side',
+	'clear', 'cursor', 'direction', 'font', 'font-family', 'font-size', 'font-style',
+	'font-variant', 'font-weight', 'height', 'letter-spacing', 'line-height', 'margin-bottom',
+	'margin-left', 'margin-right', 'margin-top', 'overflow', 'padding', 'padding-bottom',
+	'padding-left', 'padding-right', 'padding-top', 'text-decoration', 'text-indent', 'vertical-align',
+	'width' ) );
+
+	if ( empty($allowed_attr) )
+		return $css;
+
+	$css = '';
+	foreach ( $css_array as $css_item ) {
+		if ( $css_item == '' )
+			continue;
+		$css_item = trim( $css_item );
+		$found = false;
+		if ( strpos( $css_item, ':' ) === false ) {
+			$found = true;
+		} else {
+			$parts = split( ':', $css_item );
+			if ( in_array( trim( $parts[0] ), $allowed_attr ) )
+				$found = true;
+		}
+		if ( $found ) {
+			if( $css != '' )
+				$css .= ';';
+			$css .= $css_item;
+		}
+	}
+
+	return $css;
+}

@@ -1,6 +1,6 @@
 <?php
 /**
- * Main Wordpress Formatting API.
+ * Main WordPress Formatting API.
  *
  * Handles many functions for formatting output.
  *
@@ -28,44 +28,67 @@
  */
 function wptexturize($text) {
 	global $wp_cockneyreplace;
-	$next = true;
-	$has_pre_parent = false;
+	static $static_setup = false, $opening_quote, $closing_quote, $default_no_texturize_tags, $default_no_texturize_shortcodes, $static_characters, $static_replacements, $dynamic_characters, $dynamic_replacements;
 	$output = '';
 	$curl = '';
 	$textarr = preg_split('/(<.*>|\[.*\])/Us', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
 	$stop = count($textarr);
+	
+	// No need to setup these variables more than once
+	if (!$static_setup) {
+		/* translators: opening curly quote */
+		$opening_quote = _x('&#8220;', 'opening curly quote');
+		/* translators: closing curly quote */
+		$closing_quote = _x('&#8221;', 'closing curly quote');
 
-	// if a plugin has provided an autocorrect array, use it
-	if ( isset($wp_cockneyreplace) ) {
-		$cockney = array_keys($wp_cockneyreplace);
-		$cockneyreplace = array_values($wp_cockneyreplace);
-	} else {
-		$cockney = array("'tain't","'twere","'twas","'tis","'twill","'til","'bout","'nuff","'round","'cause");
-		$cockneyreplace = array("&#8217;tain&#8217;t","&#8217;twere","&#8217;twas","&#8217;tis","&#8217;twill","&#8217;til","&#8217;bout","&#8217;nuff","&#8217;round","&#8217;cause");
+		$default_no_texturize_tags = array('pre', 'code', 'kbd', 'style', 'script', 'tt');
+		$default_no_texturize_shortcodes = array('code');
+
+		// if a plugin has provided an autocorrect array, use it
+		if ( isset($wp_cockneyreplace) ) {
+			$cockney = array_keys($wp_cockneyreplace);
+			$cockneyreplace = array_values($wp_cockneyreplace);
+		} else {
+			$cockney = array("'tain't","'twere","'twas","'tis","'twill","'til","'bout","'nuff","'round","'cause");
+			$cockneyreplace = array("&#8217;tain&#8217;t","&#8217;twere","&#8217;twas","&#8217;tis","&#8217;twill","&#8217;til","&#8217;bout","&#8217;nuff","&#8217;round","&#8217;cause");
+		}
+
+		$static_characters = array_merge(array('---', ' -- ', '--', ' - ', 'xn&#8211;', '...', '``', '\'s', '\'\'', ' (tm)'), $cockney);
+		$static_replacements = array_merge(array('&#8212;', ' &#8212; ', '&#8211;', ' &#8211; ', 'xn--', '&#8230;', $opening_quote, '&#8217;s', $closing_quote, ' &#8482;'), $cockneyreplace);
+
+		$dynamic_characters = array('/\'(\d\d(?:&#8217;|\')?s)/', '/(\s|\A|[([{<]|")\'/', '/(\d+)"/', '/(\d+)\'/', '/(\S)\'([^\'\s])/', '/(\s|\A|[([{<])"(?!\s)/', '/"(\s|\S|\Z)/', '/\'([\s.]|\Z)/', '/(\d+)x(\d+)/');
+		$dynamic_replacements = array('&#8217;$1','$1&#8216;', '$1&#8243;', '$1&#8242;', '$1&#8217;$2', '$1' . $opening_quote . '$2', $closing_quote . '$1', '&#8217;$1', '$1&#215;$2');
+
+		$static_setup = true;
 	}
 
-	$static_characters = array_merge(array('---', ' -- ', '--', 'xn&#8211;', '...', '``', '\'s', '\'\'', ' (tm)'), $cockney);
-	$static_replacements = array_merge(array('&#8212;', ' &#8212; ', '&#8211;', 'xn--', '&#8230;', '&#8220;', '&#8217;s', '&#8221;', ' &#8482;'), $cockneyreplace);
+	// Transform into regexp sub-expression used in _wptexturize_pushpop_element
+	// Must do this everytime in case plugins use these filters in a context sensitive manner
+	$no_texturize_tags = '(' . implode('|', apply_filters('no_texturize_tags', $default_no_texturize_tags) ) . ')';
+	$no_texturize_shortcodes = '(' . implode('|', apply_filters('no_texturize_shortcodes', $default_no_texturize_shortcodes) ) . ')';
 
-	$dynamic_characters = array('/\'(\d\d(?:&#8217;|\')?s)/', '/(\s|\A|")\'/', '/(\d+)"/', '/(\d+)\'/', '/(\S)\'([^\'\s])/', '/(\s|\A)"(?!\s)/', '/"(\s|\S|\Z)/', '/\'([\s.]|\Z)/', '/(\d+)x(\d+)/');
-	$dynamic_replacements = array('&#8217;$1','$1&#8216;', '$1&#8243;', '$1&#8242;', '$1&#8217;$2', '$1&#8220;$2', '&#8221;$1', '&#8217;$1', '$1&#215;$2');
+	$no_texturize_tags_stack = array();
+	$no_texturize_shortcodes_stack = array();
 
 	for ( $i = 0; $i < $stop; $i++ ) {
 		$curl = $textarr[$i];
 
-		if ( !empty($curl) && '<' != $curl{0} && '[' != $curl{0} && $next && !$has_pre_parent) { // If it's not a tag
+		if ( !empty($curl) && '<' != $curl{0} && '[' != $curl{0}
+				&& empty($no_texturize_shortcodes_stack) && empty($no_texturize_tags_stack)) { 
+			// This is not a tag, nor is the texturization disabled
 			// static strings
 			$curl = str_replace($static_characters, $static_replacements, $curl);
 			// regular expressions
 			$curl = preg_replace($dynamic_characters, $dynamic_replacements, $curl);
-		} elseif (strpos($curl, '<code') !== false || strpos($curl, '<kbd') !== false || strpos($curl, '<style') !== false || strpos($curl, '<script') !== false) {
-			$next = false;
-		} elseif (strpos($curl, '<pre') !== false) {
-			$has_pre_parent = true;
-		} elseif (strpos($curl, '</pre>') !== false) {
-			$has_pre_parent = false;
-		} else {
-			$next = true;
+		} elseif (!empty($curl)) {
+			/*
+			 * Only call _wptexturize_pushpop_element if first char is correct
+			 * tag opening
+			 */
+			if ('<' == $curl{0})
+				_wptexturize_pushpop_element($curl, $no_texturize_tags_stack, $no_texturize_tags, '<', '>');
+			elseif ('[' == $curl{0})
+				_wptexturize_pushpop_element($curl, $no_texturize_shortcodes_stack, $no_texturize_shortcodes, '[', ']');
 		}
 
 		$curl = preg_replace('/&([^#])(?![a-zA-Z1-4]{1,8};)/', '&#038;$1', $curl);
@@ -73,6 +96,48 @@ function wptexturize($text) {
 	}
 
 	return $output;
+}
+
+/**
+ * Search for disabled element tags. Push element to stack on tag open and pop
+ * on tag close. Assumes first character of $text is tag opening.
+ *
+ * @access private
+ * @since 2.9.0
+ *
+ * @param string $text Text to check. First character is assumed to be $opening
+ * @param array $stack Array used as stack of opened tag elements
+ * @param string $disabled_elements Tags to match against formatted as regexp sub-expression
+ * @param string $opening Tag opening character, assumed to be 1 character long
+ * @param string $opening Tag closing  character
+ * @return object
+ */
+function _wptexturize_pushpop_element($text, &$stack, $disabled_elements, $opening = '<', $closing = '>') {
+	// Check if it is a closing tag -- otherwise assume opening tag
+	if (strncmp($opening . '/', $text, 2)) {
+		// Opening? Check $text+1 against disabled elements
+		if (preg_match('/^' . $disabled_elements . '\b/', substr($text, 1), $matches)) {
+			/*
+			 * This disables texturize until we find a closing tag of our type
+			 * (e.g. <pre>) even if there was invalid nesting before that
+			 * 
+			 * Example: in the case <pre>sadsadasd</code>"baba"</pre>
+			 *          "baba" won't be texturize
+			 */
+
+			array_push($stack, $matches[1]);
+		}
+	} else {
+		// Closing? Check $text+2 against disabled elements
+		$c = preg_quote($closing, '/');
+		if (preg_match('/^' . $disabled_elements . $c . '/', substr($text, 2), $matches)) {
+			$last = array_pop($stack);
+
+			// Make sure it matches the opening tag
+			if ($last != $matches[1])
+				array_push($stack, $last);
+		}
+	}
 }
 
 /**
@@ -114,10 +179,13 @@ function clean_pre($matches) {
  * @return string Text which has been converted into correct paragraph tags.
  */
 function wpautop($pee, $br = 1) {
+
+	if ( trim($pee) === '' )
+		return '';
 	$pee = $pee . "\n"; // just to make things a little easier, pad the end
 	$pee = preg_replace('|<br />\s*<br />|', "\n\n", $pee);
 	// Space things out a little
-	$allblocks = '(?:table|thead|tfoot|caption|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|map|area|blockquote|address|math|style|input|p|h[1-6]|hr)';
+	$allblocks = '(?:table|thead|tfoot|caption|col|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|map|area|blockquote|address|math|style|input|p|h[1-6]|hr|fieldset|legend)';
 	$pee = preg_replace('!(<' . $allblocks . '[^>]*>)!', "\n$1", $pee);
 	$pee = preg_replace('!(</' . $allblocks . '>)!', "$1\n\n", $pee);
 	$pee = str_replace(array("\r\n", "\r"), "\n", $pee); // cross-platform newlines
@@ -131,9 +199,8 @@ function wpautop($pee, $br = 1) {
 	$pee = '';
 	foreach ( $pees as $tinkle )
 		$pee .= '<p>' . trim($tinkle, "\n") . "</p>\n";
-	$pee = preg_replace('|<p>\s*?</p>|', '', $pee); // under certain strange conditions it could create a P of entirely whitespace
-	$pee = preg_replace('!<p>([^<]+)\s*?(</(?:div|address|form)[^>]*>)!', "<p>$1</p>$2", $pee);
-	$pee = preg_replace( '|<p>|', "$1<p>", $pee );
+	$pee = preg_replace('|<p>\s*</p>|', '', $pee); // under certain strange conditions it could create a P of entirely whitespace
+	$pee = preg_replace('!<p>([^<]+)</(div|address|form)>!', "<p>$1</p></$2>", $pee);
 	$pee = preg_replace('!<p>\s*(</?' . $allblocks . '[^>]*>)\s*</p>!', "$1", $pee); // don't pee all over a tag
 	$pee = preg_replace("|<p>(<li.+?)</p>|", "$1", $pee); // problem with nested lists
 	$pee = preg_replace('|<p><blockquote([^>]*)>|i', "<blockquote$1><p>", $pee);
@@ -148,9 +215,30 @@ function wpautop($pee, $br = 1) {
 	$pee = preg_replace('!(</?' . $allblocks . '[^>]*>)\s*<br />!', "$1", $pee);
 	$pee = preg_replace('!<br />(\s*</?(?:p|li|div|dl|dd|dt|th|pre|td|ul|ol)[^>]*>)!', '$1', $pee);
 	if (strpos($pee, '<pre') !== false)
-		$pee = preg_replace_callback('!(<pre.*?>)(.*?)</pre>!is', 'clean_pre', $pee );
+		$pee = preg_replace_callback('!(<pre[^>]*>)(.*?)</pre>!is', 'clean_pre', $pee );
 	$pee = preg_replace( "|\n</p>$|", '</p>', $pee );
-	$pee = preg_replace('/<p>\s*?(' . get_shortcode_regex() . ')\s*<\/p>/s', '$1', $pee); // don't auto-p wrap shortcodes that stand alone
+
+	return $pee;
+}
+
+/**
+ * Don't auto-p wrap shortcodes that stand alone
+ *
+ * Ensures that shortcodes are not wrapped in <<p>>...<</p>>.
+ *
+ * @since 2.9.0
+ *
+ * @param string $pee The content.
+ * @return string The filtered content.
+ */
+function shortcode_unautop($pee) {
+	global $shortcode_tags;
+
+	if ( !empty($shortcode_tags) && is_array($shortcode_tags) ) {
+		$tagnames = array_keys($shortcode_tags);
+		$tagregexp = join( '|', array_map('preg_quote', $tagnames) );
+		$pee = preg_replace('/<p>\\s*?(\\[(' . $tagregexp . ')\\b.*?\\/?\\](?:.+?\\[\\/\\2\\])?)\\s*<\\/p>/s', '$1', $pee);
+	}
 
 	return $pee;
 }
@@ -158,26 +246,29 @@ function wpautop($pee, $br = 1) {
 /**
  * Checks to see if a string is utf8 encoded.
  *
- * @author bmorel at ssi dot fr
+ * NOTE: This function checks for 5-Byte sequences, UTF8
+ *       has Bytes Sequences with a maximum length of 4.
  *
+ * @author bmorel at ssi dot fr (modified)
  * @since 1.2.1
  *
- * @param string $Str The string to be checked
- * @return bool True if $Str fits a UTF-8 model, false otherwise.
+ * @param string $str The string to be checked
+ * @return bool True if $str fits a UTF-8 model, false otherwise.
  */
-function seems_utf8($Str) { # by bmorel at ssi dot fr
-	$length = strlen($Str);
+function seems_utf8($str) {
+	$length = strlen($str);
 	for ($i=0; $i < $length; $i++) {
-		if (ord($Str[$i]) < 0x80) continue; # 0bbbbbbb
-		elseif ((ord($Str[$i]) & 0xE0) == 0xC0) $n=1; # 110bbbbb
-		elseif ((ord($Str[$i]) & 0xF0) == 0xE0) $n=2; # 1110bbbb
-		elseif ((ord($Str[$i]) & 0xF8) == 0xF0) $n=3; # 11110bbb
-		elseif ((ord($Str[$i]) & 0xFC) == 0xF8) $n=4; # 111110bb
-		elseif ((ord($Str[$i]) & 0xFE) == 0xFC) $n=5; # 1111110b
+		$c = ord($str[$i]);
+		if ($c < 0x80) $n = 0; # 0bbbbbbb
+		elseif (($c & 0xE0) == 0xC0) $n=1; # 110bbbbb
+		elseif (($c & 0xF0) == 0xE0) $n=2; # 1110bbbb
+		elseif (($c & 0xF8) == 0xF0) $n=3; # 11110bbb
+		elseif (($c & 0xFC) == 0xF8) $n=4; # 111110bb
+		elseif (($c & 0xFE) == 0xFC) $n=5; # 1111110b
 		else return false; # Does not match any model
 		for ($j=0; $j<$n; $j++) { # n bytes matching 10bbbbbb follow ?
-			if ((++$i == $length) || ((ord($Str[$i]) & 0xC0) != 0x80))
-			return false;
+			if ((++$i == $length) || ((ord($str[$i]) & 0xC0) != 0x80))
+				return false;
 		}
 	}
 	return true;
@@ -186,34 +277,189 @@ function seems_utf8($Str) { # by bmorel at ssi dot fr
 /**
  * Converts a number of special characters into their HTML entities.
  *
- * Differs from htmlspecialchars as existing HTML entities will not be encoded.
- * Specifically changes: & to &#038;, < to &lt; and > to &gt;.
+ * Specifically deals with: &, <, >, ", and '.
  *
- * $quotes can be set to 'single' to encode ' to &#039;, 'double' to encode " to
- * &quot;, or '1' to do both. Default is 0 where no quotes are encoded.
+ * $quote_style can be set to ENT_COMPAT to encode " to
+ * &quot;, or ENT_QUOTES to do both. Default is ENT_NOQUOTES where no quotes are encoded.
  *
  * @since 1.2.2
  *
- * @param string $text The text which is to be encoded.
- * @param mixed $quotes Optional. Converts single quotes if set to 'single', double if set to 'double' or both if otherwise set. Default 0.
+ * @param string $string The text which is to be encoded.
+ * @param mixed $quote_style Optional. Converts double quotes if set to ENT_COMPAT, both single and double if set to ENT_QUOTES or none if set to ENT_NOQUOTES. Also compatible with old values; converting single quotes if set to 'single', double if set to 'double' or both if otherwise set. Default is ENT_NOQUOTES.
+ * @param string $charset Optional. The character encoding of the string. Default is false.
+ * @param boolean $double_encode Optional. Whether or not to encode existing html entities. Default is false.
  * @return string The encoded text with HTML entities.
  */
-function wp_specialchars( $text, $quotes = 0 ) {
-	// Like htmlspecialchars except don't double-encode HTML entities
-	$text = str_replace('&&', '&#038;&', $text);
-	$text = str_replace('&&', '&#038;&', $text);
-	$text = preg_replace('/&(?:$|([^#])(?![a-z1-4]{1,8};))/', '&#038;$1', $text);
-	$text = str_replace('<', '&lt;', $text);
-	$text = str_replace('>', '&gt;', $text);
-	if ( 'double' === $quotes ) {
-		$text = str_replace('"', '&quot;', $text);
-	} elseif ( 'single' === $quotes ) {
-		$text = str_replace("'", '&#039;', $text);
-	} elseif ( $quotes ) {
-		$text = str_replace('"', '&quot;', $text);
-		$text = str_replace("'", '&#039;', $text);
+function _wp_specialchars( $string, $quote_style = ENT_NOQUOTES, $charset = false, $double_encode = false ) {
+	$string = (string) $string;
+
+	if ( 0 === strlen( $string ) ) {
+		return '';
 	}
-	return $text;
+
+	// Don't bother if there are no specialchars - saves some processing
+	if ( !preg_match( '/[&<>"\']/', $string ) ) {
+		return $string;
+	}
+
+	// Account for the previous behaviour of the function when the $quote_style is not an accepted value
+	if ( empty( $quote_style ) ) {
+		$quote_style = ENT_NOQUOTES;
+	} elseif ( !in_array( $quote_style, array( 0, 2, 3, 'single', 'double' ), true ) ) {
+		$quote_style = ENT_QUOTES;
+	}
+
+	// Store the site charset as a static to avoid multiple calls to wp_load_alloptions()
+	if ( !$charset ) {
+		static $_charset;
+		if ( !isset( $_charset ) ) {
+			$alloptions = wp_load_alloptions();
+			$_charset = isset( $alloptions['blog_charset'] ) ? $alloptions['blog_charset'] : '';
+		}
+		$charset = $_charset;
+	}
+	if ( in_array( $charset, array( 'utf8', 'utf-8', 'UTF8' ) ) ) {
+		$charset = 'UTF-8';
+	}
+
+	$_quote_style = $quote_style;
+
+	if ( $quote_style === 'double' ) {
+		$quote_style = ENT_COMPAT;
+		$_quote_style = ENT_COMPAT;
+	} elseif ( $quote_style === 'single' ) {
+		$quote_style = ENT_NOQUOTES;
+	}
+
+	// Handle double encoding ourselves
+	if ( !$double_encode ) {
+		$string = wp_specialchars_decode( $string, $_quote_style );
+		$string = preg_replace( '/&(#?x?[0-9a-z]+);/i', '|wp_entity|$1|/wp_entity|', $string );
+	}
+
+	$string = @htmlspecialchars( $string, $quote_style, $charset );
+
+	// Handle double encoding ourselves
+	if ( !$double_encode ) {
+		$string = str_replace( array( '|wp_entity|', '|/wp_entity|' ), array( '&', ';' ), $string );
+	}
+
+	// Backwards compatibility
+	if ( 'single' === $_quote_style ) {
+		$string = str_replace( "'", '&#039;', $string );
+	}
+
+	return $string;
+}
+
+/**
+ * Converts a number of HTML entities into their special characters.
+ *
+ * Specifically deals with: &, <, >, ", and '.
+ *
+ * $quote_style can be set to ENT_COMPAT to decode " entities,
+ * or ENT_QUOTES to do both " and '. Default is ENT_NOQUOTES where no quotes are decoded.
+ *
+ * @since 2.8
+ *
+ * @param string $string The text which is to be decoded.
+ * @param mixed $quote_style Optional. Converts double quotes if set to ENT_COMPAT, both single and double if set to ENT_QUOTES or none if set to ENT_NOQUOTES. Also compatible with old _wp_specialchars() values; converting single quotes if set to 'single', double if set to 'double' or both if otherwise set. Default is ENT_NOQUOTES.
+ * @return string The decoded text without HTML entities.
+ */
+function wp_specialchars_decode( $string, $quote_style = ENT_NOQUOTES ) {
+	$string = (string) $string;
+
+	if ( 0 === strlen( $string ) ) {
+		return '';
+	}
+
+	// Don't bother if there are no entities - saves a lot of processing
+	if ( strpos( $string, '&' ) === false ) {
+		return $string;
+	}
+
+	// Match the previous behaviour of _wp_specialchars() when the $quote_style is not an accepted value
+	if ( empty( $quote_style ) ) {
+		$quote_style = ENT_NOQUOTES;
+	} elseif ( !in_array( $quote_style, array( 0, 2, 3, 'single', 'double' ), true ) ) {
+		$quote_style = ENT_QUOTES;
+	}
+
+	// More complete than get_html_translation_table( HTML_SPECIALCHARS )
+	$single = array( '&#039;'  => '\'', '&#x27;' => '\'' );
+	$single_preg = array( '/&#0*39;/'  => '&#039;', '/&#x0*27;/i' => '&#x27;' );
+	$double = array( '&quot;' => '"', '&#034;'  => '"', '&#x22;' => '"' );
+	$double_preg = array( '/&#0*34;/'  => '&#034;', '/&#x0*22;/i' => '&#x22;' );
+	$others = array( '&lt;'   => '<', '&#060;'  => '<', '&gt;'   => '>', '&#062;'  => '>', '&amp;'  => '&', '&#038;'  => '&', '&#x26;' => '&' );
+	$others_preg = array( '/&#0*60;/'  => '&#060;', '/&#0*62;/'  => '&#062;', '/&#0*38;/'  => '&#038;', '/&#x0*26;/i' => '&#x26;' );
+
+	if ( $quote_style === ENT_QUOTES ) {
+		$translation = array_merge( $single, $double, $others );
+		$translation_preg = array_merge( $single_preg, $double_preg, $others_preg );
+	} elseif ( $quote_style === ENT_COMPAT || $quote_style === 'double' ) {
+		$translation = array_merge( $double, $others );
+		$translation_preg = array_merge( $double_preg, $others_preg );
+	} elseif ( $quote_style === 'single' ) {
+		$translation = array_merge( $single, $others );
+		$translation_preg = array_merge( $single_preg, $others_preg );
+	} elseif ( $quote_style === ENT_NOQUOTES ) {
+		$translation = $others;
+		$translation_preg = $others_preg;
+	}
+
+	// Remove zero padding on numeric entities
+	$string = preg_replace( array_keys( $translation_preg ), array_values( $translation_preg ), $string );
+
+	// Replace characters according to translation table
+	return strtr( $string, $translation );
+}
+
+/**
+ * Checks for invalid UTF8 in a string.
+ *
+ * @since 2.8
+ *
+ * @param string $string The text which is to be checked.
+ * @param boolean $strip Optional. Whether to attempt to strip out invalid UTF8. Default is false.
+ * @return string The checked text.
+ */
+function wp_check_invalid_utf8( $string, $strip = false ) {
+	$string = (string) $string;
+
+	if ( 0 === strlen( $string ) ) {
+		return '';
+	}
+
+	// Store the site charset as a static to avoid multiple calls to get_option()
+	static $is_utf8;
+	if ( !isset( $is_utf8 ) ) {
+		$is_utf8 = in_array( get_option( 'blog_charset' ), array( 'utf8', 'utf-8', 'UTF8', 'UTF-8' ) );
+	}
+	if ( !$is_utf8 ) {
+		return $string;
+	}
+
+	// Check for support for utf8 in the installed PCRE library once and store the result in a static
+	static $utf8_pcre;
+	if ( !isset( $utf8_pcre ) ) {
+		$utf8_pcre = @preg_match( '/^./u', 'a' );
+	}
+	// We can't demand utf8 in the PCRE installation, so just return the string in those cases
+	if ( !$utf8_pcre ) {
+		return $string;
+	}
+
+	// preg_match fails when it encounters invalid UTF8 in $string
+	if ( 1 === @preg_match( '/^./us', $string ) ) {
+		return $string;
+	}
+
+	// Attempt to strip the bad chars if requested (not recommended)
+	if ( $strip && function_exists( 'iconv' ) ) {
+		return iconv( 'utf-8', 'utf-8', $string );
+	}
+
+	return '';
 }
 
 /**
@@ -407,27 +653,60 @@ function remove_accents($string) {
 }
 
 /**
- * Filters certain characters from the file name.
+ * Sanitizes a filename replacing whitespace with dashes
  *
- * Turns all strings to lowercase removing most characters except alphanumeric
- * with spaces, dashes and periods. All spaces and underscores are converted to
- * dashes. Multiple dashes are converted to a single dash. Finally, if the file
- * name ends with a dash, it is removed.
+ * Removes special characters that are illegal in filenames on certain
+ * operating systems and special characters requiring special escaping
+ * to manipulate at the command line. Replaces spaces and consecutive
+ * dashes with a single dash. Trim period, dash and underscore from beginning
+ * and end of filename.
  *
  * @since 2.1.0
  *
- * @param string $name The file name
- * @return string Sanitized file name
+ * @param string $filename The filename to be sanitized
+ * @return string The sanitized filename
  */
-function sanitize_file_name( $name ) { // Like sanitize_title, but with periods
-	$name = strtolower( $name );
-	$name = preg_replace('/&.+?;/', '', $name); // kill entities
-	$name = str_replace( '_', '-', $name );
-	$name = preg_replace('/[^a-z0-9\s-.]/', '', $name);
-	$name = preg_replace('/\s+/', '-', $name);
-	$name = preg_replace('|-+|', '-', $name);
-	$name = trim($name, '-');
-	return $name;
+function sanitize_file_name( $filename ) {
+	$filename_raw = $filename;
+	$special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}", chr(0));
+	$special_chars = apply_filters('sanitize_file_name_chars', $special_chars, $filename_raw);
+	$filename = str_replace($special_chars, '', $filename);
+	$filename = preg_replace('/[\s-]+/', '-', $filename);
+	$filename = trim($filename, '.-_');
+
+	// Split the filename into a base and extension[s]
+	$parts = explode('.', $filename);
+
+	// Return if only one extension
+	if ( count($parts) <= 2 )
+		return apply_filters('sanitize_file_name', $filename, $filename_raw);
+
+	// Process multiple extensions
+	$filename = array_shift($parts);
+	$extension = array_pop($parts);
+	$mimes = get_allowed_mime_types();
+
+	// Loop over any intermediate extensions.  Munge them with a trailing underscore if they are a 2 - 5 character
+	// long alpha string not in the extension whitelist.
+	foreach ( (array) $parts as $part) {
+		$filename .= '.' . $part;
+		
+		if ( preg_match("/^[a-zA-Z]{2,5}\d?$/", $part) ) {
+			$allowed = false;
+			foreach ( $mimes as $ext_preg => $mime_match ) {
+				$ext_preg = '!(^' . $ext_preg . ')$!i';
+				if ( preg_match( $ext_preg, $part ) ) {
+					$allowed = true;
+					break;
+				}
+			}
+			if ( !$allowed )
+				$filename .= '_';
+		}
+	}
+	$filename .= '.' . $extension;
+
+	return apply_filters('sanitize_file_name', $filename, $filename_raw);
 }
 
 /**
@@ -450,7 +729,7 @@ function sanitize_file_name( $name ) { // Like sanitize_title, but with periods
  */
 function sanitize_user( $username, $strict = false ) {
 	$raw_username = $username;
-	$username = strip_tags($username);
+	$username = wp_strip_all_tags($username);
 	// Kill octets
 	$username = preg_replace('|%([a-fA-F0-9][a-fA-F0-9])|', '', $username);
 	$username = preg_replace('/&.+?;/', '', $username); // Kill entities
@@ -479,8 +758,9 @@ function sanitize_user( $username, $strict = false ) {
  * @return string The sanitized string.
  */
 function sanitize_title($title, $fallback_title = '') {
+	$raw_title = $title;
 	$title = strip_tags($title);
-	$title = apply_filters('sanitize_title', $title);
+	$title = apply_filters('sanitize_title', $title, $raw_title);
 
 	if ( '' === $title || false === $title )
 		$title = $fallback_title;
@@ -518,6 +798,7 @@ function sanitize_title_with_dashes($title) {
 
 	$title = strtolower($title);
 	$title = preg_replace('/&.+?;/', '', $title); // kill entities
+	$title = str_replace('.', '-', $title);
 	$title = preg_replace('/[^%a-z0-9 _-]/', '', $title);
 	$title = preg_replace('/\s+/', '-', $title);
 	$title = preg_replace('|-+|', '-', $title);
@@ -542,6 +823,33 @@ function sanitize_sql_orderby( $orderby ){
 	if ( !$obmatches )
 		return false;
 	return $orderby;
+}
+
+/**
+ * Santizes a html classname to ensure it only contains valid characters
+ *
+ * Strips the string down to A-Z,a-z,0-9,'-' if this results in an empty
+ * string then it will return the alternative value supplied.
+ *
+ * @todo Expand to support the full range of CDATA that a class attribute can contain.
+ *
+ * @since 2.8.0
+ *
+ * @param string $class The classname to be sanitized
+ * @param string $fallback The value to return if the sanitization end's up as an empty string.
+ * @return string The sanitized value
+ */
+function sanitize_html_class($class, $fallback){
+	//Strip out any % encoded octets
+	$sanitized = preg_replace('|%[a-fA-F0-9][a-fA-F0-9]|', '', $class);
+
+	//Limit to A-Z,a-z,0-9,'-'
+	$sanitized = preg_replace('/[^A-Za-z0-9-]/', '', $sanitized);
+
+	if ('' == $sanitized)
+		$sanitized = $fallback;
+
+	return apply_filters('sanitize_html_class',$sanitized, $class, $fallback);
 }
 
 /**
@@ -612,6 +920,18 @@ function convert_chars($content, $deprecated = '') {
 }
 
 /**
+ * Callback used to change %uXXXX to &#YYY; syntax
+ *
+ * @since 2.8?
+ *
+ * @param array $matches Single Match
+ * @return string An HTML entity
+ */
+function funky_javascript_callback($matches) {
+	return "&#".base_convert($matches[1],16,10).";";
+}
+
+/**
  * Fixes javascript bugs in browsers.
  *
  * Converts unicode characters to HTML numbered entities.
@@ -627,9 +947,10 @@ function funky_javascript_fix($text) {
 	// Fixes for browsers' javascript bugs
 	global $is_macIE, $is_winIE;
 
-	/** @todo use preg_replace_callback() instead */
 	if ( $is_winIE || $is_macIE )
-		$text =  preg_replace("/\%u([0-9A-F]{4,4})/e",  "'&#'.base_convert('\\1',16,10).';'", $text);
+		$text =  preg_replace_callback("/\%u([0-9A-F]{4,4})/",
+					       "funky_javascript_callback",
+					       $text);
 
 	return $text;
 }
@@ -690,7 +1011,7 @@ function force_balance_tags( $text ) {
 		// clear the shifter
 		$tagqueue = '';
 		// Pop or Push
-		if ($regex[1][0] == "/") { // End Tag
+		if ( isset($regex[1][0]) && '/' == $regex[1][0] ) { // End Tag
 			$tag = strtolower(substr($regex[1],1));
 			// if too many closing tags
 			if($stacksize <= 0) {
@@ -890,7 +1211,7 @@ function addslashes_gpc($gpc) {
 		$gpc = stripslashes($gpc);
 	}
 
-	return $wpdb->escape($gpc);
+	return esc_sql($gpc);
 }
 
 /**
@@ -964,17 +1285,13 @@ function antispambot($emailaddy, $mailto=0) {
  * @return string HTML A element with URI address.
  */
 function _make_url_clickable_cb($matches) {
-	$ret = '';
 	$url = $matches[2];
-	$url = clean_url($url);
+
+	$url = esc_url($url);
 	if ( empty($url) )
 		return $matches[0];
-	// removed trailing [.,;:] from URL
-	if ( in_array(substr($url, -1), array('.', ',', ';', ':')) === true ) {
-		$ret = substr($url, -1);
-		$url = substr($url, 0, strlen($url)-1);
-	}
-	return $matches[1] . "<a href=\"$url\" rel=\"nofollow\">$url</a>" . $ret;
+
+	return $matches[1] . "<a href=\"$url\" rel=\"nofollow\">$url</a>";
 }
 
 /**
@@ -993,15 +1310,16 @@ function _make_web_ftp_clickable_cb($matches) {
 	$ret = '';
 	$dest = $matches[2];
 	$dest = 'http://' . $dest;
-	$dest = clean_url($dest);
+	$dest = esc_url($dest);
 	if ( empty($dest) )
 		return $matches[0];
-	// removed trailing [,;:] from URL
-	if ( in_array(substr($dest, -1), array('.', ',', ';', ':')) === true ) {
+
+	// removed trailing [.,;:)] from URL
+	if ( in_array( substr($dest, -1), array('.', ',', ';', ':', ')') ) === true ) {
 		$ret = substr($dest, -1);
 		$dest = substr($dest, 0, strlen($dest)-1);
 	}
-	return $matches[1] . "<a href=\"$dest\" rel=\"nofollow\">$dest</a>" . $ret;
+	return $matches[1] . "<a href=\"$dest\" rel=\"nofollow\">$dest</a>$ret";
 }
 
 /**
@@ -1035,8 +1353,8 @@ function _make_email_clickable_cb($matches) {
 function make_clickable($ret) {
 	$ret = ' ' . $ret;
 	// in testing, using arrays here was found to be faster
-	$ret = preg_replace_callback('#([\s>])([\w]+?://[\w\\x80-\\xff\#$%&~/.\-;:=,?@\[\]+]*)#is', '_make_url_clickable_cb', $ret);
-	$ret = preg_replace_callback('#([\s>])((www|ftp)\.[\w\\x80-\\xff\#$%&~/.\-;:=,?@\[\]+]*)#is', '_make_web_ftp_clickable_cb', $ret);
+	$ret = preg_replace_callback('#(?<=[\s>])(\()?([\w]+?://(?:[\w\\x80-\\xff\#$%&~/=?@\[\](+-]|[.,;:](?![\s<]|(\))?([\s]|$))|(?(1)\)(?![\s<.,;:]|$)|\)))+)#is', '_make_url_clickable_cb', $ret);
+	$ret = preg_replace_callback('#([\s>])((www|ftp)\.[\w\\x80-\\xff\#$%&~/.\-;:=,?@\[\]+]+)#is', '_make_web_ftp_clickable_cb', $ret);
 	$ret = preg_replace_callback('#([\s>])([.0-9a-z_+-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})#i', '_make_email_clickable_cb', $ret);
 	// this one is not in an array because we need it to run last, for cleanup of accidental links within links
 	$ret = preg_replace("#(<a( [^>]+?>|>))<a [^>]+?>([^>]+?)</a></a>#i", "$1$3</a>", $ret);
@@ -1057,7 +1375,7 @@ function wp_rel_nofollow( $text ) {
 	// This is a pre save filter, so text is already escaped.
 	$text = stripslashes($text);
 	$text = preg_replace_callback('|<a (.+?)>|i', 'wp_rel_nofollow_callback', $text);
-	$text = $wpdb->escape($text);
+	$text = esc_sql($text);
 	return $text;
 }
 
@@ -1078,29 +1396,61 @@ function wp_rel_nofollow_callback( $matches ) {
 	return "<a $text rel=\"nofollow\">";
 }
 
+
+/**
+ * Convert one smiley code to the icon graphic file equivalent.
+ *
+ * Looks up one smiley code in the $wpsmiliestrans global array and returns an
+ * <img> string for that smiley.
+ *
+ * @global array $wpsmiliestrans
+ * @since 2.8.0
+ *
+ * @param string $smiley Smiley code to convert to image.
+ * @return string Image string for smiley.
+ */
+function translate_smiley($smiley) {
+	global $wpsmiliestrans;
+
+	if (count($smiley) == 0) {
+		return '';
+	}
+
+	$siteurl = get_option( 'siteurl' );
+
+	$smiley = trim(reset($smiley));
+	$img = $wpsmiliestrans[$smiley];
+	$smiley_masked = esc_attr($smiley);
+
+	$srcurl = apply_filters('smilies_src', "$siteurl/wp-includes/images/smilies/$img", $img, $siteurl);
+
+	return " <img src='$srcurl' alt='$smiley_masked' class='wp-smiley' /> ";
+}
+
+
 /**
  * Convert text equivalent of smilies to images.
  *
- * Will only convert smilies if the option 'use_smilies' is true and the globals
- * used in the function aren't empty.
+ * Will only convert smilies if the option 'use_smilies' is true and the global
+ * used in the function isn't empty.
  *
  * @since 0.71
- * @uses $wp_smiliessearch, $wp_smiliesreplace Smiley replacement arrays.
+ * @uses $wp_smiliessearch
  *
  * @param string $text Content to convert smilies from text.
  * @return string Converted content with text smilies replaced with images.
  */
 function convert_smilies($text) {
-	global $wp_smiliessearch, $wp_smiliesreplace;
+	global $wp_smiliessearch;
 	$output = '';
-	if ( get_option('use_smilies') && !empty($wp_smiliessearch) && !empty($wp_smiliesreplace) ) {
+	if ( get_option('use_smilies') && !empty($wp_smiliessearch) ) {
 		// HTML loop taken from texturize function, could possible be consolidated
 		$textarr = preg_split("/(<.*>)/U", $text, -1, PREG_SPLIT_DELIM_CAPTURE); // capture the tags as well as in between
 		$stop = count($textarr);// loop stuff
 		for ($i = 0; $i < $stop; $i++) {
 			$content = $textarr[$i];
 			if ((strlen($content) > 0) && ('<' != $content{0})) { // If it's not a tag
-				$content = preg_replace($wp_smiliessearch, $wp_smiliesreplace, $content);
+				$content = preg_replace_callback($wp_smiliessearch, 'translate_smiley', $content);
 			}
 			$output .= $content;
 		}
@@ -1112,24 +1462,76 @@ function convert_smilies($text) {
 }
 
 /**
- * Checks to see if the text is a valid email address.
+ * Verifies that an email is valid.
+ *
+ * Does not grok i18n domains. Not RFC compliant.
  *
  * @since 0.71
  *
- * @param string $user_email The email address to be checked.
- * @return bool Returns true if valid, otherwise false.
+ * @param string $email Email address to verify.
+ * @param boolean $check_dns Whether to check the DNS for the domain using checkdnsrr().
+ * @return string|bool Either false or the valid email address.
  */
-function is_email($user_email) {
-	$chars = "/^([a-z0-9+_]|\\-|\\.)+@(([a-z0-9_]|\\-)+\\.)+[a-z]{2,6}\$/i";
-	if (strpos($user_email, '@') !== false && strpos($user_email, '.') !== false) {
-		if (preg_match($chars, $user_email)) {
-			return true;
-		} else {
-			return false;
-		}
-	} else {
-		return false;
+function is_email( $email, $check_dns = false ) {
+	// Test for the minimum length the email can be
+	if ( strlen( $email ) < 3 ) {
+		return apply_filters( 'is_email', false, $email, 'email_too_short' );
 	}
+
+	// Test for an @ character after the first position
+	if ( strpos( $email, '@', 1 ) === false ) {
+		return apply_filters( 'is_email', false, $email, 'email_no_at' );
+	}
+
+	// Split out the local and domain parts
+	list( $local, $domain ) = explode( '@', $email, 2 );
+
+	// LOCAL PART
+	// Test for invalid characters
+	if ( !preg_match( '/^[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~\.-]+$/', $local ) ) {
+		return apply_filters( 'is_email', false, $email, 'local_invalid_chars' );
+	}
+
+	// DOMAIN PART
+	// Test for sequences of periods
+	if ( preg_match( '/\.{2,}/', $domain ) ) {
+		return apply_filters( 'is_email', false, $email, 'domain_period_sequence' );
+	}
+
+	// Test for leading and trailing periods and whitespace
+	if ( trim( $domain, " \t\n\r\0\x0B." ) !== $domain ) {
+		return apply_filters( 'is_email', false, $email, 'domain_period_limits' );
+	}
+
+	// Split the domain into subs
+	$subs = explode( '.', $domain );
+
+	// Assume the domain will have at least two subs
+	if ( 2 > count( $subs ) ) {
+		return apply_filters( 'is_email', false, $email, 'domain_no_periods' );
+	}
+
+	// Loop through each sub
+	foreach ( $subs as $sub ) {
+		// Test for leading and trailing hyphens and whitespace
+		if ( trim( $sub, " \t\n\r\0\x0B-" ) !== $sub ) {
+			return apply_filters( 'is_email', false, $email, 'sub_hyphen_limits' );
+		}
+
+		// Test for invalid characters
+		if ( !preg_match('/^[a-z0-9-]+$/i', $sub ) ) {
+			return apply_filters( 'is_email', false, $email, 'sub_invalid_chars' );
+		}
+	}
+
+	// DNS
+	// Check the domain has a valid MX and A resource record
+	if ( $check_dns && function_exists( 'checkdnsrr' ) && !( checkdnsrr( $domain . '.', 'MX' ) || checkdnsrr( $domain . '.', 'A' ) ) ) {
+		return apply_filters( 'is_email', false, $email, 'dns_no_rr' );
+	}
+
+	// Congratulations your email made it!
+	return apply_filters( 'is_email', $email, $email, null );
 }
 
 /**
@@ -1147,8 +1549,7 @@ function wp_iso_descrambler($string) {
 		return $string;
 	} else {
 		$subject = str_replace('_', ' ', $matches[2]);
-		/** @todo use preg_replace_callback() */
-		$subject = preg_replace('#\=([0-9a-f]{2})#ei', "chr(hexdec(strtolower('$1')))", $subject);
+		$subject = preg_replace_callback('#\=([0-9a-f]{2})#i', create_function('$match', 'return chr(hexdec(strtolower($match[1])));'), $subject);
 		return $subject;
 	}
 }
@@ -1157,17 +1558,20 @@ function wp_iso_descrambler($string) {
  * Returns a date in the GMT equivalent.
  *
  * Requires and returns a date in the Y-m-d H:i:s format. Simply subtracts the
- * value of gmt_offset.
+ * value of the 'gmt_offset' option. Return format can be overridden using the
+ * $format parameter
  *
  * @since 1.2.0
  *
+ * @uses get_option() to retrieve the the value of 'gmt_offset'.
  * @param string $string The date to be converted.
+ * @param string $format The format string for the returned date (default is Y-m-d H:i:s)
  * @return string GMT version of the date provided.
  */
-function get_gmt_from_date($string) {
+function get_gmt_from_date($string, $format = 'Y-m-d H:i:s') {
 	preg_match('#([0-9]{1,4})-([0-9]{1,2})-([0-9]{1,2}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})#', $string, $matches);
 	$string_time = gmmktime($matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1]);
-	$string_gmt = gmdate('Y-m-d H:i:s', $string_time - get_option('gmt_offset') * 3600);
+	$string_gmt = gmdate($format, $string_time - get_option('gmt_offset') * 3600);
 	return $string_gmt;
 }
 
@@ -1175,17 +1579,18 @@ function get_gmt_from_date($string) {
  * Converts a GMT date into the correct format for the blog.
  *
  * Requires and returns in the Y-m-d H:i:s format. Simply adds the value of
- * gmt_offset.
+ * gmt_offset.Return format can be overridden using the $format parameter
  *
  * @since 1.2.0
  *
  * @param string $string The date to be converted.
+ * @param string $format The format string for the returned date (default is Y-m-d H:i:s)
  * @return string Formatted date relative to the GMT offset.
  */
-function get_date_from_gmt($string) {
+function get_date_from_gmt($string, $format = 'Y-m-d H:i:s') {
 	preg_match('#([0-9]{1,4})-([0-9]{1,2})-([0-9]{1,2}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})#', $string, $matches);
 	$string_time = gmmktime($matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1]);
-	$string_localtime = gmdate('Y-m-d H:i:s', $string_time + get_option('gmt_offset')*3600);
+	$string_localtime = gmdate($format, $string_time + get_option('gmt_offset')*3600);
 	return $string_localtime;
 }
 
@@ -1267,8 +1672,78 @@ function popuplinks($text) {
  * @param string $email Email address to filter.
  * @return string Filtered email address.
  */
-function sanitize_email($email) {
-	return preg_replace('/[^a-z0-9+_.@-]/i', '', $email);
+function sanitize_email( $email ) {
+	// Test for the minimum length the email can be
+	if ( strlen( $email ) < 3 ) {
+		return apply_filters( 'sanitize_email', '', $email, 'email_too_short' );
+	}
+
+	// Test for an @ character after the first position
+	if ( strpos( $email, '@', 1 ) === false ) {
+		return apply_filters( 'sanitize_email', '', $email, 'email_no_at' );
+	}
+
+	// Split out the local and domain parts
+	list( $local, $domain ) = explode( '@', $email, 2 );
+
+	// LOCAL PART
+	// Test for invalid characters
+	$local = preg_replace( '/[^a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~\.-]/', '', $local );
+	if ( '' === $local ) {
+		return apply_filters( 'sanitize_email', '', $email, 'local_invalid_chars' );
+	}
+
+	// DOMAIN PART
+	// Test for sequences of periods
+	$domain = preg_replace( '/\.{2,}/', '', $domain );
+	if ( '' === $domain ) {
+		return apply_filters( 'sanitize_email', '', $email, 'domain_period_sequence' );
+	}
+
+	// Test for leading and trailing periods and whitespace
+	$domain = trim( $domain, " \t\n\r\0\x0B." );
+	if ( '' === $domain ) {
+		return apply_filters( 'sanitize_email', '', $email, 'domain_period_limits' );
+	}
+
+	// Split the domain into subs
+	$subs = explode( '.', $domain );
+
+	// Assume the domain will have at least two subs
+	if ( 2 > count( $subs ) ) {
+		return apply_filters( 'sanitize_email', '', $email, 'domain_no_periods' );
+	}
+
+	// Create an array that will contain valid subs
+	$new_subs = array();
+
+	// Loop through each sub
+	foreach ( $subs as $sub ) {
+		// Test for leading and trailing hyphens
+		$sub = trim( $sub, " \t\n\r\0\x0B-" );
+
+		// Test for invalid characters
+		$sub = preg_replace( '/^[^a-z0-9-]+$/i', '', $sub );
+
+		// If there's anything left, add it to the valid subs
+		if ( '' !== $sub ) {
+			$new_subs[] = $sub;
+		}
+	}
+
+	// If there aren't 2 or more valid subs
+	if ( 2 > count( $new_subs ) ) {
+		return apply_filters( 'sanitize_email', '', $email, 'domain_no_valid_subs' );
+	}
+
+	// Join valid subs into the new domain
+	$domain = join( '.', $new_subs );
+
+	// Put the email back together
+	$email = $local . '@' . $domain;
+
+	// Congratulations your email made it!
+	return apply_filters( 'sanitize_email', $email, $email, null );
 }
 
 /**
@@ -1292,19 +1767,19 @@ function human_time_diff( $from, $to = '' ) {
 		if ($mins <= 1) {
 			$mins = 1;
 		}
-		$since = sprintf(__ngettext('%s min', '%s mins', $mins), $mins);
+		$since = sprintf(_n('%s min', '%s mins', $mins), $mins);
 	} else if (($diff <= 86400) && ($diff > 3600)) {
 		$hours = round($diff / 3600);
 		if ($hours <= 1) {
 			$hours = 1;
 		}
-		$since = sprintf(__ngettext('%s hour', '%s hours', $hours), $hours);
+		$since = sprintf(_n('%s hour', '%s hours', $hours), $hours);
 	} elseif ($diff >= 86400) {
 		$days = round($diff / 86400);
 		if ($days <= 1) {
 			$days = 1;
 		}
-		$since = sprintf(__ngettext('%s day', '%s days', $days), $days);
+		$since = sprintf(_n('%s day', '%s days', $days), $days);
 	}
 	return $since;
 }
@@ -1313,15 +1788,19 @@ function human_time_diff( $from, $to = '' ) {
  * Generates an excerpt from the content, if needed.
  *
  * The excerpt word amount will be 55 words and if the amount is greater than
- * that, then the string '[...]' will be appended to the excerpt. If the string
+ * that, then the string ' [...]' will be appended to the excerpt. If the string
  * is less than 55 words, then the content will be returned as is.
+ *
+ * The 55 word limit can be modified by plugins/themes using the excerpt_length filter
+ * The ' [...]' string can be modified by plugins/themes using the excerpt_more filter
  *
  * @since 1.5.0
  *
- * @param string $text The exerpt. If set to empty an excerpt is generated.
+ * @param string $text The excerpt. If set to empty an excerpt is generated.
  * @return string The excerpt.
  */
 function wp_trim_excerpt($text) {
+	$raw_excerpt = $text;
 	if ( '' == $text ) {
 		$text = get_the_content('');
 
@@ -1331,14 +1810,15 @@ function wp_trim_excerpt($text) {
 		$text = str_replace(']]>', ']]&gt;', $text);
 		$text = strip_tags($text);
 		$excerpt_length = apply_filters('excerpt_length', 55);
+		$excerpt_more = apply_filters('excerpt_more', ' ' . '[...]');
 		$words = explode(' ', $text, $excerpt_length + 1);
 		if (count($words) > $excerpt_length) {
 			array_pop($words);
-			array_push($words, '[...]');
 			$text = implode(' ', $words);
+			$text = $text . $excerpt_more;
 		}
 	}
-	return $text;
+	return apply_filters('wp_trim_excerpt', $text, $raw_excerpt);
 }
 
 /**
@@ -1657,7 +2137,7 @@ function wp_htmledit_pre($output) {
  * Checks and cleans a URL.
  *
  * A number of characters are removed from the URL. If the URL is for displaying
- * (the default behaviour) amperstands are also replaced. The 'clean_url' filter
+ * (the default behaviour) amperstands are also replaced. The 'esc_url' filter
  * is applied to the returned cleaned URL.
  *
  * @since 1.2.0
@@ -1674,16 +2154,16 @@ function clean_url( $url, $protocols = null, $context = 'display' ) {
 	$original_url = $url;
 
 	if ('' == $url) return $url;
-	$url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$*\'()\\x80-\\xff]|i', '', $url);
-	$strip = array('%0d', '%0a');
-	$url = str_replace($strip, '', $url);
+	$url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\\x80-\\xff]|i', '', $url);
+	$strip = array('%0d', '%0a', '%0D', '%0A');
+	$url = _deep_replace($strip, $url);
 	$url = str_replace(';//', '://', $url);
 	/* If the URL doesn't appear to contain a scheme, we
 	 * presume it needs http:// appended (unless a relative
 	 * link starting with / or a php file).
 	 */
 	if ( strpos($url, ':') === false &&
-		substr( $url, 0, 1 ) != '/' && !preg_match('/^[a-z0-9-]+?\.php/i', $url) )
+		substr( $url, 0, 1 ) != '/' && substr( $url, 0, 1 ) != '#' && !preg_match('/^[a-z0-9-]+?\.php/i', $url) )
 		$url = 'http://' . $url;
 
 	// Replace ampersands and single quotes only when displaying.
@@ -1701,9 +2181,91 @@ function clean_url( $url, $protocols = null, $context = 'display' ) {
 }
 
 /**
- * Performs clean_url() for database usage.
+ * Perform a deep string replace operation to ensure the values in $search are no longer present
  *
- * @see clean_url()
+ * Repeats the replacement operation until it no longer replaces anything so as to remove "nested" values
+ * e.g. $subject = '%0%0%0DDD', $search ='%0D', $result ='' rather than the '%0%0DD' that
+ * str_replace would return
+ *
+ * @since 2.8.1
+ * @access private
+ *
+ * @param string|array $search
+ * @param string $subject
+ * @return string The processed string
+ */
+function _deep_replace($search, $subject){
+	$found = true;
+	while($found) {
+		$found = false;
+		foreach( (array) $search as $val ) {
+			while(strpos($subject, $val) !== false) {
+				$found = true;
+				$subject = str_replace($val, '', $subject);
+			}
+		}
+	}
+
+	return $subject;
+}
+
+/**
+ * Escapes data for use in a MySQL query
+ *
+ * This is just a handy shortcut for $wpdb->escape(), for completeness' sake
+ *
+ * @since 2.8.0
+ * @param string $sql Unescaped SQL data
+ * @return string The cleaned $sql
+ */
+function esc_sql( $sql ) {
+	global $wpdb;
+	return $wpdb->escape( $sql );
+}
+
+
+/**
+ * Checks and cleans a URL.
+ *
+ * A number of characters are removed from the URL. If the URL is for displaying
+ * (the default behaviour) amperstands are also replaced. The 'esc_url' filter
+ * is applied to the returned cleaned URL.
+ *
+ * @since 2.8.0
+ * @uses esc_url()
+ * @uses wp_kses_bad_protocol() To only permit protocols in the URL set
+ *		via $protocols or the common ones set in the function.
+ *
+ * @param string $url The URL to be cleaned.
+ * @param array $protocols Optional. An array of acceptable protocols.
+ *		Defaults to 'http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet' if not set.
+ * @return string The cleaned $url after the 'cleaned_url' filter is applied.
+ */
+function esc_url( $url, $protocols = null ) {
+	return clean_url( $url, $protocols, 'display' );
+}
+
+/**
+ * Performs esc_url() for database usage.
+ *
+ * @see esc_url()
+ * @see esc_url()
+ *
+ * @since 2.8.0
+ *
+ * @param string $url The URL to be cleaned.
+ * @param array $protocols An array of acceptable protocols.
+ * @return string The cleaned URL.
+ */
+function esc_url_raw( $url, $protocols = null ) {
+	return clean_url( $url, $protocols, 'db' );
+}
+
+/**
+ * Performs esc_url() for database or redirect usage.
+ *
+ * @see esc_url()
+ * @deprecated 2.8.0
  *
  * @since 2.3.1
  *
@@ -1732,20 +2294,83 @@ function htmlentities2($myHTML) {
 }
 
 /**
- * Escape single quotes, specialchar double quotes, and fix line endings.
+ * Escape single quotes, htmlspecialchar " < > &, and fix line endings.
  *
+ * Escapes text strings for echoing in JS, both inline (for example in onclick="...")
+ * and inside <script> tag. Note that the strings have to be in single quotes.
  * The filter 'js_escape' is also applied here.
  *
- * @since 2.0.4
+ * @since 2.8.0
  *
  * @param string $text The text to be escaped.
  * @return string Escaped text.
  */
-function js_escape($text) {
-	$safe_text = wp_specialchars($text, 'double');
-	$safe_text = preg_replace('/&#(x)?0*(?(1)27|39);?/i', "'", stripslashes($safe_text));
-	$safe_text = preg_replace("/\r?\n/", "\\n", addslashes($safe_text));
-	return apply_filters('js_escape', $safe_text, $text);
+function esc_js( $text ) {
+	$safe_text = wp_check_invalid_utf8( $text );
+	$safe_text = _wp_specialchars( $safe_text, ENT_COMPAT );
+	$safe_text = preg_replace( '/&#(x)?0*(?(1)27|39);?/i', "'", stripslashes( $safe_text ) );
+	$safe_text = str_replace( "\r", '', $safe_text );
+	$safe_text = str_replace( "\n", '\\n', addslashes( $safe_text ) );
+	return apply_filters( 'js_escape', $safe_text, $text );
+}
+
+/**
+ * Escape single quotes, specialchar double quotes, and fix line endings.
+ *
+ * The filter 'js_escape' is also applied by esc_js()
+ *
+ * @since 2.0.4
+ *
+ * @deprecated 2.8.0
+ * @see esc_js()
+ *
+ * @param string $text The text to be escaped.
+ * @return string Escaped text.
+ */
+function js_escape( $text ) {
+	return esc_js( $text );
+}
+
+/**
+ * Escaping for HTML blocks.
+ *
+ * @since 2.8.0
+ *
+ * @param string $text
+ * @return string
+ */
+function esc_html( $text ) {
+	$safe_text = wp_check_invalid_utf8( $text );
+	$safe_text = _wp_specialchars( $safe_text, ENT_QUOTES );
+	return apply_filters( 'esc_html', $safe_text, $text );
+}
+
+/**
+ * Escaping for HTML blocks
+ * @deprecated 2.8.0
+ * @see esc_html()
+ */
+function wp_specialchars( $string, $quote_style = ENT_NOQUOTES, $charset = false, $double_encode = false ) {
+	if ( func_num_args() > 1 ) { // Maintain backwards compat for people passing additional args
+		$args = func_get_args();
+		return call_user_func_array( '_wp_specialchars', $args );
+	} else {
+		return esc_html( $string );
+	}
+}
+
+/**
+ * Escaping for HTML attributes.
+ *
+ * @since 2.8.0
+ *
+ * @param string $text
+ * @return string
+ */
+function esc_attr( $text ) {
+	$safe_text = wp_check_invalid_utf8( $text );
+	$safe_text = _wp_specialchars( $safe_text, ENT_QUOTES );
+	return apply_filters( 'attribute_escape', $safe_text, $text );
 }
 
 /**
@@ -1753,12 +2378,14 @@ function js_escape($text) {
  *
  * @since 2.0.6
  *
+ * @deprecated 2.8.0
+ * @see esc_attr()
+ *
  * @param string $text
  * @return string
  */
-function attribute_escape($text) {
-	$safe_text = wp_specialchars($text, true);
-	return apply_filters('attribute_escape', $safe_text, $text);
+function attribute_escape( $text ) {
+	return esc_attr( $text );
 }
 
 /**
@@ -1770,7 +2397,7 @@ function attribute_escape($text) {
  * @return string
  */
 function tag_escape($tag_name) {
-	$safe_tag = strtolower( preg_replace('[^a-zA-Z_:]', '', $tag_name) );
+	$safe_tag = strtolower( preg_replace('/[^a-zA-Z_:]/', '', $tag_name) );
 	return apply_filters('tag_escape', $safe_tag, $tag_name);
 }
 
@@ -1826,6 +2453,7 @@ function sanitize_option($option, $value) {
 		case 'medium_size_h':
 		case 'large_size_w':
 		case 'large_size_h':
+		case 'embed_size_h':
 		case 'default_post_edit_rows':
 		case 'mailserver_port':
 		case 'comment_max_links':
@@ -1837,7 +2465,13 @@ function sanitize_option($option, $value) {
 		case 'close_comments_days_old':
 		case 'comments_per_page':
 		case 'thread_comments_depth':
-			$value = abs((int) $value);
+		case 'users_can_register':
+			$value = absint( $value );
+			break;
+
+		case 'embed_size_w':
+			if ( '' !== $value )
+				$value = absint( $value );
 			break;
 
 		case 'posts_per_page':
@@ -1859,7 +2493,7 @@ function sanitize_option($option, $value) {
 			$value = addslashes($value);
 			$value = wp_filter_post_kses( $value ); // calls stripslashes then addslashes
 			$value = stripslashes($value);
-			$value = wp_specialchars( $value );
+			$value = esc_html( $value );
 			break;
 
 		case 'blog_charset':
@@ -1886,7 +2520,7 @@ function sanitize_option($option, $value) {
 		case 'siteurl':
 		case 'home':
 			$value = stripslashes($value);
-			$value = clean_url($value);
+			$value = esc_url($value);
 			break;
 		default :
 			$value = apply_filters("sanitize_option_{$option}", $value, $option);
@@ -1933,15 +2567,15 @@ function wp_pre_kses_less_than( $text ) {
 /**
  * Callback function used by preg_replace.
  *
- * @uses wp_specialchars to format the $matches text.
+ * @uses esc_html to format the $matches text.
  * @since 2.3.0
  *
  * @param array $matches Populated by matches to preg_replace.
- * @return string The text returned after wp_specialchars if needed.
+ * @return string The text returned after esc_html if needed.
  */
 function wp_pre_kses_less_than_callback( $matches ) {
 	if ( false === strpos($matches[0], '>') )
-		return wp_specialchars($matches[0]);
+		return esc_html($matches[0]);
 	return $matches[0];
 }
 
@@ -2031,9 +2665,12 @@ function wp_sprintf_l($pattern, $args) {
 
 	// Translate and filter the delimiter set (avoid ampersands and entities here)
 	$l = apply_filters('wp_sprintf_l', array(
-		'between'          => _c(', |between list items'),
-		'between_last_two' => _c(', and |between last two list items'),
-		'between_only_two' => _c(' and |between only two list items'),
+		/* translators: used between list items, there is a space after the coma */
+		'between'          => __(', '),
+		/* translators: used between list items, there is a space after the and */
+		'between_last_two' => __(', and '),
+		/* translators: used between only two list items, there is a space after the and */
+		'between_only_two' => __(' and '),
 		));
 
 	$args = (array) $args;
@@ -2045,7 +2682,7 @@ function wp_sprintf_l($pattern, $args) {
 	while ( $i ) {
 		$arg = array_shift($args);
 		$i--;
-		if ( $i == 1 )
+		if ( 0 == $i )
 			$result .= $l['between_last_two'] . $arg;
 		else
 			$result .= $l['between'] . $arg;
@@ -2067,8 +2704,8 @@ function wp_sprintf_l($pattern, $args) {
  * @return string The excerpt.
  */
 function wp_html_excerpt( $str, $count ) {
-	$str = strip_tags( $str );
-	$str = mb_strcut( $str, 0, $count );
+	$str = wp_strip_all_tags( $str, true );
+	$str = mb_substr( $str, 0, $count );
 	// remove part of an entity at the end
 	$str = preg_replace( '/&[^;\s]{0,6}$/', '', $str );
 	return $str;
@@ -2134,6 +2771,7 @@ function links_add_target( $content, $target = '_blank', $tags = array('a') ) {
 			create_function('$m', 'return _links_add_target($m, "' . $target . '");'),
 			$content);
 }
+
 /**
  * Callback to add a target attribute to all links in passed content.
  *
@@ -2156,6 +2794,56 @@ function normalize_whitespace( $str ) {
 	$str  = str_replace("\r", "\n", $str);
 	$str  = preg_replace( array( '/\n+/', '/[ \t]+/' ), array( "\n", ' ' ), $str );
 	return $str;
+}
+
+/**
+ * Properly strip all HTML tags including script and style
+ *
+ * @since 2.9.0
+ *
+ * @param string $string String containing HTML tags
+ * @param bool $remove_breaks optional Whether to remove left over line breaks and white space chars
+ * @return string The processed string.
+ */
+function wp_strip_all_tags($string, $remove_breaks = false) {
+	$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $string );
+	$string = strip_tags($string);
+
+	if ( $remove_breaks )
+		$string = preg_replace('/[\r\n\t ]+/', ' ', $string);
+
+	return trim($string);
+}
+
+/**
+ * Sanitize a string from user input or from the db
+ *
+ * check for invalid UTF-8,
+ * Convert single < characters to entity,
+ * strip all tags,
+ * remove line breaks, tabs and extra whitre space,
+ * strip octets.
+ *
+ * @since 2.9
+ *
+ * @param string $str
+ * @return string
+ */
+function sanitize_text_field($str) {
+	$filtered = wp_check_invalid_utf8( $str );
+
+	if ( strpos($filtered, '<') !== false ) {
+		$filtered = wp_pre_kses_less_than( $filtered );
+		$filtered = wp_strip_all_tags( $filtered, true );
+	} else {
+		 $filtered = trim( preg_replace('/[\r\n\t ]+/', ' ', $filtered) );
+	}
+
+	$match = array();
+	while ( preg_match('/%[a-f0-9]{2}/i', $filtered, $match) )
+		$filtered = str_replace($match[0], '', $filtered);
+
+	return apply_filters('sanitize_text_field', $filtered, $str);
 }
 
 ?>

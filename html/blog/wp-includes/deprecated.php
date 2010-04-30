@@ -748,14 +748,13 @@ function dropdown_cats($optionall = 1, $all = 'All', $orderby = 'ID', $order = '
 
 /**
  * @since 2.1
- * @deprecated Use wp_print_scripts() or WP_Scripts.
- * @see wp_print_scripts()
- * @see WP_Scripts
+ * @deprecated Use wp_tiny_mce().
+ * @see wp_tiny_mce()
  */
 function tinymce_include() {
-	_deprecated_function(__FUNCTION__, '0.0', 'wp_print_scripts()/WP_Scripts');
+	_deprecated_function(__FUNCTION__, '0.0', 'wp_tiny_mce()');
 
-	wp_print_script('wp_tiny_mce');
+	wp_tiny_mce();
 }
 
 /**
@@ -1002,13 +1001,13 @@ function get_links($category = -1, $before = '', $after = '<br />', $between = '
 			$output .= get_option('links_recently_updated_prepend');
 		$the_link = '#';
 		if ( !empty($row->link_url) )
-			$the_link = clean_url($row->link_url);
+			$the_link = esc_url($row->link_url);
 		$rel = $row->link_rel;
 		if ( '' != $rel )
 			$rel = ' rel="' . $rel . '"';
 
-		$desc = attribute_escape(sanitize_bookmark_field('link_description', $row->link_description, $row->link_id, 'display'));
-		$name = attribute_escape(sanitize_bookmark_field('link_name', $row->link_name, $row->link_id, 'display'));
+		$desc = esc_attr(sanitize_bookmark_field('link_description', $row->link_description, $row->link_id, 'display'));
+		$name = esc_attr(sanitize_bookmark_field('link_name', $row->link_name, $row->link_id, 'display'));
 		$title = $desc;
 
 		if ( $show_updated )
@@ -1304,4 +1303,511 @@ function get_commentdata( $comment_ID, $no_cache = 0, $include_unapproved = fals
 	return get_comment($comment_ID, ARRAY_A);
 }
 
+/**
+ * Retrieve the category name by the category ID.
+ *
+ * @since 0.71
+ * @deprecated Use get_cat_name()
+ * @see get_cat_name() get_catname() is deprecated in favor of get_cat_name().
+ *
+ * @param int $cat_ID Category ID
+ * @return string category name
+ */
+function get_catname( $cat_ID ) {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_cat_name()');
+	return get_cat_name( $cat_ID );
+}
+
+/**
+ * Retrieve category children list separated before and after the term IDs.
+ *
+ * @since 1.2.0
+ *
+ * @param int $id Category ID to retrieve children.
+ * @param string $before Optional. Prepend before category term ID.
+ * @param string $after Optional, default is empty string. Append after category term ID.
+ * @param array $visited Optional. Category Term IDs that have already been added.
+ * @return string
+ */
+function get_category_children( $id, $before = '/', $after = '', $visited = array() ) {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_term_children()');
+	if ( 0 == $id )
+		return '';
+
+	$chain = '';
+	/** TODO: consult hierarchy */
+	$cat_ids = get_all_category_ids();
+	foreach ( (array) $cat_ids as $cat_id ) {
+		if ( $cat_id == $id )
+			continue;
+
+		$category = get_category( $cat_id );
+		if ( is_wp_error( $category ) )
+			return $category;
+		if ( $category->parent == $id && !in_array( $category->term_id, $visited ) ) {
+			$visited[] = $category->term_id;
+			$chain .= $before.$category->term_id.$after;
+			$chain .= get_category_children( $category->term_id, $before, $after );
+		}
+	}
+	return $chain;
+}
+
+/**
+ * Retrieve the description of the author of the current post.
+ *
+ * @since 1.5
+ * @deprecated 2.8
+ * @uses $authordata The current author's DB object.
+ * @return string The author's description.
+ * @deprecated Use the_author_meta('description')
+ */
+function get_the_author_description() {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_the_author_meta(\'description\')' );
+	return get_the_author_meta('description');
+}
+
+/**
+ * Display the description of the author of the current post.
+ *
+ * @link http://codex.wordpress.org/Template_Tags/the_author_description
+ * @since 1.0.0
+ * @deprecated 2.8
+ * @deprecated Use the_author_meta('description')
+ */
+function the_author_description() {
+	_deprecated_function(__FUNCTION__, '2.8', 'the_author_meta(\'description\')' );
+	the_author_meta('description');
+}
+
+/**
+ * Retrieve the login name of the author of the current post.
+ *
+ * @since 1.5
+ * @deprecated 2.8
+ * @uses $authordata The current author's DB object.
+ * @return string The author's login name (username).
+ * @deprecated Use the_author_meta('login')
+ */
+function get_the_author_login() {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_the_author_meta(\'login\')' );
+	return get_the_author_meta('login');
+}
+
+/**
+ * Display the login name of the author of the current post.
+ *
+ * @link http://codex.wordpress.org/Template_Tags/the_author_login
+ * @since 0.71
+ * @deprecated 2.8
+ * @deprecated Use the_author_meta('login')
+ */
+function the_author_login() {
+	_deprecated_function(__FUNCTION__, '2.8', 'the_author_meta(\'login\')' );
+	the_author_meta('login');
+}
+
+/**
+ * Retrieve the first name of the author of the current post.
+ *
+ * @since 1.5
+ * @deprecated 2.8
+ * @uses $authordata The current author's DB object.
+ * @return string The author's first name.
+ * @deprecated Use the_author_meta('first_name')
+ */
+function get_the_author_firstname() {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_the_author_meta(\'first_name\')' );
+	return get_the_author_meta('first_name');
+}
+
+/**
+ * Display the first name of the author of the current post.
+ *
+ * @link http://codex.wordpress.org/Template_Tags/the_author_firstname
+ * @since 0.71
+ * @deprecated 2.8
+ * @deprecated Use the_author_meta('first_name')
+ */
+function the_author_firstname() {
+	_deprecated_function(__FUNCTION__, '2.8', 'the_author_meta(\'first_name\')' );
+	the_author_meta('first_name');
+}
+
+/**
+ * Retrieve the last name of the author of the current post.
+ *
+ * @since 1.5
+ * @deprecated 2.8
+ * @uses $authordata The current author's DB object.
+ * @return string The author's last name.
+ * @deprecated Use the_author_meta('last_name')
+ */
+function get_the_author_lastname() {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_the_author_meta(\'last_name\')' );
+	return get_the_author_meta('last_name');
+}
+
+/**
+ * Display the last name of the author of the current post.
+ *
+ * @link http://codex.wordpress.org/Template_Tags/the_author_lastname
+ * @since 0.71
+ * @deprecated 2.8
+ * @deprecated Use the_author_meta('last_name')
+ */
+function the_author_lastname() {
+	_deprecated_function(__FUNCTION__, '2.8', 'the_author_meta(\'last_name\')' );
+	the_author_meta('last_name');
+}
+
+/**
+ * Retrieve the nickname of the author of the current post.
+ *
+ * @since 1.5
+ * @deprecated 2.8
+ * @uses $authordata The current author's DB object.
+ * @return string The author's nickname.
+ * @deprecated Use the_author_meta('nickname')
+ */
+function get_the_author_nickname() {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_the_author_meta(\'nickname\')' );
+	return get_the_author_meta('nickname');
+}
+
+/**
+ * Display the nickname of the author of the current post.
+ *
+ * @link http://codex.wordpress.org/Template_Tags/the_author_nickname
+ * @since 0.71
+ * @deprecated 2.8
+ * @deprecated Use the_author_meta('nickname')
+ */
+function the_author_nickname() {
+	_deprecated_function(__FUNCTION__, '2.8', 'the_author_meta(\'nickname\')' );
+	the_author_meta('nickname');
+}
+
+/**
+ * Retrieve the email of the author of the current post.
+ *
+ * @since 1.5
+ * @deprecated 2.8
+ * @uses $authordata The current author's DB object.
+ * @return string The author's username.
+ * @deprecated Use the_author_meta('email')
+ */
+function get_the_author_email() {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_the_author_meta(\'email\')' );
+	return get_the_author_meta('email');
+}
+
+/**
+ * Display the email of the author of the current post.
+ *
+ * @link http://codex.wordpress.org/Template_Tags/the_author_email
+ * @since 0.71
+ * @deprecated 2.8
+ * @deprecated Use the_author_meta('email')
+ */
+function the_author_email() {
+	_deprecated_function(__FUNCTION__, '2.8', 'the_author_meta(\'email\')' );
+	the_author_meta('email');
+}
+
+/**
+ * Retrieve the ICQ number of the author of the current post.
+ *
+ * @since 1.5
+ * @deprecated 2.8
+ * @uses $authordata The current author's DB object.
+ * @return string The author's ICQ number.
+ * @deprecated Use the_author_meta('icq')
+ */
+function get_the_author_icq() {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_the_author_meta(\'icq\')' );
+	return get_the_author_meta('icq');
+}
+
+/**
+ * Display the ICQ number of the author of the current post.
+ *
+ * @link http://codex.wordpress.org/Template_Tags/the_author_icq
+ * @since 0.71
+ * @deprecated 2.8
+ * @see get_the_author_icq()
+ * @deprecated Use the_author_meta('icq')
+ */
+function the_author_icq() {
+	_deprecated_function(__FUNCTION__, '2.8', 'the_author_meta(\'icq\')' );
+	the_author_meta('icq');
+}
+
+/**
+ * Retrieve the Yahoo! IM name of the author of the current post.
+ *
+ * @since 1.5
+ * @deprecated 2.8
+ * @uses $authordata The current author's DB object.
+ * @return string The author's Yahoo! IM name.
+ * @deprecated Use the_author_meta('yim')
+ */
+function get_the_author_yim() {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_the_author_meta(\'yim\')' );
+	return get_the_author_meta('yim');
+}
+
+/**
+ * Display the Yahoo! IM name of the author of the current post.
+ *
+ * @link http://codex.wordpress.org/Template_Tags/the_author_yim
+ * @since 0.71
+ * @deprecated 2.8
+ * @deprecated Use the_author_meta('yim')
+ */
+function the_author_yim() {
+	_deprecated_function(__FUNCTION__, '2.8', 'the_author_meta(\'yim\')' );
+	the_author_meta('yim');
+}
+
+/**
+ * Retrieve the MSN address of the author of the current post.
+ *
+ * @since 1.5
+ * @deprecated 2.8
+ * @uses $authordata The current author's DB object.
+ * @return string The author's MSN address.
+ * @deprecated Use the_author_meta('msn')
+ */
+function get_the_author_msn() {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_the_author_meta(\'msn\')' );
+	return get_the_author_meta('msn');
+}
+
+/**
+ * Display the MSN address of the author of the current post.
+ *
+ * @link http://codex.wordpress.org/Template_Tags/the_author_msn
+ * @since 0.71
+ * @deprecated 2.8
+ * @see get_the_author_msn()
+ * @deprecated Use the_author_meta('msn')
+ */
+function the_author_msn() {
+	_deprecated_function(__FUNCTION__, '2.8', 'the_author_meta(\'msn\')' );
+	the_author_meta('msn');
+}
+
+/**
+ * Retrieve the AIM address of the author of the current post.
+ *
+ * @since 1.5
+ * @deprecated 2.8
+ * @uses $authordata The current author's DB object.
+ * @return string The author's AIM address.
+ * @deprecated Use the_author_meta('aim')
+ */
+function get_the_author_aim() {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_the_author_meta(\'aim\')' );
+	return get_the_author_meta('aim');
+}
+
+/**
+ * Display the AIM address of the author of the current post.
+ *
+ * @link http://codex.wordpress.org/Template_Tags/the_author_aim
+ * @since 0.71
+ * @deprecated 2.8
+ * @see get_the_author_aim()
+ * @deprecated Use the_author_meta('aim')
+ */
+function the_author_aim() {
+	_deprecated_function(__FUNCTION__, '2.8', 'the_author_meta(\'aim\')' );
+	the_author_meta('aim');
+}
+
+/**
+ * Retrieve the specified author's preferred display name.
+ *
+ * @since 1.0.0
+ * @deprecated 2.8
+ * @param int $auth_id The ID of the author.
+ * @return string The author's display name.
+ * @deprecated Use the_author_meta('display_name')
+ */
+function get_author_name( $auth_id = false ) {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_the_author_meta(\'display_name\')' );
+	return get_the_author_meta('display_name', $auth_id);
+}
+
+/**
+ * Retrieve the URL to the home page of the author of the current post.
+ *
+ * @since 1.5
+ * @deprecated 2.8
+ * @uses $authordata The current author's DB object.
+ * @return string The URL to the author's page.
+ */
+function get_the_author_url() {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_the_author_meta(\'url\')' );
+	return get_the_author_meta('url');
+}
+
+/**
+ * Display the URL to the home page of the author of the current post.
+ *
+ * @link http://codex.wordpress.org/Template_Tags/the_author_url
+ * @since 0.71
+ * @deprecated 2.8
+ */
+function the_author_url() {
+	_deprecated_function(__FUNCTION__, '2.8', 'the_author_meta(\'url\')' );
+	the_author_meta('url');
+}
+
+/**
+ * Retrieve the ID of the author of the current post.
+ *
+ * @since 1.5
+ * @deprecated 2.8
+ * @return int The author's ID.
+ */
+function get_the_author_ID() {
+	_deprecated_function(__FUNCTION__, '2.8', 'get_the_author_meta(\'ID\')' );
+	return get_the_author_meta('ID');
+}
+
+/**
+ * Display the ID of the author of the current post.
+ *
+ * @link http://codex.wordpress.org/Template_Tags/the_author_ID
+ * @since 0.71
+ * @deprecated 2.8
+ * @uses get_the_author_ID()
+*/
+function the_author_ID() {
+	_deprecated_function(__FUNCTION__, '2.8', 'the_author_meta(\'ID\')' );
+	the_author_meta('ID');
+}
+
+/**
+ * Display the post content for the feed.
+ *
+ * For encoding the html or the $encode_html parameter, there are three possible
+ * values. '0' will make urls footnotes and use make_url_footnote(). '1' will
+ * encode special characters and automatically display all of the content. The
+ * value of '2' will strip all HTML tags from the content.
+ *
+ * Also note that you cannot set the amount of words and not set the html
+ * encoding. If that is the case, then the html encoding will default to 2,
+ * which will strip all HTML tags.
+ *
+ * To restrict the amount of words of the content, you can use the cut
+ * parameter. If the content is less than the amount, then there won't be any
+ * dots added to the end. If there is content left over, then dots will be added
+ * and the rest of the content will be removed.
+ *
+ * @package WordPress
+ * @subpackage Feed
+ * @since 0.71
+ * @uses apply_filters() Calls 'the_content_rss' on the content before processing.
+ * @see get_the_content() For the $more_link_text, $stripteaser, and $more_file
+ *		parameters.
+ *
+ * @deprecated 2.9.0
+ *
+ * @param string $more_link_text Optional. Text to display when more content is available but not displayed.
+ * @param int|bool $stripteaser Optional. Default is 0.
+ * @param string $more_file Optional.
+ * @param int $cut Optional. Amount of words to keep for the content.
+ * @param int $encode_html Optional. How to encode the content.
+ */
+function the_content_rss($more_link_text='(more...)', $stripteaser=0, $more_file='', $cut = 0, $encode_html = 0) {
+	_deprecated_function(__FUNCTION__, '2.9', 'the_content_feed' );
+	$content = get_the_content($more_link_text, $stripteaser, $more_file);
+	$content = apply_filters('the_content_rss', $content);
+	if ( $cut && !$encode_html )
+		$encode_html = 2;
+	if ( 1== $encode_html ) {
+		$content = esc_html($content);
+		$cut = 0;
+	} elseif ( 0 == $encode_html ) {
+		$content = make_url_footnote($content);
+	} elseif ( 2 == $encode_html ) {
+		$content = strip_tags($content);
+	}
+	if ( $cut ) {
+		$blah = explode(' ', $content);
+		if ( count($blah) > $cut ) {
+			$k = $cut;
+			$use_dotdotdot = 1;
+		} else {
+			$k = count($blah);
+			$use_dotdotdot = 0;
+		}
+
+		/** @todo Check performance, might be faster to use array slice instead. */
+		for ( $i=0; $i<$k; $i++ )
+			$excerpt .= $blah[$i].' ';
+		$excerpt .= ($use_dotdotdot) ? '...' : '';
+		$content = $excerpt;
+	}
+	$content = str_replace(']]>', ']]&gt;', $content);
+	echo $content;
+}
+
+/**
+ * Strip HTML and put links at the bottom of stripped content.
+ *
+ * Searches for all of the links, strips them out of the content, and places
+ * them at the bottom of the content with numbers.
+ *
+ * @since 0.71
+ * @deprecated 2.9.0
+ *
+ * @param string $content Content to get links
+ * @return string HTML stripped out of content with links at the bottom.
+ */
+function make_url_footnote( $content ) {
+	_deprecated_function(__FUNCTION__, '2.9', '' );
+	preg_match_all( '/<a(.+?)href=\"(.+?)\"(.*?)>(.+?)<\/a>/', $content, $matches );
+	$links_summary = "\n";
+	for ( $i=0; $i<count($matches[0]); $i++ ) {
+		$link_match = $matches[0][$i];
+		$link_number = '['.($i+1).']';
+		$link_url = $matches[2][$i];
+		$link_text = $matches[4][$i];
+		$content = str_replace( $link_match, $link_text . ' ' . $link_number, $content );
+		$link_url = ( ( strtolower( substr( $link_url, 0, 7 ) ) != 'http://' ) && ( strtolower( substr( $link_url, 0, 8 ) ) != 'https://' ) ) ? get_option( 'home' ) . $link_url : $link_url;
+		$links_summary .= "\n" . $link_number . ' ' . $link_url;
+	}
+	$content  = strip_tags( $content );
+	$content .= $links_summary;
+	return $content;
+}
+
+/**
+ * Retrieve translated string with vertical bar context
+ *
+ * Quite a few times, there will be collisions with similar translatable text
+ * found in more than two places but with different translated context.
+ *
+ * In order to use the separate contexts, the _c() function is used and the
+ * translatable string uses a pipe ('|') which has the context the string is in.
+ *
+ * When the translated string is returned, it is everything before the pipe, not
+ * including the pipe character. If there is no pipe in the translated text then
+ * everything is returned.
+ *
+ * @since 2.2.0
+ * @deprecated 2.9.0
+ *
+ * @param string $text Text to translate
+ * @param string $domain Optional. Domain to retrieve the translated text
+ * @return string Translated context string without pipe
+ */
+function _c( $text, $domain = 'default' ) {
+	_deprecated_function(__FUNCTION__, '2.9', '_x' );
+	return translate_with_context( $text, $domain );
+}
 ?>

@@ -142,10 +142,15 @@ function get_bookmarks($args = '') {
 	$r = wp_parse_args( $args, $defaults );
 	extract( $r, EXTR_SKIP );
 
+	$cache = array();
 	$key = md5( serialize( $r ) );
-	if ( $cache = wp_cache_get( 'get_bookmarks', 'bookmark' ) )
-		if ( isset( $cache[ $key ] ) )
+	if ( $cache = wp_cache_get( 'get_bookmarks', 'bookmark' ) ) {
+		if ( is_array($cache) && isset( $cache[ $key ] ) )
 			return apply_filters('get_bookmarks', $cache[ $key ], $r );
+	}
+
+	if ( !is_array($cache) )
+		$cache = array();
 
 	$inclusions = '';
 	if ( !empty($include) ) {
@@ -180,9 +185,14 @@ function get_bookmarks($args = '') {
 	if (!empty($exclusions))
 		$exclusions .= ')';
 
-	if ( ! empty($category_name) ) {
-		if ( $category = get_term_by('name', $category_name, 'link_category') )
+	if ( !empty($category_name) ) {
+		if ( $category = get_term_by('name', $category_name, 'link_category') ) {
 			$category = $category->term_id;
+		} else {
+			$cache[ $key ] = array();
+			wp_cache_set( 'get_bookmarks', $cache, 'bookmark' );
+			return apply_filters( 'get_bookmarks', array(), $r );
+		}
 	}
 
 	if ( ! empty($search) ) {
@@ -208,7 +218,7 @@ function get_bookmarks($args = '') {
 		$join = " INNER JOIN $wpdb->term_relationships AS tr ON ($wpdb->links.link_id = tr.object_id) INNER JOIN $wpdb->term_taxonomy as tt ON tt.term_taxonomy_id = tr.term_taxonomy_id";
 	}
 
-	if (get_option('links_recently_updated_time')) {
+	if ( $show_updated && get_option('links_recently_updated_time') ) {
 		$recently_updated_test = ", IF (DATE_ADD(link_updated, INTERVAL " . get_option('links_recently_updated_time') . " MINUTE) >= NOW(), 1,0) as recently_updated ";
 	} else {
 		$recently_updated_test = '';
@@ -335,7 +345,7 @@ function sanitize_bookmark_field($field, $value, $bookmark_id, $context) {
 		if ( in_array($field, $format_to_edit) ) {
 			$value = format_to_edit($value);
 		} else {
-			$value = attribute_escape($value);
+			$value = esc_attr($value);
 		}
 	} else if ( 'db' == $context ) {
 		$value = apply_filters("pre_$field", $value);
@@ -345,9 +355,9 @@ function sanitize_bookmark_field($field, $value, $bookmark_id, $context) {
 	}
 
 	if ( 'attribute' == $context )
-		$value = attribute_escape($value);
+		$value = esc_attr($value);
 	else if ( 'js' == $context )
-		$value = js_escape($value);
+		$value = esc_js($value);
 
 	return $value;
 }

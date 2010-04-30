@@ -56,8 +56,13 @@ if (!function_exists('stripos')) {
 	}
 }
 
-if ( ! function_exists('hash_hmac') ):
+if ( !function_exists('hash_hmac') ):
 function hash_hmac($algo, $data, $key, $raw_output = false) {
+	return _hash_hmac($algo, $data, $key, $raw_output);
+}
+endif;
+
+function _hash_hmac($algo, $data, $key, $raw_output = false) {
 	$packs = array('md5' => 'H32', 'sha1' => 'H40');
 
 	if ( !isset($packs[$algo]) )
@@ -67,23 +72,26 @@ function hash_hmac($algo, $data, $key, $raw_output = false) {
 
 	if (strlen($key) > 64)
 		$key = pack($pack, $algo($key));
-	else if (strlen($key) < 64)
-		$key = str_pad($key, 64, chr(0));
+
+	$key = str_pad($key, 64, chr(0));
 
 	$ipad = (substr($key, 0, 64) ^ str_repeat(chr(0x36), 64));
 	$opad = (substr($key, 0, 64) ^ str_repeat(chr(0x5C), 64));
 
-	return $algo($opad . pack($pack, $algo($ipad . $data)));
-}
-endif;
+	$hmac = $algo($opad . pack($pack, $algo($ipad . $data)));
 
-if ( ! function_exists('mb_strcut') ):
-	function mb_strcut( $str, $start, $length=null, $encoding=null ) {
-		return _mb_strcut($str, $start, $length, $encoding);
+	if ( $raw_output )
+		return pack( $pack, $hmac );
+	return $hmac;
+}
+
+if ( !function_exists('mb_substr') ):
+	function mb_substr( $str, $start, $length=null, $encoding=null ) {
+		return _mb_substr($str, $start, $length, $encoding);
 	}
 endif;
 
-function _mb_strcut( $str, $start, $length=null, $encoding=null ) {
+function _mb_substr( $str, $start, $length=null, $encoding=null ) {
 	// the solution below, works only for utf-8, so in case of a different
 	// charset, just use built-in substr
 	$charset = get_option( 'blog_charset' );
@@ -96,4 +104,59 @@ function _mb_strcut( $str, $start, $length=null, $encoding=null ) {
 	return implode( '', $chars );
 }
 
-?>
+if ( !function_exists( 'htmlspecialchars_decode' ) ) {
+	// Added in PHP 5.1.0
+	// Error checks from PEAR::PHP_Compat
+	function htmlspecialchars_decode( $string, $quote_style = ENT_COMPAT )
+	{
+		if ( !is_scalar( $string ) ) {
+			trigger_error( 'htmlspecialchars_decode() expects parameter 1 to be string, ' . gettype( $string ) . ' given', E_USER_WARNING );
+			return;
+		}
+
+		if ( !is_int( $quote_style ) && $quote_style !== null ) {
+			trigger_error( 'htmlspecialchars_decode() expects parameter 2 to be integer, ' . gettype( $quote_style ) . ' given', E_USER_WARNING );
+			return;
+		}
+
+		return wp_specialchars_decode( $string, $quote_style );
+	}
+}
+
+// For PHP < 5.2.0
+if ( !function_exists('json_encode') ) {
+	function json_encode( $string ) {
+		global $wp_json;
+
+		if ( !is_a($wp_json, 'Services_JSON') ) {
+			require_once( 'class-json.php' );
+			$wp_json = new Services_JSON();
+		}
+
+		return $wp_json->encodeUnsafe( $string );
+	}
+}
+
+if ( !function_exists('json_decode') ) {
+	function json_decode( $string ) {
+		global $wp_json;
+
+		if ( !is_a($wp_json, 'Services_JSON') ) {
+			require_once( 'class-json.php' );
+			$wp_json = new Services_JSON();
+		}
+
+		return $wp_json->decode( $string );
+	}
+}
+
+// pathinfo that fills 'filename' without extension like in PHP 5.2+
+function pathinfo52($path) {
+	$parts = pathinfo($path);
+	if ( !isset($parts['filename']) ) {
+		$parts['filename'] = substr( $parts['basename'], 0, strrpos($parts['basename'], '.') );
+		if ( empty($parts['filename']) ) // there's no extension
+			$parts['filename'] = $parts['basename'];
+	}
+	return $parts;
+}

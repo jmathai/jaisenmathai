@@ -32,27 +32,90 @@ function wp_signon( $credentials = '', $secure_cookie = '' ) {
 			$credentials['remember'] = $_POST['rememberme'];
 	}
 
-	if ( !empty($credentials['user_login']) )
-		$credentials['user_login'] = sanitize_user($credentials['user_login']);
-	if ( !empty($credentials['user_password']) )
-		$credentials['user_password'] = trim($credentials['user_password']);
 	if ( !empty($credentials['remember']) )
 		$credentials['remember'] = true;
 	else
 		$credentials['remember'] = false;
 
+	// TODO do we deprecate the wp_authentication action?
 	do_action_ref_array('wp_authenticate', array(&$credentials['user_login'], &$credentials['user_password']));
 
 	if ( '' === $secure_cookie )
 		$secure_cookie = is_ssl() ? true : false;
 
-	// If no credential info provided, check cookie.
-	if ( empty($credentials['user_login']) && empty($credentials['user_password']) ) {
-		$user = wp_validate_auth_cookie();
-		if ( $user )
-			return new WP_User($user);
+	global $auth_secure_cookie; // XXX ugly hack to pass this to wp_authenticate_cookie
+	$auth_secure_cookie = $secure_cookie;
 
-		if ( $secure_cookie )
+	add_filter('authenticate', 'wp_authenticate_cookie', 30, 3);
+
+	$user = wp_authenticate($credentials['user_login'], $credentials['user_password']);
+
+	if ( is_wp_error($user) ) {
+		if ( $user->get_error_codes() == array('empty_username', 'empty_password') ) {
+			$user = new WP_Error('', '');
+		}
+
+		return $user;
+	}
+
+	wp_set_auth_cookie($user->ID, $credentials['remember'], $secure_cookie);
+	do_action('wp_login', $credentials['user_login']);
+	return $user;
+}
+
+
+/**
+ * Authenticate the user using the username and password.
+ */
+add_filter('authenticate', 'wp_authenticate_username_password', 20, 3);
+function wp_authenticate_username_password($user, $username, $password) {
+	if ( is_a($user, 'WP_User') ) { return $user; }
+
+	if ( empty($username) || empty($password) ) {
+		$error = new WP_Error();
+
+		if ( empty($username) )
+			$error->add('empty_username', __('<strong>ERROR</strong>: The username field is empty.'));
+
+		if ( empty($password) )
+			$error->add('empty_password', __('<strong>ERROR</strong>: The password field is empty.'));
+
+		return $error;
+	}
+
+	$userdata = get_userdatabylogin($username);
+
+	if ( !$userdata ) {
+		return new WP_Error('invalid_username', sprintf(__('<strong>ERROR</strong>: Invalid username. <a href="%s" title="Password Lost and Found">Lost your password</a>?'), site_url('wp-login.php?action=lostpassword', 'login')));
+	}
+
+	$userdata = apply_filters('wp_authenticate_user', $userdata, $password);
+	if ( is_wp_error($userdata) ) {
+		return $userdata;
+	}
+
+	if ( !wp_check_password($password, $userdata->user_pass, $userdata->ID) ) {
+		return new WP_Error('incorrect_password', sprintf(__('<strong>ERROR</strong>: Incorrect password. <a href="%s" title="Password Lost and Found">Lost your password</a>?'), site_url('wp-login.php?action=lostpassword', 'login')));
+	}
+
+	$user =  new WP_User($userdata->ID);
+	return $user;
+}
+
+/**
+ * Authenticate the user using the WordPress auth cookie.
+ */
+function wp_authenticate_cookie($user, $username, $password) {
+	if ( is_a($user, 'WP_User') ) { return $user; }
+
+	if ( empty($username) && empty($password) ) {
+		$user_id = wp_validate_auth_cookie();
+		if ( $user_id )
+			return new WP_User($user_id);
+
+		global $auth_secure_cookie;
+
+		if ( $auth_secure_cookie )
 			$auth_cookie = SECURE_AUTH_COOKIE;
 		else
 			$auth_cookie = AUTH_COOKIE;
@@ -61,25 +124,8 @@ function wp_signon( $credentials = '', $secure_cookie = '' ) {
 			return new WP_Error('expired_session', __('Please log in again.'));
 
 		// If the cookie is not set, be silent.
-		return new WP_Error();
 	}
 
-	if ( empty($credentials['user_login']) || empty($credentials['user_password']) ) {
-		$error = new WP_Error();
-
-		if ( empty($credentials['user_login']) )
-			$error->add('empty_username', __('<strong>ERROR</strong>: The username field is empty.'));
-		if ( empty($credentials['user_password']) )
-			$error->add('empty_password', __('<strong>ERROR</strong>: The password field is empty.'));
-		return $error;
-	}
-
-	$user = wp_authenticate($credentials['user_login'], $credentials['user_password']);
-	if ( is_wp_error($user) )
-		return $user;
-
-	wp_set_auth_cookie($user->ID, $credentials['remember'], $secure_cookie);
-	do_action('wp_login', $credentials['user_login']);
 	return $user;
 }
 
@@ -107,7 +153,7 @@ function wp_signon( $credentials = '', $secure_cookie = '' ) {
 function get_profile($field, $user = false) {
 	global $wpdb;
 	if ( !$user )
-		$user = $wpdb->escape($_COOKIE[USER_COOKIE]);
+		$user = esc_sql( $_COOKIE[USER_COOKIE] );
 	return $wpdb->get_var( $wpdb->prepare("SELECT $field FROM $wpdb->users WHERE user_login = %s", $user) );
 }
 
@@ -196,7 +242,7 @@ function get_user_option( $option, $user = 0, $check_blog_options = true ) {
  * Update user option with global blog capability.
  *
  * User options are just like user metadata except that they have support for
- * global blog options. If the 'global' parameter is false, which it is by false
+ * global blog options. If the 'global' parameter is false, which it is by default
  * it will prepend the WordPress table prefix to the option name.
  *
  * @since 2.0.0
@@ -232,7 +278,7 @@ function get_users_of_blog( $id = '' ) {
 	global $wpdb, $blog_id;
 	if ( empty($id) )
 		$id = (int) $blog_id;
-	$users = $wpdb->get_results( "SELECT user_id, user_login, display_name, user_email, meta_value FROM $wpdb->users, $wpdb->usermeta WHERE " . $wpdb->users . ".ID = " . $wpdb->usermeta . ".user_id AND meta_key = '" . $wpdb->prefix . "capabilities' ORDER BY {$wpdb->usermeta}.user_id" );
+	$users = $wpdb->get_results( "SELECT user_id, user_id AS ID, user_login, display_name, user_email, meta_value FROM $wpdb->users, $wpdb->usermeta WHERE {$wpdb->users}.ID = {$wpdb->usermeta}.user_id AND meta_key = '{$wpdb->prefix}capabilities' ORDER BY {$wpdb->usermeta}.user_id" );
 	return $users;
 }
 
@@ -261,12 +307,20 @@ function delete_usermeta( $user_id, $meta_key, $meta_value = '' ) {
 		$meta_value = serialize($meta_value);
 	$meta_value = trim( $meta_value );
 
+	$cur = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $wpdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta_key) );
+
+	if ( $cur && $cur->umeta_id )
+		do_action( 'delete_usermeta', $cur->umeta_id, $user_id, $meta_key, $meta_value );
+
 	if ( ! empty($meta_value) )
 		$wpdb->query( $wpdb->prepare("DELETE FROM $wpdb->usermeta WHERE user_id = %d AND meta_key = %s AND meta_value = %s", $user_id, $meta_key, $meta_value) );
 	else
 		$wpdb->query( $wpdb->prepare("DELETE FROM $wpdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta_key) );
 
 	wp_cache_delete($user_id, 'users');
+
+	if ( $cur && $cur->umeta_id )
+		do_action( 'deleted_usermeta', $cur->umeta_id, $user_id, $meta_key, $meta_value );
 
 	return true;
 }
@@ -353,17 +407,23 @@ function update_usermeta( $user_id, $meta_key, $meta_value ) {
 	}
 
 	$cur = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $wpdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta_key) );
-	if ( !$cur ) {
-		$wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->usermeta ( user_id, meta_key, meta_value )
-		VALUES
-		( %d, %s, %s )", $user_id, $meta_key, $meta_value) );
-	} else if ( $cur->meta_value != $meta_value ) {
-		$wpdb->query( $wpdb->prepare("UPDATE $wpdb->usermeta SET meta_value = %s WHERE user_id = %d AND meta_key = %s", $meta_value, $user_id, $meta_key) );
-	} else {
+
+	if ( $cur )
+		do_action( 'update_usermeta', $cur->umeta_id, $user_id, $meta_key, $meta_value );
+
+	if ( !$cur )
+		$wpdb->insert($wpdb->usermeta, compact('user_id', 'meta_key', 'meta_value') );
+	else if ( $cur->meta_value != $meta_value )
+		$wpdb->update($wpdb->usermeta, compact('meta_value'), compact('user_id', 'meta_key') );
+	else
 		return false;
-	}
 
 	wp_cache_delete($user_id, 'users');
+
+	if ( !$cur )
+		do_action( 'added_usermeta', $wpdb->insert_id, $user_id, $meta_key, $meta_value );
+	else
+		do_action( 'updated_usermeta', $cur->umeta_id, $user_id, $meta_key, $meta_value );
 
 	return true;
 }
@@ -388,15 +448,15 @@ function update_usermeta( $user_id, $meta_key, $meta_value ) {
  * @global string $user_pass_md5 MD5 of the user's password
  * @global string $user_identity The display name of the user
  *
- * @param int $user_id Optional. User ID to setup global data.
+ * @param int $for_user_id Optional. User ID to setup global data.
  */
-function setup_userdata($user_id = '') {
+function setup_userdata($for_user_id = '') {
 	global $user_login, $userdata, $user_level, $user_ID, $user_email, $user_url, $user_pass_md5, $user_identity;
 
-	if ( '' == $user_id )
+	if ( '' == $for_user_id )
 		$user = wp_get_current_user();
 	else
-		$user = new WP_User($user_id);
+		$user = new WP_User($for_user_id);
 
 	if ( 0 == $user->ID )
 		return;
@@ -404,7 +464,7 @@ function setup_userdata($user_id = '') {
 	$userdata = $user->data;
 	$user_login	= $user->user_login;
 	$user_level	= (int) isset($user->user_level) ? $user->user_level : 0;
-	$user_ID	= (int) $user->ID;
+	$user_ID = (int) $user->ID;
 	$user_email	= $user->user_email;
 	$user_url	= $user->user_url;
 	$user_pass_md5	= md5($user->user_pass);
@@ -497,7 +557,7 @@ function wp_dropdown_users( $args = '' ) {
 			$user->ID = (int) $user->ID;
 			$_selected = $user->ID == $selected ? " selected='selected'" : '';
 			$display = !empty($user->$show) ? $user->$show : '('. $user->user_login . ')';
-			$output .= "\t<option value='$user->ID'$_selected>" . wp_specialchars($display) . "</option>\n";
+			$output .= "\t<option value='$user->ID'$_selected>" . esc_html($display) . "</option>\n";
 		}
 
 		$output .= "</select>";
@@ -554,6 +614,123 @@ function _fill_user( &$user ) {
 	wp_cache_add($user->ID, $user, 'users');
 	wp_cache_add($user->user_login, $user->ID, 'userlogins');
 	wp_cache_add($user->user_email, $user->ID, 'useremail');
+	wp_cache_add($user->user_nicename, $user->ID, 'userslugs');
+}
+
+/**
+ * Sanitize every user field.
+ *
+ * If the context is 'raw', then the user object or array will get minimal santization of the int fields.
+ *
+ * @since 2.3.0
+ * @uses sanitize_user_field() Used to sanitize the fields.
+ *
+ * @param object|array $user The User Object or Array
+ * @param string $context Optional, default is 'display'. How to sanitize user fields.
+ * @return object|array The now sanitized User Object or Array (will be the same type as $user)
+ */
+function sanitize_user_object($user, $context = 'display') {
+	if ( is_object($user) ) {
+		if ( !isset($user->ID) )
+			$user->ID = 0;
+		if ( isset($user->data) )
+			$vars = get_object_vars( $user->data );
+		else
+			$vars = get_object_vars($user);
+		foreach ( array_keys($vars) as $field ) {
+			if ( is_string($user->$field) || is_numeric($user->$field) ) 
+				$user->$field = sanitize_user_field($field, $user->$field, $user->ID, $context);
+		}
+		$user->filter = $context;
+	} else {
+		if ( !isset($user['ID']) )
+			$user['ID'] = 0;
+		foreach ( array_keys($user) as $field )
+			$user[$field] = sanitize_user_field($field, $user[$field], $user['ID'], $context);
+		$user['filter'] = $context;
+	}
+
+	return $user;
+}
+
+/**
+ * Sanitize user field based on context.
+ *
+ * Possible context values are:  'raw', 'edit', 'db', 'display', 'attribute' and 'js'. The
+ * 'display' context is used by default. 'attribute' and 'js' contexts are treated like 'display'
+ * when calling filters.
+ *
+ * @since 2.3.0
+ * @uses apply_filters() Calls 'edit_$field' and '${field_no_prefix}_edit_pre' passing $value and
+ *  $user_id if $context == 'edit' and field name prefix == 'user_'.
+ *
+ * @uses apply_filters() Calls 'edit_user_$field' passing $value and $user_id if $context == 'db'.
+ * @uses apply_filters() Calls 'pre_$field' passing $value if $context == 'db' and field name prefix == 'user_'.
+ * @uses apply_filters() Calls '${field}_pre' passing $value if $context == 'db' and field name prefix != 'user_'.
+ *
+ * @uses apply_filters() Calls '$field' passing $value, $user_id and $context if $context == anything
+ *  other than 'raw', 'edit' and 'db' and field name prefix == 'user_'.
+ * @uses apply_filters() Calls 'user_$field' passing $value if $context == anything other than 'raw',
+ *  'edit' and 'db' and field name prefix != 'user_'.
+ *
+ * @param string $field The user Object field name.
+ * @param mixed $value The user Object value.
+ * @param int $user_id user ID.
+ * @param string $context How to sanitize user fields. Looks for 'raw', 'edit', 'db', 'display',
+ *               'attribute' and 'js'.
+ * @return mixed Sanitized value.
+ */
+function sanitize_user_field($field, $value, $user_id, $context) {
+	$int_fields = array('ID');
+	if ( in_array($field, $int_fields) )
+		$value = (int) $value;
+
+	if ( 'raw' == $context )
+		return $value;
+
+	if ( !is_string($value) && !is_numeric($value) )
+		return $value;
+
+	$prefixed = false;
+	if ( false !== strpos($field, 'user_') ) {
+		$prefixed = true;
+		$field_no_prefix = str_replace('user_', '', $field);
+	}
+
+	if ( 'edit' == $context ) {
+		if ( $prefixed ) {
+			$value = apply_filters("edit_$field", $value, $user_id);
+		} else {
+			$value = apply_filters("edit_user_$field", $value, $user_id);
+		}
+
+		if ( 'description' == $field )
+			$value = esc_html($value);
+		else
+			$value = esc_attr($value);
+	} else if ( 'db' == $context ) {
+		if ( $prefixed ) {
+			$value = apply_filters("pre_$field", $value);
+		} else {
+			$value = apply_filters("pre_user_$field", $value);
+		}
+	} else {
+		// Use display filters by default.
+		if ( $prefixed )
+			$value = apply_filters($field, $value, $user_id, $context);
+		else
+			$value = apply_filters("user_$field", $value, $user_id, $context);
+	}
+
+	if ( 'user_url' == $field )
+		$value = esc_url($value);
+
+	if ( 'attribute' == $context )
+		$value = esc_attr($value);
+	else if ( 'js' == $context )
+		$value = esc_js($value);
+
+	return $value;
 }
 
 ?>
