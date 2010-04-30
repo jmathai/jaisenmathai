@@ -13,7 +13,7 @@
     foreach($files as $file)
     {
       $fullPath = $baseDir . '/' . $file;
-      if(validCacheInclude(__FILE__, $fullPath, '.js'))
+      if(file_exists($fullPath) && validCacheInclude(__FILE__, $fullPath, '.js'))
       {
         $cache .= JSMin::minify(file_get_contents($fullPath)) . "\n";
       }
