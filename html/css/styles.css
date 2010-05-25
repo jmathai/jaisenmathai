@@ -19,10 +19,11 @@ a:hover
 }
 
 .code{
-  font-family:courier;
-  border:dotted 1px #4c7eac;
-  padding:2px;
-  background-color:#eeeeee;
+  font-family:"DejaVu Sans Mono",Monaco,"Bitstream Vera Sans Mono",monospaced;
+  font-size:9pt;
+  color:#fff;
+  padding:1px 4px;
+  background-color:#333355;
   white-space:nowrap;
 }
 
