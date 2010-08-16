@@ -14,18 +14,18 @@ switch($_['constMode'])
     /*
     * Database connection properties
     */
-    //define('DATABASE_TYPE', '');
-    //define('DATABASE_HOST', '');
-    //define('DATABASE_USER', '');
-    //define('DATABASE_PASS', '');
-    //define('DATABASE_NAME', '');
+    //define('DATABASE_TYPE', 'mysql');
+    define('DB_HOST', '127.0.0.1');
+    define('DB_USER', 'root');
+    define('DB_PASSWORD', '');
+    define('DB_NAME', 'jaisenmathai_wp');
     
     /*
     * Filesystem paths relevant to the application
     */
-    define('PATH_LIB', '/Users/jmathai/Y/jaisenmathai/lib');
-    define('PATH_DOC', '/Users/jmathai/Y/jaisenmathai/html');
-    define('PATH_SECRET', '/Users/jmathai/Y/jaisenmathai/secret');
+    define('PATH_LIB', '/Users/jmathai/Y/jm/lib');
+    define('PATH_DOC', '/Users/jmathai/Y/jm/html');
+    define('PATH_SECRET', '/Users/jmathai/Y/jm/secret');
 
     /*
      * Domains
@@ -39,11 +39,11 @@ switch($_['constMode'])
     /*
     * Database connection properties
     */
-    //define('DATABASE_TYPE', '');
-    //define('DATABASE_HOST', '');
-    //define('DATABASE_USER', '');
-    //define('DATABASE_PASS', '');
-    //define('DATABASE_NAME', '');
+    //define('DATABASE_TYPE', 'mysql');
+    define('DB_HOST', 'localhost');
+    define('DB_USER', 'jmathai');
+    define('DB_PASSWORD', trim(file_get_contents(dirname(__FILE__).'/../../secret/mysql')));
+    define('DB_NAME', 'jaisenmathai_wp');
     
     /*
     * Filesystem paths relevant to the application

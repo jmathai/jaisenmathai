@@ -1,6 +1,11 @@
     </div>
     <div id="sidebar">
       <ul>
+        <?php $redirectUrl = isset($_SERVER['REDIRECT_URL']) ? $_SERVER['REDIRECT_URL'] : ''; ?>
+        <?php if(preg_match('#^/blog/[a-zA-Z0-9_-]+#', $redirectUrl)) { ?>
+          <?php $facebookInclude = true; ?>
+          <li id="fb-like"><fb:like layout="button_count" width="140" font="lucida grande" href="<?php echo "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REDIRECT_URL']}"; ?>"></li>
+        <?php } ?>
         <li class="rss"><div><a href="http://feeds.feedburner.com/jaisenmathai" rel="alternate" type="application/rss+xml">Subscribe in a reader</a></div></li>
         <li class="twitter"><div><a href="http://twitter.com/jmathai" target="_blank">Follow me on Twitter</a></div></li>
         <li>
@@ -69,11 +74,19 @@
     Thanks for stopping by.  Be sure to <a href="/contact.html">drop me a line</a>.
   </div>
   
+  <script> var FB; </script>
+  <?php if(isset($facebookInclude) && $facebookInclude) { ?>
+    <script src="//connect.facebook.net/en_US/all.js" type="text/javascript"></script>
+  <?php } ?>
   <?php echo getJs(); ?>
   <?php if(strstr($_SERVER['REQUEST_URI'], '/blog') !== false || strstr($_SERVER['REQUEST_URI'], '/code') !== false){ ?>
     <script>
-          dp.SyntaxHighlighter.ClipboardSwf = '/swf/clipboard.swf';
-          dp.SyntaxHighlighter.HighlightAll('code');
+      dp.SyntaxHighlighter.ClipboardSwf = '/swf/clipboard.swf';
+      dp.SyntaxHighlighter.HighlightAll('code');
+      if(typeof FB !== 'undefined')
+      {
+        FB.init({appId: "140052122696614", status: true, cookie: true, xfbml: true});
+      }
     </script>
   <?php } ?>
   <script type="text/javascript" id="__PTG" src="http://photos.jaisenmathai.com/js/api.js"></script>

@@ -4,6 +4,7 @@
   require '../../lib/config.php';
   require '../../lib/scripts/jsmin.php';
   
+  $cache = '';
   if(!empty($_GET['__args__']))
   {
     $hash = md5($_SERVER['REQUEST_URI']);
