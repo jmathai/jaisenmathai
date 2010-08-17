@@ -8,6 +8,7 @@
         <p class="date"><small><?php the_time('F<\b\r>jS, Y') ?> <!-- by <?php the_author() ?> --></small></p>
 				<h2 class="title"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
         <div>
+          <a style="margin-top:5px;" href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="jmathai">Tweet</a>
           <fb:like layout="standard" font="lucida grande" href="<?php echo "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REDIRECT_URL']}"; ?>">
         </div>
 
