@@ -10,7 +10,7 @@
   // Centos sucks - curl_setopt($ch, CURLOPT_URL, 'http://twitter.com/users/show/jmathai.json');
   curl_setopt($ch, CURLOPT_URL, 'http://twitter.com/users/show/jmathai.xml');
   curl_setopt($ch, CURLOPT_HEADER, 0);
-  curl_setopt($ch, CURLOPT_USERPWD, "jmathai:{$password}");
+  //curl_setopt($ch, CURLOPT_USERPWD, "jmathai:{$password}");
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   $xmlObj = new SimpleXMLElement(curl_exec($ch));
   curl_close($ch);

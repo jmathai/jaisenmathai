@@ -73,20 +73,22 @@
     <br/><br/>
     Thanks for stopping by.  Be sure to <a href="/contact.html">drop me a line</a>.
   </div>
-  
+  <div id="fb-root"></div>
   <script> var FB; </script>
-  <?php if(isset($facebookInclude) && $facebookInclude) { ?>
-    <script src="//connect.facebook.net/en_US/all.js" type="text/javascript"></script>
-  <?php } ?>
   <?php echo getJs(); ?>
   <?php if(strstr($_SERVER['REQUEST_URI'], '/blog') !== false || strstr($_SERVER['REQUEST_URI'], '/code') !== false){ ?>
+    <?php if(isset($facebookInclude) && $facebookInclude) { ?>
+      <script src="//connect.facebook.net/en_US/all.js" type="text/javascript"></script>
+      <script>
+            if(typeof FB !== 'undefined')
+            {
+              FB.init({appId: "140052122696614", status: true, cookie: true, xfbml: true});
+            }
+      </script>
+    <?php } ?>
     <script>
       dp.SyntaxHighlighter.ClipboardSwf = '/swf/clipboard.swf';
       dp.SyntaxHighlighter.HighlightAll('code');
-      if(typeof FB !== 'undefined')
-      {
-        FB.init({appId: "140052122696614", status: true, cookie: true, xfbml: true});
-      }
     </script>
   <?php } ?>
   <script type="text/javascript" id="__PTG" src="http://photos.jaisenmathai.com/js/api.js"></script>

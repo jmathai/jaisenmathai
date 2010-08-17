@@ -42,7 +42,7 @@ switch($_['constMode'])
     //define('DATABASE_TYPE', 'mysql');
     define('DB_HOST', 'localhost');
     define('DB_USER', 'jmathai');
-    define('DB_PASSWORD', trim(file_get_contents(dirname(__FILE__).'/../../secret/mysql')));
+    define('DB_PASSWORD', trim(file_get_contents(dirname(__FILE__).'/../secret/mysql')));
     define('DB_NAME', 'jaisenmathai_wp');
     
     /*
