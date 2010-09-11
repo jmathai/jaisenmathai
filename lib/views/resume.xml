@@ -44,20 +44,20 @@
   </job>
   
   <job>
-    <company>Textbook Revolt / Student Revolt</company>
+    <company>Textbook Revolt / The Scholar App</company>
     <title>Co-founder</title>
     <description department="">Senior Developer</description>
     <date-start>Aug. 2007</date-start>
     <date-stop>Present</date-stop>
     <accomplishments>
       <task>
+        Added telephony and SMS support by using APIs provided by Twilio
+      </task>
+      <task>
         Integrated the Amazon Search API to search for books by specifying ISBN, title or author
       </task>
       <task>
-        Successfully integrated with Facebook using the Facebook Platform
-      </task>
-      <task>
-        Built a credit system which keeps balances for students allowing them to exchange books
+        Successfully integrated with APIs by Facebook and Twitter
       </task>
       <task>
         Created a custom PHP framework which enabled the team to complete the project in 4 weeks
