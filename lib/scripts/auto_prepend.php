@@ -18,7 +18,7 @@
     return substr($child, $extLen) == $ext;
   }
 
-  define('CACHE_JS', '/js/compress-aae.js|prototype.lite.js|javascript.js|blog-ptg.js|FancyZoom.js|FancyZoomHTML.js|shCore.js|shBrushCss.js|shBrushJScript.js|shBrushPhp.js|shBrushBash.js');
+  define('CACHE_JS', '/js/compress-aag.js|prototype.lite.js|javascript.js|blog-ptg.js|FancyZoom.js|FancyZoomHTML.js|shCore.js|shBrushCss.js|shBrushJScript.js|shBrushPhp.js|shBrushBash.js');
   function getJs()
   {
     $url = CACHE_JS;
@@ -31,7 +31,7 @@
     return $retval;
   }
 
-  define('CACHE_CSS', '/css/compress-aah.css|styles.css|resume.css|style.css|SyntaxHighlighter.css');
+  define('CACHE_CSS', '/css/compress-aai.css|styles.css|resume.css|style.css|SyntaxHighlighter.css');
   function getCss()
   {
     $url = CACHE_CSS;

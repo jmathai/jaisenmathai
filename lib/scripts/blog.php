@@ -5,15 +5,15 @@
   $dsn = 'mysql:dbname='.DB_NAME.';host='.DB_HOST;
   $dbh = new PDO($dsn, DB_USER, DB_PASSWORD);
 
-  $recentSql = 'SELECT * FROM wp_posts WHERE post_status = :status ORDER BY post_date DESC LIMIT 3';
+  $recentSql = 'SELECT * FROM posts WHERE post_status = :status ORDER BY post_date DESC LIMIT 3';
   $recentSth = $dbh->prepare($recentSql);
   $recentSth->execute(array(':status' => 'publish'));
 
-  $popularSql= 'SELECT * FROM wp_posts WHERE post_status = :status ORDER BY comment_count DESC LIMIT 3';
+  $popularSql= 'SELECT * FROM posts WHERE post_status = :status ORDER BY comment_count DESC LIMIT 3';
   $popularSth= $dbh->prepare($popularSql);
   $popularSth->execute(array(':status' => 'publish'));
 
-  $commentSql= 'SELECT * FROM wp_comments WHERE comment_approved = :status ORDER BY comment_date DESC LIMIT 3';
+  $commentSql= 'SELECT * FROM comments WHERE comment_approved = :status ORDER BY comment_date DESC LIMIT 3';
   $commentSth= $dbh->prepare($commentSql);
   $commentSth->execute(array(':status' => 1));
 
