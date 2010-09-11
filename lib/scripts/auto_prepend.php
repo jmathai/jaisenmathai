@@ -31,7 +31,7 @@
     return $retval;
   }
 
-  define('CACHE_CSS', '/css/compress-aai.css|styles.css|resume.css|style.css|SyntaxHighlighter.css');
+  define('CACHE_CSS', '/css/compress-aaj.css|styles.css|resume.css|style.css|SyntaxHighlighter.css');
   function getCss()
   {
     $url = CACHE_CSS;
@@ -40,7 +40,7 @@
     if(file_exists(PATH_DOC . $relativePath))
       $url = 'http://' . HOST_MEDIA . $relativePath;
 
-    $retval = '<style type="text/css"> @import url("' . $url . '"); </style>';
+    $retval = '<link rel="stylesheet" href="' . $url . '" type="text/css">';
     return $retval;
   }
 
