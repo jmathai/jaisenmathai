@@ -23,27 +23,6 @@
   </contact>
   
   <job>
-    <company>Yahoo!</company>
-    <title>Software Engineer</title>
-    <description department="">Engineer</description>
-    <date-start>Nov. 2007</date-start>
-    <date-stop>Present</date-stop>
-    <accomplishments>
-      <task>
-        Designated as the Local Paranoid responsible for all aspects of security including Cross Site Scripting (XSS) and Cross Site Request Forgery (XSRF)
-      </task>
-      <task>
-        Unobtrusively combat spam and abuse by intelligently using CAPTCHA and pattern based rate limiting
-      </task>
-      <task>
-        Developing software which supports over 30 languages through internationalization and localization
-      </task>
-    </accomplishments>
-    <details>
-    </details>
-  </job>
-  
-  <job>
     <company>Textbook Revolt / The Scholar App</company>
     <title>Co-founder</title>
     <description department="">Senior Developer</description>
@@ -58,9 +37,6 @@
       </task>
       <task>
         Successfully integrated with APIs by Facebook and Twitter
-      </task>
-      <task>
-        Created a custom PHP framework which enabled the team to complete the project in 4 weeks
       </task>
     </accomplishments>
     <details>
@@ -84,6 +60,27 @@
         <skills>PHP, Ajax, MySql</skills>
         <screenshot><img src="/images/screenshots/socialbib_receive_s.png" width="200" height="117" border="0" /></screenshot>
       </detail>
+    </details>
+  </job>
+  
+  <job>
+    <company>Yahoo!</company>
+    <title>Software Engineer</title>
+    <description department="">Engineer</description>
+    <date-start>Nov. 2007</date-start>
+    <date-stop>Present</date-stop>
+    <accomplishments>
+      <task>
+        Designated as the Local Paranoid responsible for all aspects of security including Cross Site Scripting (XSS) and Cross Site Request Forgery (XSRF)
+      </task>
+      <task>
+        Unobtrusively combat spam and abuse by intelligently using CAPTCHA and pattern based rate limiting
+      </task>
+      <task>
+        Developing software which supports over 30 languages through internationalization and localization
+      </task>
+    </accomplishments>
+    <details>
     </details>
   </job>
 
