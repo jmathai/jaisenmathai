@@ -35,6 +35,7 @@ switch($_['constMode'])
     break;
   case 'scripts.jaisenmathai.com':
   case 'scripts.jaisenmathai.com':
+  case 'mustache.jaisenmathai.com':
   case 'www.jaisenmathai.com':
     /*
     * Database connection properties
@@ -75,7 +76,7 @@ switch($_['constMode'])
 /*
 * Filesystem paths relevant to the application
 */
-define('PATH_MODEL', PATH_LIB . '/models');
+define('PATH_CLASS', PATH_LIB . '/classes');
 define('PATH_VIEW', PATH_LIB . '/views');
 
 /*
@@ -88,27 +89,25 @@ define('PATH_VIEW', PATH_LIB . '/views');
 */
 $_['routes'] = array(
                 ''                        => array('CSite', 'home'), // Required
-                'about.html'              => array('CSite', 'about'),
+                'ajax.json'               => array('CSite', 'homeAjax'),
+                'articles.html'           => array('CSite', 'articles'),
+                'articles/ajax.json'      => array('CSite', 'articlesAjax'),
                 'contact.html'            => array('CSite', 'contact'),
+                'contact/ajax.json'       => array('CSite', 'contactAjax'),
                 'code.html'               => array('CSite', 'code'),
-                'code/episuite.html'      => array('CSite', 'codeEpisuite'),
+                'code/ajax.json'          => array('CSite', 'codeAjax'),
                 'error/404.html'          => array('CSite', 'error404'),
+                'mustaches.js'            => array('CSite', 'mustaches'),
                 'playground/notify.html'  => array('CSite', 'playgroundNotify'),
                 'portfolio.html'          => array('CSite', 'portfolio'),
+                'portfolio/ajax.json'     => array('CSite', 'portfolioAjax'),
                 'resume.html'             => array('CSite', 'resume'),
-                'resume/detail.html'      => array('CSite', 'resumeDetail'),
-                'resume/detail/print.html'=> array('CSite', 'resumeDetailPrint'),
+                'resume/ajax.json'        => array('CSite', 'resumeAjax'),
                 'resume/ascii.html'       => array('CSite', 'resumeAscii'),
                 'resume/print.html'       => array('CSite', 'resumePrint'),
-                'resume/doc'              => array('CSite', 'resumeDoc'),
-                'sample/closure'          => array('CSite', 'sampleClosure'),
-                'sample/scroll'           => array('CSite', 'sampleScroll'),
-                'stocks'                  => array('CSite', 'stocks'),
 
-                'about'                   => array('CSite', 'error301'),
                 'contact'                 => array('CSite', 'error301'),
                 'code'                    => array('CSite', 'error301'),
-                'code/episuite'           => array('CSite', 'error301'),
                 'error/404'               => array('CSite', 'error301'),
                 'portfolio'               => array('CSite', 'error301'),
                 'resume'                  => array('CSite', 'error301'),

@@ -10,28 +10,27 @@
         <a href="/resume/print.html">Print this resume.</a>
       </div>
       <div id="resume-objective">
-        <h2>Objective</h2>
+        <h3>Objective</h3>
         <xsl:value-of select="/resume/objective" />
       </div>
       
       <div id="resume-skills">
-        <h2>Skills</h2>
+        <h3>Skills</h3>
         <table border="0" cellpadding="0" cellspacing="0">
           <xsl:for-each select="resume/skills/skill">
             <tr>
-              <td valign="top" align="right"><strong><xsl:value-of select="@name" />:</strong></td>
-              <td width="6"></td>
+              <td valign="top" class="right"><strong><xsl:value-of select="@name" />:</strong></td>
               <td><xsl:value-of select="." /></td>
             </tr>
             <tr height="10">
-              <td colspan="3"> </td>
+              <td colspan="2"> </td>
             </tr>
           </xsl:for-each>
         </table>
       </div>
 
       <div id="resume-experience">
-        <h2>Experience</h2>
+        <h3>Experience</h3>
         <xsl:for-each select="/resume/job">
           <ul>
             <li class="company">
@@ -56,7 +55,7 @@
       </div>
       
       <div id="resume-publications">
-        <h2>Conferences and Publications</h2>
+        <h3>Conferences and Publications</h3>
         <ul>
           <xsl:for-each select="/resume/publications/publication">
             <li>
@@ -70,7 +69,7 @@
       </div>
 
       <div id="resume-header">
-        <h1><xsl:value-of select="/resume/contact/name" /></h1>
+        <h3><xsl:value-of select="/resume/contact/name" /></h3>
         <ul>
           <li><xsl:value-of select="/resume/contact/address/street" /></li>
           <li><xsl:value-of select="/resume/contact/address/city" />, <xsl:value-of select="/resume/contact/address/state" /> <xsl:value-of select="/resume/contact/address/zip" /></li>

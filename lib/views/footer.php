@@ -1,103 +1,151 @@
-    </div>
-    <div id="sidebar">
-      <ul>
-        <?php $redirectUrl = isset($_SERVER['REDIRECT_URL']) ? $_SERVER['REDIRECT_URL'] : ''; ?>
-        <?php if(preg_match('#^/blog/[a-zA-Z0-9_-]+#', $redirectUrl)) { ?>
-          <?php $facebookInclude = true; ?>
-          <li id="fb-like">
-            <fb:like layout="button_count" width="140" font="lucida grande" href="<?php echo "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REDIRECT_URL']}"; ?>">
-          </li>
-        <?php } ?>
-        <li class="rss"><div><a href="http://feeds.feedburner.com/jaisenmathai" rel="alternate" type="application/rss+xml">Subscribe in a reader</a></div></li>
-        <li class="twitter"><div><a href="http://twitter.com/jmathai" target="_blank">Follow me on Twitter</a></div></li>
-        <li>
-          <h2>Work</h2>
-          I'm currently working as an engineer at <img src="/images/yahoo_logo-a.gif" border="0" alt="Yahoo!" /> and living in Sunnyvale, CA.  
-        </li>
-        <li>
-          <?php echo getMemcache()->get('blog_comments'); ?>
-        </li>
-        <li>
-          <?php echo getMemcache()->get('blog_recent'); ?>
-        </li>
-        <li>
-          <?php echo getMemcache()->get('blog_popular'); ?>
-        </li>
-        <li>
-          <div id="custom-sidebar"></div>
-        </li>
-        <li>
-          <h2>Playlist</h2>
-          <?php $songs = json_decode(file_get_contents(PATH_LIB . '/views/songza.json'), 1); ?>
+      </div>
+      <div id="right">
+              
+        <div class="sidemenu">  
+          <ul>        
+            <?php $redirectUrl = isset($_SERVER['REDIRECT_URL']) ? $_SERVER['REDIRECT_URL'] : ''; ?>
+            <?php if(preg_match('#^/blog/[a-zA-Z0-9_-]+#', $redirectUrl)) { ?>
+              <?php $facebookInclude = true; ?>
+              <li id="fb-like">
+                <fb:like layout="button_count" width="140" font="lucida grande" href="<?php echo "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REDIRECT_URL']}"; ?>">
+              </li>
+            <?php } ?>
+            <li><a href="http://github.com/jmathai" target="_blank">Watch me on Github</a></li>
+            <li><a href="http://twitter.com/jmathai" target="_blank">Follow me on Twitter</a></li>
+          </ul>
+        </div>
+              
+        <div class="sidemenu">
+          <h3>Work</h3>
           <ul>
-            <?php foreach($songs as $song){ ?>
-              <li><a href="<?php echo $song['link']; ?>" target="_blank"><?php echo $song['title']; ?></a></li>
+            <li>I'm currently working as an engineer at <img src="/images/yahoo_logo-a.gif" border="0" alt="Yahoo!" class="plain" /> and living in Sunnyvale, CA.</li>
+          </ul>
+        </div>
+        
+        <div class="sidemenu">
+          <h3>Articles</h3>
+          <ul>
+            <?php foreach(getArticles() as $article) { ?>
+              <li><a href="/articles/<?php echo $article['file']; ?>"><?php echo $article['name']; ?></a></li>
             <?php } ?>
           </ul>
-        </li>
-        <li>
-          <h2>Twitter</h2>
-          <?php echo twitify(file_get_contents(PATH_LIB . '/views/twitter.txt')); ?>
-        </li>
-        <li>
-          <h2>Extras</h2>
+        </div>
+
+        <div class="sidemenu">
+          <h3>Twitter</h3>
           <ul>
-            <li><a href="http://gmpg.org/xfn/">XFN</a></li>
-            <li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress</a></li>
+            <li><?php echo twitify(file_get_contents(PATH_LIB . '/views/twitter.txt')); ?></li>
           </ul>
-        </li>
-      </ul>
+        </div>
+
+  <!-- content end -->  
+    </div> <!-- id="content" -->
+  </div> <!-- id="content-outer" -->
+    
+  <!-- footer starts here -->  
+  <div id="footer-outer" class="clear"><div id="footer-wrap">
+    <div class="col-a">
+      <h3>Image Gallery </h3>          
+      <p class="thumbs">
+        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>
+        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>
+        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>
+        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>
+        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>
+        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>  
+        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>
+        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>        
+      </p>  
+      <h3>Something about images</h3>
+      <p>Something more about images</p>      
     </div>
-    <br clear="left" />
-  </div>
-  <div id="content-top">
-    <div id="content-bottom-left"></div>
-    <div id="content-bottom-middle"></div>
-    <div id="content-bottom-right"></div>
+    
+    <div class="col-a">
+      <h3>Middle text</h3>
+      <p>
+        <strong>Middle bold</strong> <br />
+        Middle text.
+      </p>
+        
+      <div class="footer-list">
+        <ul>        
+          <li><a href="index.html">consequat molestie</a></li>
+          <li><a href="index.html">sem justo</a></li>
+          <li><a href="index.html">semper</a></li>
+          <li><a href="index.html">magna sed purus</a></li>
+          <li><a href="index.html">tincidunt</a></li>    
+          <li><a href="index.html">consequat molestie</a></li>    
+          <li><a href="index.html">magna sed purus</a></li>          
+        </ul>
+      </div>
+        
+    </div>    
+  
+    <div class="col-b">
+    
+      <h3>About</h3>      
+      
+      <p>
+      <a href="index.html"><img src="images/gravatar.jpg" width="40" height="40" alt="firefox" class="float-left" /></a>
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. 
+      Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu 
+      posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum 
+      odio, ac blandit ante orci ut diam.</p>
+      
+      <p>
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. 
+      Cras id urna. <a href="index.html">Learn more...</a></p>      
+      
+    </div>    
+  
+  <!-- footer ends -->    
+  </div></div>
+  
+  <!-- footer-bottom starts -->    
+  <div id="footer-bottom">
+    <div class="bottom-left">
+      <p>
+      &copy; 2010 <strong>Your Copyright Info Here</strong>&nbsp; &nbsp; &nbsp;
+      <a href="http://www.bluewebtemplates.com/" title="Website Templates">website templates</a> by <a href="http://www.styleshout.com/">styleshout</a>
+      </p>
+    </div>
+  
+    <div class="bottom-right">
+      <p>    
+        <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | 
+         <a href="http://validator.w3.org/check/referer">XHTML</a>  |      
+        <a href="index.html">Home</a> |
+        <a href="index.html">Sitemap</a> |
+        <a href="index.html">RSS Feed</a>                
+      </p>
+    </div>
+  <!-- footer-bottom ends -->    
   </div>
   
-  <div id="footer">
-    <a href="/">home</a> / 
-    <a href="/resume.html">resume</a> / 
-    <a href="/portfolio.html">portfolio</a> / 
-    <a href="/code.html">code</a> / 
-    <a href="/blog">blog</a> / 
-    <a href="/contact.html">contact</a>
-  </div>
-  
-  <div id="seo">
-    About this site:
-    <br/>
-    This is my (Jaisen Mathai) personal site for potential employers who want to see my resume or portfolio.  
-    My ideal job would be to work as a <strong>Web developer</strong> on a large scale consumer website.  
-    My experience is in using <strong>PHP</strong>, <strong>MySQL</strong>, <strong>Ajax</strong> and <strong>JSON</strong>.  
-    I really enjoy creative brainstorming...taking a problem apart and narrowing 100 solutions down to the best one.
-    <br/><br/>
-    Thanks for stopping by.  Be sure to <a href="/contact.html">drop me a line</a>.
-  </div>
-  <div id="fb-root"></div>
-  <script> var FB; </script>
-  <?php echo getJs(); ?>
-  <?php if(strstr($_SERVER['REQUEST_URI'], '/blog') !== false || strstr($_SERVER['REQUEST_URI'], '/code') !== false){ ?>
-    <?php if(isset($facebookInclude) && $facebookInclude) { ?>
-      <script src="//connect.facebook.net/en_US/all.js" type="text/javascript"></script>
-      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>      <script>
-            if(typeof FB !== 'undefined')
-            {
-              FB.init({appId: "140052122696614", status: true, cookie: true, xfbml: true});
-            }
-      </script>
-    <?php } ?>
-    <script>
-      dp.SyntaxHighlighter.ClipboardSwf = '/swf/clipboard.swf';
-      dp.SyntaxHighlighter.HighlightAll('code');
-    </script>
-  <?php } ?>
-  <script type="text/javascript" id="__PTG" src="http://photos.jaisenmathai.com/js/api.js"></script>
-  <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
-  <script type="text/javascript">
-    _uacct = "UA-88708-4";
-    urchinTracker();
-  </script>  
+<!-- wrap ends here -->
+</div>
+<?php echo getJs(); ?>
+<script src="/mustaches.js" type="text/javascript"></script>
+<script>
+  $(document).ready(function() {
+    $("div#nav ul li a").click(function() {
+      var el = this;
+      var url = $(el).attr('href');
+      var loc = location.href;
+      if(loc.search("#") != -1)
+        loc = loc.substr(0, loc.indexOf("#"));
+
+      $("div#nav ul li.last").show();
+      jm.click(url, loc);
+      return false;
+    });
+
+    if(location.href.search("#") != -1) {
+      jm.click(location.hash.substring(1), location.href.replace(location.hash, ""));
+    }
+    dp.SyntaxHighlighter.ClipboardSwf = '/swf/clipboard.swf';
+    dp.SyntaxHighlighter.HighlightAll('code');
+  });
+</script>
 </body>
 </html>

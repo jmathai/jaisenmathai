@@ -1,8 +1,14 @@
 <?php
   $memcache = null;
+
+  function getArticles()
+  {
+    return array(array('file' => 'twitter-sign-in.html', 'name' => 'Sign In With Twitter Using PHP'), array('file' => 'twitter-oauth.html', 'name' => "Twitter's OAuth API using PHP"));
+  }
+
   function getMemcache()
   {
-    global $memcache;
+    static $memcache;
     if($memcache === null)
     {
       $memcache = new Memcache();
@@ -12,13 +18,29 @@
     return $memcache;
   }
 
+  function getPartials()
+  {
+    return array(
+      'featured' => EpiCode::get('featured.html'),
+    );
+  }
+
+  function M()
+  {
+    static $mustache;
+    if($mustache === null)
+      $mustache = new Mustache;
+
+    return $mustache;
+  }
+
   function validCacheInclude($parent, $child, $ext)
   {
     $extLen = -1 * (int)strlen($ext);
     return substr($child, $extLen) == $ext;
   }
 
-  define('CACHE_JS', '/js/compress-aag.js|prototype.lite.js|javascript.js|blog-ptg.js|FancyZoom.js|FancyZoomHTML.js|shCore.js|shBrushCss.js|shBrushJScript.js|shBrushPhp.js|shBrushBash.js');
+  define('CACHE_JS', '/js/compress-aag.js|jquery-1.4.2.min.js|javascript.js|mustache.js|FancyZoom.js|FancyZoomHTML.js|shCore.js|shBrushCss.js|shBrushJScript.js|shBrushPhp.js|shBrushBash.js');
   function getJs()
   {
     $url = CACHE_JS;
@@ -31,7 +53,7 @@
     return $retval;
   }
 
-  define('CACHE_CSS', '/css/compress-aaj.css|styles.css|resume.css|style.css|SyntaxHighlighter.css');
+  define('CACHE_CSS', '/css/compress-aaj.css|reset.css|screen.css|FreshPick.css|styles.css|resume.css|SyntaxHighlighter.css');
   function getCss()
   {
     $url = CACHE_CSS;

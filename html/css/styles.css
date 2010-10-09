@@ -1,180 +1,69 @@
-body{
-  font-family: Georgia, "Times New Roman", Times, serif, helvetica,verdana,arial,"Bitstream Vera Sans",sans-serif;
-  font-size:11pt;
-  background:url("/images/background.jpeg") repeat-x #3b6d9e;
-  margin:0px;
-  padding:0px;
+
+img.plain{ border:0; padding:0; }
+#header #nav ul li.last{ 
+  display:none;
+}
+#header #nav ul li.last a{ 
+	border-right: 0;	
+}
+#header #header-image {
+  opacity:0.15;filter:alpha(opacity=15);
+}
+#header #header-image.default {
+	background: url(/images/qrcodes/default.png) no-repeat; 
+}
+#header #header-image.resume {
+	background: url(/images/qrcodes/resume.png) no-repeat; 
+}
+#header #header-image.portfolio {
+	background: url(/images/qrcodes/portfolio.png) no-repeat; 
+}
+#header #header-image.code {
+	background: url(/images/qrcodes/code.png) no-repeat; 
+}
+#header #header-image.articles {
+	background: url(/images/qrcodes/articles.png) no-repeat; 
+}
+#header #header-image.contact {
+	background: url(/images/qrcodes/contact.png) no-repeat; 
+}
+#left {
+	width: 650px;	
+	float: left;	
+	padding-top: 15px;	
+}
+#right {
+	width: 215px;
+	float: right;
+	padding-top: 5px;
+}
+#footer-wrap .col-a {
+  width: 335px;
+}
+#footer-wrap .col-b {
+  width: 215px;
 }
 
-a:link, a:visited, a:active
-{
-	color: #06c;
-  text-decoration:none;
+/* custom */
+div#resume table {
+	border-collapse: collapse;
+	margin: 10px 20px;		
 }
-
-a:hover
-{
-	color: #147;
-  text-decoration:underline;
-}
-
-.code{
-  font-family:"DejaVu Sans Mono",Monaco,"Bitstream Vera Sans Mono",monospaced;
-  font-size:9pt;
-  color:#fff;
-  padding:1px 4px;
-  background-color:#333355;
-  white-space:nowrap;
-}
-
-div.border{
-  height:1px;
-  margin:8px 0;
-  border-bottom:dotted 1px #aaa;
-}
-
-#header-banner
-{
-  width:700px;
-  margin:auto;
-  height:40px;
-  color:#bbb;
-  font-size:20pt;
-  padding-top:20px;
-}
-
-#header
-{
-  width:960;
-  margin:auto;
-  margin-bottom:10px;
-  text-align:center;
-}
-
-hr
-{
-  color:#ddd;
-  background-color:#ddd;
-  height:1px;
+div#resume th, td {
   border:0;
-}
-
-#content
-{
-  width:940px;
-  padding:10px;
-  background:#fff;
-  color:#000;
-  margin:auto;
-}
-
-#content h1, #content h2
-{
-  font-size:13pt;
-  margin:15px 0px 15px 0px;
-  padding:3px 5px 0px 0px;
-}
-
-#content h3
-{
-  font-size:11pt;
-  margin:0;
   padding:0;
 }
-
-#content-top
-{
-  width:960px;
-  height:7px;
-  margin:auto;
+th.right, td.right {
+  text-align:right;
+  padding-right:5px;
 }
-
-#content-bottom-left
-{
-  background:url(/images/sprite-aab.png) no-repeat top left;
-  background-position:0px -56px;
-  width:7px;
-  height:7px;
-  float:left;
+div#resume h3 {
+  margin-left:0px;
 }
-
-#content-bottom-right
-{
-  background:url(/images/sprite-aab.png) no-repeat top left;
-  background-position:-11px -56px;
-  width:7px;
-  height:7px;
-  float:left;
+div#resume div#resume-header h3{
+  text-align:right;
+  margin:0 20px 0 0;
 }
-
-#content-top-left
-{
-  background:url(/images/sprite-aab.png) no-repeat top left;
-  background-position:0px -46px;
-  width:7px;
-  height:7px;
-  float:left;
-}
-
-#content-top-middle, #content-bottom-middle
-{
-  width:946px;
-  height:7px;
-  background-color:#fff;
-  float:left;
-}
-
-#content-top-right
-{
-  background:url(/images/sprite-aab.png) no-repeat top left;
-  background-position:-11px -46px;
-  width:7px;
-  height:7px;
-  float:left;
-}
-
-#header ul
-{
-  list-style-type:none;
-  margin:0;
-  padding:0;
-  height:46px;
-  width:636px; /* (102+4)*6 */
-  margin:auto;
-}
-
-#header ul li
-{
-  margin:0 2px;
-  padding:0;
-  text-align:center;
-  float:left;
-}
-
-#header ul li a:link, #header ul li a:visited
-{
-  font-size:12pt;
-  color:#fff;
-  background:url("/images/sprite-aab.png") no-repeat top left;
-  background-position:0px -63px;
-  width:102px;
-  height:26px;
-  padding-top:20px;
-  display:block;
-}
-
-#header ul li a:link.on, #header ul li a:visited.on
-{
-  text-decoration:underline;
-  font-style:italic;
-  background-position:0px 0px;
-}
-
-#header ul li a:hover
-{
-  background-position:0px 0px;
-}
-
 .home-images
 {
   width:660px;
@@ -263,143 +152,11 @@ hr
   text-align:center;
   font-size:smaller;
 }
-
-
-#footer
-{
-  width:700px;
-  margin:auto;
-  text-align:center;
+.code{
+  font-family:"DejaVu Sans Mono",Monaco,"Bitstream Vera Sans Mono",monospaced;
+  font-size:9pt;
   color:#fff;
-  padding-top:10px;
-  padding-bottom:10px;
-}
-
-#footer a:link, #footer a:visited, #footer a:active, #footer a:hover, #seo a:link, #seo a:visited, #seo a:active, #seo a:hover
-{
-  color:#fff;
-}
-
-.narrowcolumn {
-	float: left;
-	padding: 0 0 20px 0px;
-	margin: 0px 0 0;
-	width: 700px;
-}
-
-  pre{
-  font-family:courier;
-  border:dotted 1px #4c7eac;
-  padding:2px;
-  background-color:#eeeeee;
-}
-
-#seo
-{
-  color:#fff;
-  font-size:smaller;
-  width:700px;
-  margin:auto;
-  margin-top:25px;
-  margin-bottom:25px;
-}
-
-#sidebar
-{
-	padding: 20px 0 10px 0;
-	margin-left: 725px;
-	width: 180px;
-  margin-top:-55px;
-}
-
-#sidebar form {
-	margin: 0;
-}
-
-#header ul li
-{
-  margin:0 2px;
-  padding:0;
-  text-align:center;
-  float:left;
-}
-
-#header ul li a:link, #header ul li a:visited
-{
-  font-size:12pt;
-  color:#fff;
-  background:url("/images/sprite-aab.png") no-repeat top left;
-  background-position:0px -63px;
-  width:102px;
-  height:26px;
-  padding-top:20px;
-  display:block;
-}
-
-#header ul li a:hover
-{
-  text-decoration:underline;
-  background-position:0px 0px;
-}
-
-#header ul li a:link.on, #header ul li a:visited.on
-{
-  text-decoration:underline;
-  font-style:italic;
-}
-
-li.rss li.twitter
-{
-  height:16px;
-}
-
-li.rss div 
-{
-  background:url(/images/sprite-aab.png) no-repeat top left;
-  background-position: -142px -57px;
-  height:14px;
-  padding:2px 0px 0px 20px;
-}
-
-li.twitter div 
-{
-  background:url(/images/sprite-aab.png) no-repeat top left;
-  background-position: -142px -118px;
-  height:14px;
-  padding:2px 0px 0px 20px;
-}
-
-input.search
-{
-  border:0;
-  background-color:#fff;
-  background:url(/images/sprite-aab.png) no-repeat top left;
-  background-position: -143px -103px;
-  width:16px;
-  height:16px;
-  cursor:pointer;
-}
-
-input.next
-{
-  border:0;
-  background-color:#fff;
-  background:url(/images/sprite-aab.png) no-repeat top left;
-  background-position: -143px -73px;
-  width:16px;
-  height:16px;
-  cursor:pointer;
-  float:right;
-}
-
-input.previous
-{
-  border:0;
-  background-color:#fff;
-  background:url(/images/sprite-aab.png) no-repeat top left;
-  background-position: -143px -88px;
-  width:16px;
-  height:16px;
-  cursor:pointer;
-  float:left;
+  padding:1px 4px;
+  background-color:#333355;
+  white-space:nowrap;
 }

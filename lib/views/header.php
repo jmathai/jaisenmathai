@@ -1,5 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <link rel="alternate" type="application/rss+xml" title="Jaisen's Blog RSS Feed" href="http://feeds.feedburner.com/jaisenmathai" />
   <?php if(strstr($_SERVER['REQUEST_URI'], '/blog') !== false){ ?>
@@ -8,15 +8,7 @@
   <?php } ?>
   <?php echo getCss(); ?>
   <link rel="shortcut icon"  href="/jm_logo.gif" type="image/x-icon" />
-  <title>
-  <?php if(!function_exists('bloginfo')){ ?>
-    <?php echo $subtitle; ?>
-  <?php }else if(is_single()){ ?>
-    <?php the_title(); ?>
-  <?php }else{ ?>
-    <?php echo bloginfo('name'); ?>
-  <?php } ?>
-   :: Jaisen Mathai</title>
+  <title><?php echo $title; ?> :: Jaisen Mathai</title>
   <?php if(function_exists('is_single') && is_single()) { ?>
     <meta name="og:title" content="<?php the_title(); ?>"/>
     <meta name="og:type" content="article"/>
@@ -30,22 +22,29 @@
 </head>
 
 <body>
-  <div id="header-banner"></div>
-  <div id="header">
-    <ul>
-      <li><a href="/" title="Go Home" rel="me" id="sprite-nav" <?php if($_SERVER['REQUEST_URI'] == '/'){ ?>class="on"<?php } ?>>Home</a></li>
-      <li><a href="/resume.html" title="View My Resume" id="sprite-nav" <?php if(strstr($_SERVER['REQUEST_URI'], '/resume')){ ?>class="on"<?php } ?>>Resume</a></li>
-      <li><a href="/portfolio.html" title="View My Portfolio" id="sprite-nav" <?php if(strstr($_SERVER['REQUEST_URI'], '/portfolio')){ ?>class="on"<?php } ?>>Portfolio</a></li>
-      <li><a href="/code.html" title="View My Work" id="sprite-nav" <?php if(strstr($_SERVER['REQUEST_URI'], '/code')){ ?>class="on"<?php } ?>>Code</a></li>
-      <li><a href="/blog/" title="View My Blog" id="sprite-nav" <?php if(strstr($_SERVER['REQUEST_URI'], '/blog')){ ?>class="on"<?php } ?>>Blog</a></li>
-      <li><a href="/contact.html" title="View My Contact Information" id="sprite-nav" <?php if(strstr($_SERVER['REQUEST_URI'], '/contact')){ ?>class="on"<?php } ?>>Contact</a></li>
-    </ul>
+
+<!-- wrap starts here -->
+<div id="wrap">
+
+  <!--header -->
+  <div id="header">      
+        
+    <h1 id="logo-text"><a href="/" title="">Jaisen Mathai</a></h1>    
+    <p id="slogan">Hacker::getInstance()-><span id="header-title"><?php echo $title; ?></span>();</p>  
+    
+    <div  id="nav">
+      <ul>
+        <li class="first"><a href="/" tpl="home" title="Go Home" rel="me">Home</a></li>
+        <li><a href="/resume.html" tpl="resume" title="View My Resume">Resume</a></li>
+        <li><a href="/portfolio.html" tpl="portfolio" title="View My Portfolio">Portfolio</a></li>
+        <li><a href="/code.html" tpl="code" title="View My Work">Code</a></li>
+        <li><a href="/articles.html" tpl="articles" title="View My Articles">Articles</a></li>
+        <li><a href="/contact.html" tpl="contact" title="View My Contact Information">Contact</a></li>
+        <li class="last"><a href="#"><img src="/images/loader-small.gif" class="plain" align="left" >&nbsp;Loading...</a></li>
+      </ul>    
+    </div>  
+    
+    <div id="header-image" class="default"></div>
+            
+  <!--header ends-->          
   </div>
-  <div id="content-top">
-    <div id="content-top-left"></div>
-    <div id="content-top-middle"></div>
-    <div id="content-top-right"></div>
-  </div>
-  <div id="content">
-    <h1><?php echo function_exists('bloginfo') ? bloginfo('name') : $subtitle; ?></h1>
-    <div class="narrowcolumn">

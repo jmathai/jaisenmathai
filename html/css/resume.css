@@ -1,9 +1,8 @@
-#resume, #resume div, #resume-header h1
+#resume, #resume div
 {
   font-size:10pt;
   margin:0px;
   padding:0px;
-  width:680px;
 }
 
 #resume div
@@ -21,29 +20,9 @@
   margin-top:-50px;
 }
 
-#resume-header h1
-{
-  margin-top:10px;
-  font-size:16pt;
-  text-align:right;
-}
-
-#resume div h2
-{
-  font-size:14pt;
-  margin:15px 0px 0px 0px;
-  padding:3px 5px 0px 0px;
-  height:30px;
-}
-
-#resume-header h1, #resume div h2
-{
-}
-
 #resume-header ul
 {
-  display:inline;
-  margin:0px;
+  margin:0px 20px 0 0;
   padding:0px;
 }
 
@@ -58,6 +37,7 @@
 
 #resume-objective, #resume-experience, #resume-publications, #resume-skills
 {
+  width:645px;
   border-bottom:dotted 1px #aaa;
   margin:auto;
 }

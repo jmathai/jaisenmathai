@@ -1,15 +1,19 @@
-<?php
-  include PATH_VIEW . '/header.php';
+  <div id="featured-div">
+    {{#featured-title}}
+      {{>featured}}
+    {{/featured-title}}
+  </div>
+  <!-- content -->
+  <div id="content-outer" class="clear"><div id="content-wrap">
   
-  if(is_file($body))
-  {
-    //EpiCode::insert($body);
-    include $body;
-  }
-  else
-  {
-    echo $body;
-  }
-  
-  include PATH_VIEW . '/footer.php';
-?>
+    <div id="content">
+    
+      <div id="left">      
+        {{#body}}
+          {{{body}}}
+        {{/body}}
+        <!--
+          <div class="entry">
+          <h3><?php echo function_exists('bloginfo') ? bloginfo('name') : $subtitle; ?></h3>
+          </div>
+        -->
