@@ -1,0 +1,54 @@
+<p>UPDATE: You can <a target="_blank" href="http://github.com/jmathai">watch me on GitHub</a>, <a target="_blank" href="http://wiki.github.com/jmathai/twitter-async">view documentation</a> or <a target="_blank" href="https://github.com/jmathai/twitter-async/tree">fork the project</a>.</p>
+<p>A new project I'm working on integrates closely with Twitter.  As a result, I become a lot more familiar with OAuth than I care to.  Many developers want to be able to speak the OAuth protocol without having to know the fine details.  I am deviating from the normal order by starting with an example and explaining it afterwards.  If you are interested in using "<a href="/articles/twitter-sign-in.html">Sign in with Twitter</a>" then read my other blog post.<span id="more-109"></span></p>
+<h3>A simple example</h3>
+<p>To follow the example, you'll need to download <a href="/files/jaisenmathai_com_oauth_test.zip">these files</a> and have a web server set up.  I <a target="_blank" href="http://www.jaisenmathai.com/blog/2008/12/09/developing-web-applications-locally-on-your-mac-osx-using-macports/">use my laptop</a> but you can also use a webhost if you'd like.  Head over to Twitter and <a href="http://twitter.com/oauth">set up an application</a>.  The last two fields are important.  The callback url will need to redirect to your web server at a location where you will be uploading some files.  Assuming you're going to upload into your web root, the callback url would be something like <em>http://yourdomain.com/confirm.php</em>.  You'll also need to make sure you select "Read &amp; Write" access.</p>
+<p>Once you click save, you will be presented with some information.  Download the <a href="/files/jaisenmathai_com_oauth_test.zip">php files for this example</a> and open secret.php.  Enter your consumer key and consumer secret in the appropriate areas.  Save and upload to your webserver.</p>
+<p>Open a browser to your webserver's start.php file you just uploaded.  You'll see a link to authorize with Twitter.  Clicking on that link will take you to Twitter's site and ask you to log in if you're not already.</p>
+<p><img width="570" height="342" alt="Oauth Flow" src="/images/screenshots/twitter_access.png"></p>
+<p>Once you click <em>Allow</em> you'll be redirected back to your site with a custom greeting pulled straight from Twitter.  It doesn't get much easier than that.  From here on out you can use the token and secret provided by Twitter to access the API on behalf of the user who authorized you.  Now, the details.</p>
+<h3>Why use OAuth...the benefits</h3>
+<p>OAuth is “<em>an open protocol to allow secure API authorization in a simple and standard method from desktop and web applications</em>.”  What's that mean?  In short, it means that a user of your service can provide you limited access to a third party account of theirs.  OAuth is often described as a valet key that your users can give you to access their accounts on other services.  For example, a user using Flickr (<em>the service provider</em>) would provide Snapfish (<em>the consumer</em>) with read only access to their Flickr account.  This lets Snapfish access photos in the user's Flickr account so they can order prints.</p>
+<p><strong>It's all in the tokens</strong><br>
+How does this happen without asking the user to give up their Flickr password?  The flow would start by Snapfish obtaining a <em>consumer key and secret</em> and using them to generate an authorization link to Flickr.  Once the user follows the authorization link, they are asked to log in on Flickr's site.  Once logged in they can choose to grant Snapfish access to their Flickr account.  Flickr then marks the <em>request token</em> as having been authorized by the user.  Snapfish uses the <em>request token</em> to obtain an <em>access token</em> which can be used by to make requests to Flickr on behalf of the user.  This diagram may help visualize it easier.  <em>C = Consumer, SP = Service Provider</em></p>
+<p><img width="479" height="256" alt="Oauth Flow" src="/images/screenshots/oauth_flow.png"></p>
+<h3>Let's dive in</h3>
+<p>I had several goals in writing a PHP client for OAuth and Twitter.</p>
+<ul>
+<li>The two should be decoupled, making it easier to add other OAuth services</li>
+<li>Reuse the <a target="_blank" href="http://www.jaisenmathai.com/blog/2008/05/29/asynchronous-parallel-http-requests-using-php-multi_curl/">asynchronous/non-blocking curl library</a></li>
+<li>Expose methods which would enable OAuth requests in less than 4 lines of code</li>
+</ul>
+<h3>Generating a valid OAuth request</h3>
+<p>It turns out that generating an OAuth request is very simple but debugging it is a pain.  Every OAuth request contains certain parameters.  These include:</p>
+<ul>
+<li>oauth_consumer_key</li>
+<li>oauth_token</li>
+<li>oauth_nonce</li>
+<li>oauth_timestamp</li>
+<li>oauth_signature method</li>
+<li>oauth_version</li>
+<li>oauth_signature</li>
+</ul>
+<p>These can be passed in as GET or POST parameters or in the <em>Authorization</em> header.  You'll most likely be passing in other additional parameters based on the API you're accessing.  I won't get into the details of what these parameters represent in this blog post but it's good information to know.</p>
+<h3>A look inside EpiOAuth</h3>
+<p>EpiOAuth initializes an instance of the EpiCurl object in its constructor.  Since EpiCurl is not included, you'll want to make sure you've made it available ahead of time.  There are several methods which you'll need to know about.</p>
+<ul>
+<li>getAccessToken</li>
+<li>getAuthorizationLink</li>
+<li>getRequestToken</li>
+</ul>
+<p>If you reference the diagram above, then these should be self explanatory.  There are several other helper methods which act more behind the scenes but play an important role.</p>
+<ul>
+<li>generateSignature</li>
+<li>generateNonce</li>
+<li>httpRequest</li>
+<li>prepareParameters</li>
+<li>signString</li>
+</ul>
+<p>These do all the magic to turn an otherwise normal request into a valid OAuth one.</p>
+<h3>How EpiTwitter extends EpiOAuth</h3>
+<p>Per my original goal, the Twitter class should contain a very minimal set of functions which call specific endpoints.  These methods are self explanatory if you look at them as well.  I did, however, want to make it easy to use the class in an asynchronous manner since the underlying http library I was using supports it.  This led me to create an EpiTwitterJson.  When you make a request you'll receive an instance of the EpiTwitterJson object without blocking for a response from the Twitter API.  You can at any point access individual elements in the response as a member variable.  Accessing the member variable with return the value and block if needed.</p>
+<h3>Wrapping it up</h3>
+<p>This should help get you up and running.  The code provided is very much under construction.  I would greatly appreciate contributions to make it better.</p>
+<p>If you're interested in learning more about OAuth then there's a great set of articles located at <a href="http://oauth.net/documentation/getting-started">http://oauth.net/documentation/getting-started</a>.</p>
+<p>If you find a bug, please <a target="_blank" href="http://github.com/jmathai/twitter-async/issues">open an issue</a> on GitHub.</p>

@@ -90,6 +90,7 @@ define('PATH_VIEW', PATH_LIB . '/views');
 $_['routes'] = array(
                 ''                        => array('CSite', 'home'), // Required
                 'ajax.json'               => array('CSite', 'homeAjax'),
+                'articles'                => array('CSite', 'articleDetail'),
                 'articles.html'           => array('CSite', 'articles'),
                 'articles/ajax.json'      => array('CSite', 'articlesAjax'),
                 'contact.html'            => array('CSite', 'contact'),
@@ -115,5 +116,6 @@ $_['routes'] = array(
                 'resume/detail/print'     => array('CSite', 'error301'),
                 'resume/ascii'            => array('CSite', 'error301'),
                 'resume/print'            => array('CSite', 'error301'),
+                'blog' => array('CSite', 'error301'),
               );
 ?>

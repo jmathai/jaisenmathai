@@ -29,6 +29,22 @@
       return array('title' => 'Articles', 'articles' => getArticles());
     }
 
+    public static function articleDetail()
+    {
+      $view = self::articlesView();
+      if(stristr($_SERVER['REDIRECT_URL'], '..') === false && file_exists(PATH_VIEW . $_SERVER['REDIRECT_URL']))
+      {
+        $view['body'] = EpiCode::get(substr($_SERVER['REDIRECT_URL'], 1));
+        Epicode::display('header.php', $view);
+        echo M()->render(EpiCode::get('template.php'), $view, getPartials());
+        Epicode::display('footer.php');  
+      }
+      else
+      {
+        EpiCode::redirect('/articles.html');
+      }
+    }
+
     public static function code()
     {
       $view = array('body' => M()->render(EpiCode::get('code.html'), self::codeView()));
@@ -75,7 +91,18 @@
 
     public static function error301()
     {
-      if(strstr($_SERVER['REQUEST_URI'], '?'))
+      if(strstr($_SERVER['REDIRECT_URL'], '/blog/'))
+      {
+        if(stristr($_SERVER['REDIRECT_URL'], 'asynchronous-parallel-http-requests-using-php-multi_curl'))
+          $newUrl = '/articles/php-curl-asynchronous.html';
+        elseif(stristr($_SERVER['REDIRECT_URL'], 'how-to-quickly-integrate-with-twitters-oauth-api-using-php'))
+          $newUrl = '/articles/twitter-php-oauth.html';
+        elseif(stristr($_SERVER['REDIRECT_URL'], 'letting-your-users-sign-in-with-twitter-with-oauth'))
+          $newUrl = '/articles/twitter-php-sign-in.html';
+        else
+          $newUrl = '/articles.html';
+      }
+      elseif(strstr($_SERVER['REQUEST_URI'], '?'))
       {
         $newUrl = substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?')) . '.html';
       }

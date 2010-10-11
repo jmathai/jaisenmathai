@@ -1,0 +1,200 @@
+<p>When working with web services <em>curl</em> quickly becomes your best friend.  It gets even better when you dig into PHP's multi_curl functions.  The downside to accessing web services at run time is that HTTP connections can be slow.  This problem is multiplied when you have to call multiple web services for a given page.  PHP's <span class="code">multi_curl_*</span> functions help drastically because they allow you to make unblocking asynchronous/parallel requests.  This means you can continue processing the request without waiting for a response.<span id="more-28"></span></p>
+<p>Most of the tutorials online show examples of parallel curl requests using the same pattern.  Fire of a handful of requests and then block later on until all the requests have completed.  But what if you don't need all the information right away?  Perhaps the response you need is available immediately and another request is still waiting.  Wouldn't it be nice to get what you need when you need it?  Of course it would.</p>
+<ol>
+<li><a href="#curl1">Execute curl requests as needed</a></li>
+<li><a href="#curl2">Access responses as needed</a></li>
+<li><a href="#curl3">Wrap this functionality in an easy to use class</a></li>
+<li><a href="#curl4">Offer a consistent interface to access the response</a></li>
+<li><a href="#curl5">Show a working example</a></li>
+</ol>
+<p><a name="curl1"></a><strong>Execute curl requests as needed</strong><br>
+PHP's <span class="code">multi_curl_init</span> acts as a container for one or more curl handles created by <span class="code">curl_init</span>.  It also lets you run them in parallel and continue processing other PHP code.  You can call <span class="code">curl_multi_exec</span> at any time to fire off any curl handle in the stack which haven't been yet.  The second parameter to this function is passed by reference and returns a reference to a flag to tell if there are operations still running.</p>
+<pre name="code" class="php">mch = curl_multi_init();
+
+$ch1 = curl_init('http://www.yahoo.com');
+curl_setopt($ch1, CURLOPT_RETURNTRANSFER);
+$ch2 = curl_init('http://www.google.com');
+curl_setopt($ch2, CURLOPT_RETURNTRANSFER);
+
+curl_multi_add_handle($mch, $ch1);
+curl_multi_exec($mch, $active);
+
+//
+
+curl_multi_add_handle($mch, $ch2);
+curl_multi_exec($mch, $active);
+
+//
+
+do{
+  curl_multi_exec($mch, $active);
+}while($active &gt; 0);
+
+$resp1 = curl_multi_getcontent($ch1);
+$resp2 = curl_multi_getcontent($ch2);</pre>
+<p><a name="curl2"></a><strong>Access responses as needed</strong><br>
+The above code is a huge improvement from blocking for both curl requests to Yahoo! and Google.  But say Google was being slow and you needed the response from Yahoo! first?  The above code would force you to wait for the response from Google before you could use the response from Yahoo!.  We can use the 2nd parameter to <span class="code">curl_multi_exec</span> to let us know if there are any completed responses.  What we can do is to check <span class="code">$active</span> each time the do while loop processes and store any response received.  If the response received is the one we're looking for then we can simply exit the loop.</p>
+<pre name="code" class="php">do{
+  curl_multi_exec($mch, $active);
+  if($active != $previousActive){
+    // new response to save
+    // if this is the response we were looking for then exit the loop
+  }
+  $previousActive = $active;
+}while($active &gt; 0);</pre>
+<p><a name="curl3"></a><strong>Wrap this functionality in an easy to use class</strong><br>
+It turns out that all you need to do is manage your curl handles.  In order to do this we're going to make the curl wrapper class a singleton.  Additionally, we will create another class to manage the curl handles.  When adding a curl handle we are going to return an instance of this manager class after having instantiated it with a unique identifier.  The unique identifier we're going to use is the string value of the curl handle <span class="code">(string)curl_init()</span>.  We'll get into the code later.</p>
+<p><a name="curl4"></a><strong>Offer a consistent interface to access the response</strong><br>
+In order to offer a consistent interface we are going define a few member variables for the manager class.  For simplicity sake we will start with data for the response and code for the HTTP status code.  Instead of initializing these with the object we can use PHP's <span class="code">__get</span> magic method.  Now the first time we access $manager-&gt;data it will call the <span class="code">__get</span> method.  In the get method we will do the blocking and wait for the response.  Once the response is received we'll store it in case it's accessed again later.  I am not going into the details of this code as it should be self explanatory with the notes above.</p>
+<p><a target="_blank" href="http://github.com/jmathai/epicode/tree/master">Source also available at GitHub</a>.</p>
+<pre name="code" class="php">class EpiCurl
+{
+  const timeout = 3;
+  static $inst = null;
+  static $singleton = 0;
+  private $mc;
+  private $msgs;
+  private $running;
+  private $requests = array();
+  private $responses = array();
+  private $properties = array();
+
+  function __construct()
+  {
+    if(self::$singleton == 0)
+    {
+      throw new Exception('You must instantiate it using: $obj = EpiCurl::getInstance();');
+    }
+
+    $this-&gt;mc = curl_multi_init();
+    $this-&gt;properties = array(
+      'code'  =&gt; CURLINFO_HTTP_CODE,
+      'time'  =&gt; CURLINFO_TOTAL_TIME,
+      'length'=&gt; CURLINFO_CONTENT_LENGTH_DOWNLOAD,
+      'type'  =&gt; CURLINFO_CONTENT_TYPE
+      );
+  }
+
+  public function addCurl($ch)
+  {
+    $key = (string)$ch;
+    $this-&gt;requests[$key] = $ch;
+
+    $res = curl_multi_add_handle($this-&gt;mc, $ch);
+    if($res == 0)
+    {
+      curl_multi_exec($this-&gt;mc, $active);
+      return new EpiCurlManager($key);
+    }
+    else
+    {
+      return $res;
+    }
+  }
+
+  public function getResult($key = null)
+  {
+    if($key != null)
+    {
+      if(isset($this-&gt;responses[$key]))
+      {
+        return $this-&gt;responses[$key];
+      }
+
+      $running = null;
+      do
+      {
+        $resp = curl_multi_exec($this-&gt;mc, $runningCurrent);
+        if($running !== null &amp;&amp; $runningCurrent != $running)
+        {
+          $this-&gt;storeResponses($key);
+          if(isset($this-&gt;responses[$key]))
+          {
+            return $this-&gt;responses[$key];
+          }
+        }
+        $running = $runningCurrent;
+      }while($runningCurrent &gt; 0);
+    }
+
+    return false;
+  }
+
+  private function storeResponses()
+  {
+    while($done = curl_multi_info_read($this-&gt;mc))
+    {
+      $key = (string)$done['handle'];
+      $this-&gt;responses[$key]['data'] = curl_multi_getcontent($done['handle']);
+      foreach($this-&gt;properties as $name =&gt; $const)
+      {
+        $this-&gt;responses[$key][$name] = curl_getinfo($done['handle'], $const);
+        curl_multi_remove_handle($this-&gt;mc, $done['handle']);
+      }
+    }
+  }
+
+  static function getInstance()
+  {
+    if(self::$inst == null)
+    {
+      self::$singleton = 1;
+      self::$inst = new EpiCurl();
+    }
+
+    return self::$inst;
+  }
+}
+
+class EpiCurlManager
+{
+  private $key;
+  private $epiCurl;
+
+  function __construct($key)
+  {
+    $this-&gt;key = $key;
+    $this-&gt;epiCurl = EpiCurl::getInstance();
+  }
+
+  function __get($name)
+  {
+    $responses = $this-&gt;epiCurl-&gt;getResult($this-&gt;key);
+    return $responses[$name];
+  }
+}</pre>
+<p><a name="curl5"></a><strong>Show a working example</strong><br>
+Here is how it looks to implement.  It's very clean and consistent…two of the goals we set out for.  If you have any questions then let me know in the comments.</p>
+<div class="dp-highlighter"><div class="bar"><div class="tools"><a onclick="dp.sh.Toolbar.Command('ViewSource',this);return false;" href="#">view plain</a><a onclick="dp.sh.Toolbar.Command('CopyToClipboard',this);return false;" href="#">copy to clipboard</a><a onclick="dp.sh.Toolbar.Command('PrintSource',this);return false;" href="#">print</a><a onclick="dp.sh.Toolbar.Command('About',this);return false;" href="#">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">include</span><span>&nbsp;</span><span class="string">'EpiCurl.php'</span><span>;&nbsp;&nbsp;</span></span></li><li class=""><span><span class="vars">$mc</span><span>&nbsp;=&nbsp;EpiCurl::getInstance();&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="vars">$ch1</span><span>&nbsp;=&nbsp;curl_init(</span><span class="string">'http://www.yahoo.com'</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>curl_setopt(<span class="vars">$ch1</span><span>,&nbsp;CURLOPT_RETURNTRANSFER,&nbsp;1);&nbsp;&nbsp;</span></span></li><li class=""><span><span class="vars">$curl1</span><span>&nbsp;=&nbsp;</span><span class="vars">$mc</span><span>-&gt;addCurl(</span><span class="vars">$ch1</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="comment">//&nbsp;connect&nbsp;to&nbsp;a&nbsp;database</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="comment">//&nbsp;loop&nbsp;over&nbsp;some&nbsp;records</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span><span class="comment">//&nbsp;authenticate&nbsp;a&nbsp;user</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="vars">$ch2</span><span>&nbsp;=&nbsp;curl_init(</span><span class="string">'http://www.google.com'</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>curl_setopt(<span class="vars">$ch2</span><span>,&nbsp;CURLOPT_RETURNTRANSFER,&nbsp;1);&nbsp;&nbsp;</span></span></li><li class=""><span><span class="vars">$curl2</span><span>&nbsp;=&nbsp;</span><span class="vars">$mc</span><span>-&gt;addCurl(</span><span class="vars">$ch2</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="comment">//&nbsp;open&nbsp;a&nbsp;file</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="comment">//&nbsp;loop&nbsp;over&nbsp;the&nbsp;lines&nbsp;in&nbsp;the&nbsp;file</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span><span class="comment">//&nbsp;close&nbsp;the&nbsp;file</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="vars">$ch3</span><span>&nbsp;=&nbsp;curl_init(</span><span class="string">'http://www.slooooooooooooooooow.com'</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>curl_setopt(<span class="vars">$ch3</span><span>,&nbsp;CURLOPT_RETURNTRANSFER,&nbsp;1);&nbsp;&nbsp;</span></span></li><li class=""><span><span class="vars">$curl3</span><span>&nbsp;=&nbsp;</span><span class="vars">$mc</span><span>-&gt;addCurl(</span><span class="vars">$ch3</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="func">echo</span><span>&nbsp;</span><span class="string">"Response&nbsp;code&nbsp;from&nbsp;Yahoo!&nbsp;is&nbsp;{$curl1-&gt;code}\n"</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="func">echo</span><span>&nbsp;</span><span class="string">"Response&nbsp;code&nbsp;from&nbsp;Google&nbsp;is&nbsp;{$curl2-&gt;code}\n"</span><span>;&nbsp;&nbsp;</span></span></li></ol></div><pre class="php" name="code" style="display: none;">include 'EpiCurl.php';
+$mc = EpiCurl::getInstance();
+
+$ch1 = curl_init('http://www.yahoo.com');
+curl_setopt($ch1, CURLOPT_RETURNTRANSFER, 1);
+$curl1 = $mc-&gt;addCurl($ch1);
+
+// connect to a database
+// loop over some records
+// authenticate a user
+
+$ch2 = curl_init('http://www.google.com');
+curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
+$curl2 = $mc-&gt;addCurl($ch2);
+
+// open a file
+// loop over the lines in the file
+// close the file
+
+$ch3 = curl_init('http://www.slooooooooooooooooow.com');
+curl_setopt($ch3, CURLOPT_RETURNTRANSFER, 1);
+$curl3 = $mc-&gt;addCurl($ch3);
+
+echo "Response code from Yahoo! is {$curl1-&gt;code}\n";
+echo "Response code from Google is {$curl2-&gt;code}\n";</pre>
+<p><strong>Resources</strong></p>
+<ul>
+<li><a target="_blank" href="http://mjgp2.matthewpainter.com/2007/12/how-to-multi-thread-using-php.html">http://mjgp2.matthewpainter.com/2007/12/how-to-multi-thread-using-php.html</a></li>
+<li><a target="_blank" href="http://www.phpied.com/simultaneuos-http-requests-in-php-with-curl/">http://www.phpied.com/simultaneuos-http-requests-in-php-with-curl/</a></li>
+<li><a target="_blank" href="http://www.rustyrazorblade.com/2008/02/20/curl_multi_exec/">http://www.rustyrazorblade.com/2008/02/20/curl_multi_exec/</a></li>
+<li><a target="_blank" href="http://onlineaspect.com/2009/01/26/how-to-use-curl_multi-without-blocking/">http://onlineaspect.com/2009/01/26/how-to-use-curl_multi-without-blocking/</a> (in case you need to throttle the # of calls your making simultaneously)</li>
+<li><a target="_blank" href="http://curl.haxx.se/libcurl/c/libcurl-multi.html" title="Curl docs">http://curl.haxx.se/libcurl/c/libcurl-multi.html</a></li>
+</ul>

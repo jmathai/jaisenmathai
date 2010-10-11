@@ -3,7 +3,11 @@
 
   function getArticles()
   {
-    return array(array('file' => 'twitter-sign-in.html', 'name' => 'Sign In With Twitter Using PHP'), array('file' => 'twitter-oauth.html', 'name' => "Twitter's OAuth API using PHP"));
+    return array(
+      array('file' => 'twitter-php-sign-in.html', 'name' => 'Sign In With Twitter Using PHP'), 
+      array('file' => 'twitter-php-oauth.html', 'name' => "Twitter's OAuth API using PHP"),
+      array('file' => 'php-curl-asynchronous.html', 'name' => 'Asynchronous HTTP Calls with Curl and PHP'),
+      );
   }
 
   function getMemcache()
