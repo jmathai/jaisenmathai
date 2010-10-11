@@ -91,7 +91,29 @@ var jm = (function() {
         var regt = /\>/g;
         start();
       },
-      ptg: function(){},
+      ptg: {
+        load: function(){
+          var limit = 45;
+          $.getJSON('http://photos.jaisenmathai.com/api/json?action=image.search&privacy=1&tags=favorites&limit='+limit+'&offset=0&order=dateTaken&callback=?&authenticationKey=656ff15dffa1a18c53c94b242da917f9', function(data) {
+            var photoGroup = $("#footer-outer p.thumbs");
+            $.each(data, function(i, photo) {
+              if(photo.name == null){ photo.name = 'This photo has no title.'; }
+              var lsrc = ptg.html.customImageLockSrc(photo.thumbnailPath, photo.key, photo.width, photo.height, 800, 600);
+              var tsrc = ptg.html.customImageSrc(photo.thumbnailPath, photo.key, 40, 40)
+              $(photoGroup).append('<a href="'+lsrc+'" title="'+photo.name+'" target="_blank"><img src="'+tsrc+'" width="40" height="40"></a>');
+              if(i == (limit-1))
+                setupZoom();
+            });
+          });
+        },
+        render: function(response){
+          var p, i;
+          for(i in response) {
+            p = response[i];
+            console.log(p.thumbnailPath);
+          }
+        }
+      },
       click: function(ident, loc) {
         var tplIndex, tpl;
         if(ident.search("http://") == 0)

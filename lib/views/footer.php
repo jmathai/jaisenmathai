@@ -45,57 +45,25 @@
   <!-- footer starts here -->  
   <div id="footer-outer" class="clear"><div id="footer-wrap">
     <div class="col-a">
-      <h3>Image Gallery </h3>          
-      <p class="thumbs">
-        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>
-        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>
-        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>
-        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>
-        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>
-        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>  
-        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>
-        <a href="index.html"><img src="images/thumb.jpg" width="40" height="40" alt="thumbnail" /></a>        
-      </p>  
-      <h3>Something about images</h3>
-      <p>Something more about images</p>      
+      <h3>Photos</h3>          
+      <p class="thumbs"></p>  
     </div>
-    
-    <div class="col-a">
-      <h3>Middle text</h3>
-      <p>
-        <strong>Middle bold</strong> <br />
-        Middle text.
-      </p>
-        
-      <div class="footer-list">
-        <ul>        
-          <li><a href="index.html">consequat molestie</a></li>
-          <li><a href="index.html">sem justo</a></li>
-          <li><a href="index.html">semper</a></li>
-          <li><a href="index.html">magna sed purus</a></li>
-          <li><a href="index.html">tincidunt</a></li>    
-          <li><a href="index.html">consequat molestie</a></li>    
-          <li><a href="index.html">magna sed purus</a></li>          
-        </ul>
-      </div>
-        
-    </div>    
   
     <div class="col-b">
     
       <h3>About</h3>      
       
       <p>
-      <a href="index.html"><img src="images/gravatar.jpg" width="40" height="40" alt="firefox" class="float-left" /></a>
-      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. 
-      Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu 
-      posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum 
-      odio, ac blandit ante orci ut diam.</p>
-      
+      <a href="index.html"><img src="http://www.gravatar.com/avatar/e4d1f099d40e3b453be3355349b90457?s=40" width="40" height="40" alt="firefox" class="float-left" /></a>
+      I created this site to express my technical and creative sides. 
+      Very little of my personal life is on this site (or on the Internet for that matter).
+      I do, however, have a lot of involvement in various technology groups and advocate free open source software.
+      Most of the code I write is available on <a href="http://github.com/jmathai">Github</a>.
+      </p>
       <p>
-      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. 
-      Cras id urna. <a href="index.html">Learn more...</a></p>      
-      
+      I'm also an entrepreneur having successfully launched a handful of companies and raising angel funding for one and selling another.
+      I continue to invest a portion of my time persuing ventures.
+      </p>
     </div>    
   
   <!-- footer ends -->    
@@ -126,7 +94,9 @@
 </div>
 <?php echo getJs(); ?>
 <script src="/mustaches.js" type="text/javascript"></script>
+<script src="http://photos.jaisenmathai.com/js/api.js" id="__PTG"></script>
 <script>
+  var ptg;
   $(document).ready(function() {
     $("div#nav ul li a").click(function() {
       var el = this;
@@ -139,12 +109,13 @@
       jm.click(url, loc);
       return false;
     });
-
     if(location.href.search("#") != -1) {
       jm.click(location.hash.substring(1), location.href.replace(location.hash, ""));
     }
     dp.SyntaxHighlighter.ClipboardSwf = '/swf/clipboard.swf';
     dp.SyntaxHighlighter.HighlightAll('code');
+    ptg = new PTG("656ff15dffa1a18c53c94b242da917f9");
+    jm.ptg.load();
   });
 </script>
 </body>

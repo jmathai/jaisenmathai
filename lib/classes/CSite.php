@@ -135,7 +135,7 @@
       echo EpiCode::json(self::homeView());
     }
 
-    private static function homeView()
+    public static function homeView()
     {
       return array('title' => 'Home', 'featured-title' => 'A little about myself', 'featured-content' => EpiCode::get('about.html'), 'featured-image-src' => '/images/headshot.jpg');
     }

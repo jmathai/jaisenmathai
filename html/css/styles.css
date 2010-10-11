@@ -38,10 +38,16 @@ img.plain{ border:0; padding:0; }
 	padding-top: 5px;
 }
 #footer-wrap .col-a {
-  width: 335px;
+  width: 670px;
 }
 #footer-wrap .col-b {
   width: 215px;
+}
+#ShadowBox table{
+  margin:0;
+}
+#ZoomClose img {
+  background:none;
 }
 
 /* custom */

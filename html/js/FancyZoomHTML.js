@@ -22,6 +22,7 @@ function insertZoomHTML() {
 	inBody.insertBefore(inSpinbox, inBody.firstChild);
 	
 	var inSpinImage = document.createElement("img");
+	inSpinImage.setAttribute('class', 'plain'); // jm
 	inSpinImage.setAttribute('id', 'SpinImage');
 	inSpinImage.setAttribute('src', zoomImagesURI+'zoom-spin.gif'); // make this a gif
 	inSpinbox.appendChild(inSpinImage);
@@ -51,6 +52,7 @@ function insertZoomHTML() {
 	inImage1.setAttribute('src',zoomImagesURI+'spacer.gif');
 	inImage1.setAttribute('id','ZoomImage');
 	inImage1.setAttribute('border', '0');
+	inImage1.setAttribute('class', 'plain'); // jm
 	// inImage1.setAttribute('onMouseOver', 'zoomMouseOver();')
 	// inImage1.setAttribute('onMouseOut', 'zoomMouseOut();')
 	
@@ -85,6 +87,7 @@ function insertZoomHTML() {
 	inImage2.setAttribute('width','30');
 	inImage2.setAttribute('height','30');
 	inImage2.setAttribute('border','0');
+	inImage2.setAttribute('class','plain'); // jm
 	inImage2.style.cursor = 'pointer';		
 	inClosebox.appendChild(inImage2);
 	
