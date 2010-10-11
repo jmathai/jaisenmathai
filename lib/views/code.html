@@ -32,15 +32,15 @@ try{
   <table>
     <tr>
       <td class="right"><em>Watchers:</em></td>
-      <td><a href="http://github.com/jmathai/twitter-async/watchers" target="_blank"><?php echo $github['info']['watchers']; ?></a></td>
+      <td><a href="http://github.com/jmathai/twitter-async/watchers" target="_blank">{{ghWatchers}}</a></td>
     </tr>
     <tr>
       <td class="right"><em>Forks:</em></td>
-      <td><a href="http://github.com/jmathai/twitter-async/network" target="_blank"><?php echo $github['info']['forks']; ?></a></td>
+      <td><a href="http://github.com/jmathai/twitter-async/network" target="_blank">{{ghForks}}</a></td>
     </tr>
     <tr>
       <td class="right"><em>Issues:</em></td>
-      <td><a href="http://github.com/jmathai/twitter-async/issues" target="_blank"><?php echo $github['info']['issues']; ?></a></td>
+      <td><a href="http://github.com/jmathai/twitter-async/issues" target="_blank">{{ghIssues}}</a></td>
     </tr>
   </table>
 </p>
@@ -50,22 +50,22 @@ try{
 <h3>Commit summary (5 most recent)</h3>
 <p>
   <table>
-    <?php foreach($github['commits'] as $commit) { ?>
+    {{#ghCommits}}
       <tr>
-        <td align="right"><em>Author:</em></td>
-        <td><?php echo htmlspecialchars($commit['name']); ?> &lt;<?php echo htmlspecialchars($commit['email']); ?>&gt;</td>
+        <td class="right"><em>Author:</em></td>
+        <td>{{name}}&lt;{{email}}&gt;</td>
       </tr>
       <tr>
-        <td align="right"><em>Date:</em></td>
-        <td><?php echo date('F j, Y \a\t g:i a', $commit['time']); ?></td>
+        <td class="right"><em>Date:</em></td>
+        <td>{{timefmt}}</td>
       </tr>
       <tr>
-        <td align="right" valign="top"><em>Message:</em></td>
-        <td><?php echo htmlspecialchars($commit['message']); ?></td>
+        <td class="right" valign="top"><em>Message:</em></td>
+        <td>{{message}}</td>
       </tr>
       <tr>
         <td colspan="2">&nbsp;</td>
       </tr>
-    <?php } ?>
+    {{/ghCommits}}
   </table>
 </p>

@@ -31,7 +31,8 @@
       'message' => $commit['message'],
       'name' => $commit['author']['name'],
       'email' => $commit['author']['email'],
-      'time' => strtotime($commit['committed_date'])
+      'time' => strtotime($commit['committed_date']),
+      'timefmt' => date('F j, Y \a\t g:i a', strtotime($commit['committed_date']))
     );
   }
 

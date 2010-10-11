@@ -12,8 +12,10 @@
 
     public static function articles()
     {
-      Epicode::display('header.php', self::articlesView());
-      echo M()->render(EpiCode::get('template.php'), self::articlesView(), getPartials());
+      $view = array('body' => M()->render(EpiCode::get('articles.html'), array('articles' => getArticles())));
+      $view = array_merge($view, self::articlesView());
+      Epicode::display('header.php', $view);
+      echo M()->render(EpiCode::get('template.php'), $view, getPartials());
       Epicode::display('footer.php');  
     }
 
@@ -24,14 +26,15 @@
 
     private static function articlesView()
     {
-      $articles = getArticles();
-      return array('body' => M()->render(EpiCode::get('articles.html'), array('articles' => $articles)), 'title' => 'Articles', 'articles' => $articles);
+      return array('title' => 'Articles', 'articles' => getArticles());
     }
 
     public static function code()
     {
-      Epicode::display('header.php', self::codeView());
-      echo M()->render(EpiCode::get('template.php'), self::codeView(), getPartials());
+      $view = array('body' => M()->render(EpiCode::get('code.html'), self::codeView()));
+      $view = array_merge($view, self::codeView());
+      Epicode::display('header.php', $view);
+      echo M()->render(EpiCode::get('template.php'), $view, getPartials());
       Epicode::display('footer.php');  
     }
 
@@ -42,16 +45,17 @@
 
     private static function codeView()
     {
-      return array('body' => EpiCode::get('code.html'), 'title' => 'Code', 'github' => json_decode(trim(file_get_contents(EPICODE_VIEWS . '/github.json')), true));
+      $github = json_decode(trim(file_get_contents(EPICODE_VIEWS . '/github.json')), true);
+      return array('title' => 'Code', 'ghCommits' => $github['commits'], 'ghWatchers' => $github['info']['watchers'], 'ghForks' => $github['info']['forks'], 'ghIssues' => $github['info']['issues']);
     }
     
     public static function contact()
     {
-      $view = self::contactView();
-      Epicode::display('header.php', self::contactView());
+      $view = array('body' => EpiCode::get('contact.html'));
+      $view = array_merge($view, self::contactView());
+      Epicode::display('header.php', $view);
       echo M()->render(EpiCode::get('template.php'), $view, getPartials());
       Epicode::display('footer.php');  
-      //Epicode::display('template.php', array('body' => EPICODE_VIEWS . '/contact.html', 'title' => 'Contact', 'subtitle' => 'Hacker::getInstance() / Contact'));
     }
 
     public static function contactAjax()
@@ -61,7 +65,7 @@
 
     private static function contactView()
     {
-      return array('body' => EpiCode::get('contact.html'), 'title' => 'Contact');
+      return array('title' => 'Contact');
     }
 
     public static function emptyAjax()
@@ -94,7 +98,7 @@
     {
       $view = array('body' => EpiCode::get('home.html'));
       $view = array_merge($view, self::homeView());
-      Epicode::display('header.php', self::homeView());
+      Epicode::display('header.php', $view);
       echo M()->render(EpiCode::get('template.php'), $view, getPartials());
       Epicode::display('footer.php');
     }
@@ -121,8 +125,9 @@
     
     public static function resume()
     {
-      $view = self::resumeView();
-      Epicode::display('header.php', self::resumeView());
+      $view = array('body' => EpiCode::get('resume.html'));
+      $view = array_merge($view, $view);
+      Epicode::display('header.php', $view);
       echo M()->render(EpiCode::get('template.php'), $view, getPartials());
       Epicode::display('footer.php');  
     }
@@ -134,7 +139,7 @@
 
     private static function resumeView()
     {
-        return array('body' => EpiCode::get('resume.html'), 'title' => 'Resume');
+        return array('title' => 'Resume');
     }
     
     public static function resumeAscii()
@@ -149,7 +154,8 @@
     
     public static function portfolio()
     {
-      $view = self::portfolioView();
+      $view = array('body' => EpiCode::get('portfolio.html'));
+      $view = array_merge($view, self::portfolioView());
       Epicode::display('header.php', array('title' => 'Portfolio', 'subtitle' => 'Hacker::getInstance() / Portfolio'));
       echo M()->render(EpiCode::get('template.php'), $view, getPartials());
       Epicode::display('footer.php');  
@@ -162,7 +168,6 @@
 
     private static function portfolioView()
     {
-      return array('body' => EpiCode::get('portfolio.html'), 'title' => 'Portfolio');
+      return array('title' => 'Portfolio');
     }
   }
-?>
