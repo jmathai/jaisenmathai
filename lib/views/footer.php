@@ -81,10 +81,8 @@
     <div class="bottom-right">
       <p>    
         <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | 
-         <a href="http://validator.w3.org/check/referer">XHTML</a>  |      
-        <a href="index.html">Home</a> |
-        <a href="index.html">Sitemap</a> |
-        <a href="index.html">RSS Feed</a>                
+        <a href="http://validator.w3.org/check/referer">XHTML</a>  |      
+        <a href="/">Home</a> |
       </p>
     </div>
   <!-- footer-bottom ends -->    
