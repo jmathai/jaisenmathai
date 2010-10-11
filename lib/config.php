@@ -35,7 +35,6 @@ switch($_['constMode'])
     break;
   case 'scripts.jaisenmathai.com':
   case 'scripts.jaisenmathai.com':
-  case 'mustache.jaisenmathai.com':
   case 'www.jaisenmathai.com':
     /*
     * Database connection properties
