@@ -19,8 +19,7 @@
         $cache .= JSMin::minify(file_get_contents($fullPath)) . "\n";
       }
     }
-    if(false)
-      file_put_contents(PATH_DOC . "/js/static/{$hash}.js", "/* Cache of {$_SERVER['REQUEST_URI']} */\n{$cache}");
+    file_put_contents(PATH_DOC . "/js/static/{$hash}.js", "/* Cache of {$_SERVER['REQUEST_URI']} */\n{$cache}");
     echo $cache;
   }
 ?>
