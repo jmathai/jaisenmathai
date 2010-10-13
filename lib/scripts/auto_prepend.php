@@ -82,7 +82,7 @@
     return $retval;
   }
 
-  define('CACHE_CSS_MOBILE', '/css/compress-mobile-aaa.css|shared.css|mobile.css');
+  define('CACHE_CSS_MOBILE', '/css/compress-mobile-aab.css|shared.css|mobile.css');
   function getCssMobile()
   {
     $url = CACHE_CSS_MOBILE;
