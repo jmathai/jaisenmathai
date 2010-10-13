@@ -32,6 +32,8 @@ switch($_['constMode'])
      */
     define('HOST_SCRIPT', $_['constMode']);
     define('HOST_MEDIA', $_['constMode']);
+
+    define('PROD', false);
     break;
   case 'scripts.jaisenmathai.com':
   case 'scripts.jaisenmathai.com':
@@ -57,6 +59,8 @@ switch($_['constMode'])
      */
     define('HOST_SCRIPT', 'scripts.jaisenmathai.com');
     define('HOST_MEDIA', 'media.jaisenmathai.com');
+
+    define('PROD', true);
     break;
   case 'jaisenmathai.com':
   case 'jmathai.com':

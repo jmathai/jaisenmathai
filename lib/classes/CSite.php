@@ -14,9 +14,9 @@
     {
       $view = array('body' => M()->render(EpiCode::get('articles.html'), array('articles' => getArticles())));
       $view = array_merge($view, self::articlesView());
-      Epicode::display('header.php', $view);
+      Epicode::display(getHeader(), $view);
       echo M()->render(EpiCode::get('template.php'), $view, getPartials());
-      Epicode::display('footer.php');  
+      Epicode::display(getFooter());  
     }
 
     public static function articlesAjax()
@@ -35,9 +35,9 @@
       if(stristr($_SERVER['REDIRECT_URL'], '..') === false && file_exists(PATH_VIEW . $_SERVER['REDIRECT_URL']))
       {
         $view['body'] = EpiCode::get(substr($_SERVER['REDIRECT_URL'], 1));
-        Epicode::display('header.php', $view);
+        Epicode::display(getHeader(), $view);
         echo M()->render(EpiCode::get('template.php'), $view, getPartials());
-        Epicode::display('footer.php');  
+        Epicode::display(getFooter());  
       }
       else
       {
@@ -49,9 +49,9 @@
     {
       $view = array('body' => M()->render(EpiCode::get('code.html'), self::codeView()));
       $view = array_merge($view, self::codeView());
-      Epicode::display('header.php', $view);
+      Epicode::display(getHeader(), $view);
       echo M()->render(EpiCode::get('template.php'), $view, getPartials());
-      Epicode::display('footer.php');  
+      Epicode::display(getFooter());  
     }
 
     public static function codeAjax()
@@ -69,9 +69,9 @@
     {
       $view = array('body' => EpiCode::get('contact.html'));
       $view = array_merge($view, self::contactView());
-      Epicode::display('header.php', $view);
+      Epicode::display(getHeader(), $view);
       echo M()->render(EpiCode::get('template.php'), $view, getPartials());
-      Epicode::display('footer.php');  
+      Epicode::display(getFooter());  
     }
 
     public static function contactAjax()
@@ -125,9 +125,9 @@
     {
       $view = array('body' => EpiCode::get('home.html'));
       $view = array_merge($view, self::homeView());
-      Epicode::display('header.php', $view);
+      Epicode::display(getHeader(), $view);
       echo M()->render(EpiCode::get('template.php'), $view, getPartials());
-      Epicode::display('footer.php');
+      Epicode::display(getFooter());
     }
 
     public static function homeAjax()
@@ -154,9 +154,9 @@
     {
       $view = array('body' => EpiCode::get('resume.html'));
       $view = array_merge($view, $view);
-      Epicode::display('header.php', $view);
+      Epicode::display(getHeader(), $view);
       echo M()->render(EpiCode::get('template.php'), $view, getPartials());
-      Epicode::display('footer.php');  
+      Epicode::display(getFooter());  
     }
 
     public static function resumeAjax()
@@ -183,9 +183,9 @@
     {
       $view = array('body' => EpiCode::get('portfolio.html'));
       $view = array_merge($view, self::portfolioView());
-      Epicode::display('header.php', array('title' => 'Portfolio', 'subtitle' => 'Hacker::getInstance() / Portfolio'));
+      Epicode::display(getHeader(), array('title' => 'Portfolio', 'subtitle' => 'Hacker::getInstance() / Portfolio'));
       echo M()->render(EpiCode::get('template.php'), $view, getPartials());
-      Epicode::display('footer.php');  
+      Epicode::display(getFooter());  
     }
 
     public static function portfolioAjax()

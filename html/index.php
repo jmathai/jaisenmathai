@@ -3,6 +3,7 @@
   include_once PATH_CLASS . '/EpiCode.php';
   include_once PATH_CLASS . '/CSite.php';
   include_once PATH_CLASS . '/Mustache.php';
+  include_once PATH_CLASS . '/Mobile_Detect.php';
   
   $route = isset($_GET['__route__']) ? $_GET['__route__'] : '';
   if(EpiCode::getRoute($route, $_['routes']) === false)

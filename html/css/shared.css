@@ -1,0 +1,120 @@
+img.plain{ border:0; padding:0; }
+div#resume table {
+	border-collapse: collapse;
+	margin: 10px 20px;		
+}
+div#resume th, td {
+  border:0;
+  padding:0;
+}
+th.right, td.right {
+  text-align:right;
+  padding-right:5px;
+}
+div#resume h3 {
+  margin-left:0px;
+}
+div#resume div#resume-header h3{
+  text-align:right;
+  margin:0 20px 0 0;
+}
+.home-images
+{
+  width:660px;
+  height:132px;
+  margin:auto;
+}
+
+.home-images div
+{
+  float:left;
+  width:210px;
+  padding:0px;
+  margin:0px 5px;
+}
+
+.home-images div div
+{
+  background:url(/images/sprite-home-aac.jpg) no-repeat top left;
+  width:200px;
+  height:112px;
+  float:none;
+}
+
+.home-images div div.l0
+{
+}
+
+.home-images div div.m0
+{
+  background-position:-200px 0px;
+}
+
+.home-images div div.r0
+{
+  background-position:-400px 0px;
+}
+
+.home-images div div.l1
+{
+  background-position:0px -112px;
+}
+
+.home-images div div.m1
+{
+  background-position:-200px -112px;
+}
+
+.home-images div div.r1
+{
+  background-position:-400px -112px;
+}
+
+.home-images div div.l2
+{
+  background-position:0px -224px;
+}
+
+.home-images div div.m2
+{
+  background-position:-200px -224px;
+}
+
+.home-images div div.r2
+{
+  background-position:-400px -224px;
+}
+
+.home-images div div.l3
+{
+  background-position:0px -336px;
+}
+
+.home-images div div.m3
+{
+  background-position:-200px -336px;
+}
+
+.home-images div div.r3
+{
+  background-position:-400px -336px;
+}
+.home-images div p
+{
+  margin:4px 0px 0px;
+  padding:0px;
+  text-align:center;
+  font-size:smaller;
+}
+.code{
+  font-family:"DejaVu Sans Mono",Monaco,"Bitstream Vera Sans Mono",monospaced;
+  font-size:9pt;
+  color:#fff;
+  padding:1px 4px;
+  background-color:#333355;
+  white-space:nowrap;
+}
+ol.article ul{
+  margin:0;
+}
+

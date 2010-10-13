@@ -130,7 +130,8 @@ var jm = (function() {
 
         // fetch view
         $.get(ajax, {}, function(response) {
-          _gaq.push(['jm._trackPageview', ident]);
+          if(_gaq != undefined)
+            _gaq.push(['jm._trackPageview', ident]);
           var body = Mustache.to_html(templates[tpl], response, partials);
           if(response['featured-title']) {
             var featured = Mustache.to_html(partials['featured'], response, partials);
