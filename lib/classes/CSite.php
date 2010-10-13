@@ -153,7 +153,7 @@
     public static function resume()
     {
       $view = array('body' => EpiCode::get('resume.html'));
-      $view = array_merge($view, $view);
+      $view = array_merge($view, self::resumeView());
       Epicode::display(getHeader(), $view);
       echo M()->render(EpiCode::get('template.php'), $view, getPartials());
       Epicode::display(getFooter());  

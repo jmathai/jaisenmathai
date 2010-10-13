@@ -71,6 +71,7 @@ class Mobile_Detect {
      * @return bool
      */
     public function isMobile() {
+      return true;
         return $this->isMobile;
     }
 
