@@ -118,8 +118,8 @@
 
     ptg = new PTG("656ff15dffa1a18c53c94b242da917f9");
     jm.ptg.load();
-
-    if(_gaq != undefined) {
+    jm.isProd(<?php echo json_encode(PROD); ?>);
+    if(jm.isProd()) {
       _gaq.push(function() { var pageTracker = _gat._createTracker('UA-88708-4', 'jm'); });
       _gaq.push(['jm._trackPageview']);
       (function() {

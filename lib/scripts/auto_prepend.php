@@ -6,6 +6,7 @@
     return array(
       array('file' => 'twitter-php-sign-in.html', 'name' => 'Sign In With Twitter Using PHP'), 
       array('file' => 'twitter-php-oauth.html', 'name' => "Twitter's OAuth API using PHP"),
+      array('file' => 'twitter-async-documentation.html', 'name' => "Twitter-async documentation (PHP Twitter library)"),
       array('file' => 'php-curl-asynchronous.html', 'name' => 'Asynchronous HTTP Calls with Curl and PHP'),
       );
   }
@@ -69,7 +70,7 @@
     return $retval;
   }
 
-  define('CACHE_CSS', '/css/compress-aaj.css|reset.css|screen.css|FreshPick.css|shared.css|styles.css|resume.css|SyntaxHighlighter.css');
+  define('CACHE_CSS', '/css/compress-aak.css|reset.css|screen.css|FreshPick.css|shared.css|styles.css|resume.css|SyntaxHighlighter.css');
   function getCss()
   {
     $url = CACHE_CSS;

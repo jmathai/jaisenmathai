@@ -109,9 +109,8 @@ div#resume div#resume-header h3{
 .code{
   font-family:"DejaVu Sans Mono",Monaco,"Bitstream Vera Sans Mono",monospaced;
   font-size:9pt;
-  color:#fff;
   padding:1px 4px;
-  background-color:#333355;
+  background-color:#eee;
   white-space:nowrap;
 }
 ol.article ul{
