@@ -115,9 +115,12 @@
     }
     dp.SyntaxHighlighter.ClipboardSwf = '/swf/clipboard.swf';
     dp.SyntaxHighlighter.HighlightAll('code');
-
-    ptg = new PTG("656ff15dffa1a18c53c94b242da917f9");
-    jm.ptg.load();
+    
+    if(typeof PTG == 'function')
+    {
+      ptg = new PTG("656ff15dffa1a18c53c94b242da917f9");
+      jm.ptg.load();
+    }
     jm.isProd(<?php echo json_encode(PROD); ?>);
     if(jm.isProd()) {
       _gaq.push(function() { var pageTracker = _gat._createTracker('UA-88708-4', 'jm'); });

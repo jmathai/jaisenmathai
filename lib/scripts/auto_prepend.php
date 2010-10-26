@@ -57,7 +57,7 @@
     return substr($child, $extLen) == $ext;
   }
 
-  define('CACHE_JS', '/js/compress-aah.js|jquery-1.4.2.min.js|javascript.js|mustache.js|FancyZoom.js|FancyZoomHTML.js|shCore.js|shBrushCss.js|shBrushJScript.js|shBrushPhp.js|shBrushBash.js');
+  define('CACHE_JS', '/js/compress-aai.js|jquery-1.4.2.min.js|javascript.js|mustache.js|FancyZoom.js|FancyZoomHTML.js|shCore.js|shBrushCss.js|shBrushJScript.js|shBrushPhp.js|shBrushBash.js');
   function getJs()
   {
     $url = CACHE_JS;
