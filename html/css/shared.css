@@ -116,4 +116,6 @@ div#resume div#resume-header h3{
 ol.article ul{
   margin:0;
 }
-
+.ui-header li.ui-btn {
+  display:block;
+}

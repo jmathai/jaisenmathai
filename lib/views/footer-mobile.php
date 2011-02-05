@@ -1,8 +1,7 @@
-        </div><!-- id="left" -->
-      </div> <!-- id="content" -->
-    </div> <!-- id="content-wrap" -->
-  </div> <!-- id="content-outer" -->
-</div> <!-- wrap ends here -->
+  </div>
+  
+  <div data-role="footer"><h4>&copy; <?php echo date('Y'); ?>, Jaisen Mathai</h4></div>
+</div>
 <script>
   <?php if(PROD) { ?>
     var _gaq = _gaq || [];

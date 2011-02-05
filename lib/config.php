@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Los_Angeles');
 /*
 * Configuration array that sets up the application.
 * Enviornment specific variables are handled by unique HTTP_HOST values.

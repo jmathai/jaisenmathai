@@ -70,6 +70,19 @@
     return $retval;
   }
 
+  define('CACHE_JS_MOBILE', '/js/compress-aai.js|jquery-1.5.min.js');
+  function getJsMobile()
+  {
+    $url = CACHE_JS_MOBILE;
+    $hash = md5($url);
+    $relativePath = "/js/static/{$hash}.js";
+    if(file_exists(PATH_DOC . $relativePath))
+      $url = 'http://' . HOST_SCRIPT . $relativePath;
+
+    $retval = '<script type="text/javascript" src="' . $url . '"></script>';
+    return $retval;
+  }
+
   define('CACHE_CSS', '/css/compress-aak.css|reset.css|screen.css|FreshPick.css|shared.css|styles.css|resume.css|SyntaxHighlighter.css');
   function getCss()
   {
@@ -83,7 +96,7 @@
     return $retval;
   }
 
-  define('CACHE_CSS_MOBILE', '/css/compress-mobile-aab.css|shared.css|mobile.css');
+  define('CACHE_CSS_MOBILE', '/css/compress-mobile-aac.css|jquery.mobile.css|shared.css|mobile.css');
   function getCssMobile()
   {
     $url = CACHE_CSS_MOBILE;

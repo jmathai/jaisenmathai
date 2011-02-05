@@ -17,6 +17,7 @@
       if(file_exists($fullPath) && validCacheInclude(__FILE__, $fullPath, '.js'))
       {
         $cache .= JSMin::minify(file_get_contents($fullPath)) . "\n";
+        //$cache .= file_get_contents($fullPath) . "\n";
       }
     }
     if(PROD)
