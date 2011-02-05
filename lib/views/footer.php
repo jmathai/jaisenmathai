@@ -54,7 +54,7 @@
       <h3>About</h3>      
       
       <p>
-      <a href="index.html"><img src="http://www.gravatar.com/avatar/e4d1f099d40e3b453be3355349b90457?s=40" width="40" height="40" alt="firefox" class="float-left" /></a>
+      <a href="/"><img src="http://www.gravatar.com/avatar/e4d1f099d40e3b453be3355349b90457?s=40" width="40" height="40" alt="firefox" class="float-left" /></a>
       I created this site to express my technical and creative sides. 
       Very little of my personal life is on this site (or on the Internet for that matter).
       I do, however, have a lot of involvement in various technology groups and advocate free open source software.
