@@ -1,7 +1,36 @@
+<h3>Epiphany RESTful PHP Framework</h3>
+<p>
+  The Epiphany framework is fast, easy, clean and RESTful. The framework does not do a lot of magic under the hood. It is, by design, very simple and very powerful.
+</p>
+<p>
+  The documentation provides a few conventions that we believe lead to well written code but you're free to use any style you'd like. The framework never dictates how you should write or structure your application.
+</p>
+<p>
+  You can read the <a href="https://github.com/jmathai/epiphany">Epiphany RESTful PHP Framework documentation</a> on Github.
+</p>
+
+<h3>Sample Code</h3>
+<p>
+  
+  <pre name="code" class="php">Epi::init('route');
+$router = new EpiRoute();
+$router->get('/', 'home');
+$router->get('/contact', 'contactUs');
+
+function home() {
+    echo 'You are at the home page';
+}
+
+function contactUs() {
+    echo 'Send us an email at <a href="mailto:foo@bar.com">foo@bar.com</a>';
+}</pre>
+</p>
+
+<div class="border"></div>
+
 <h3>Twitter-async</h3>
 <p>
-  Twitter-async is my latest shared FOSS project that I have been working on.
-  It's a <a href="http://github.com/jmathai/twitter-async/tree" target="_blank">PHP Twitter OAuth</a> wrapper which let's you make parallel web service calls.
+  Twitter-async is a <a href="http://github.com/jmathai/twitter-async/tree" target="_blank">PHP Twitter OAuth</a> wrapper which let's you make parallel web service calls.
   I had originally created it for <a href="http://publicitweet.com" target="_blank">PubliciTweet</a> in order to understand the OAuth specification.
   Open sourcing it helped other developers looking for such a library and also myself as they began submitting patches.
 </p>
@@ -23,49 +52,4 @@ try{
 }catch(EpiOAuthException $e){  
   echo $e->getMessage();  
 }</pre>
-</p>
-
-<div class="border"></div>
-
-<h3>Repository summary</h3>
-<p>
-  <table>
-    <tr>
-      <td class="right"><em>Watchers:</em></td>
-      <td><a href="http://github.com/jmathai/twitter-async/watchers" target="_blank">{{ghWatchers}}</a></td>
-    </tr>
-    <tr>
-      <td class="right"><em>Forks:</em></td>
-      <td><a href="http://github.com/jmathai/twitter-async/network" target="_blank">{{ghForks}}</a></td>
-    </tr>
-    <tr>
-      <td class="right"><em>Issues:</em></td>
-      <td><a href="http://github.com/jmathai/twitter-async/issues" target="_blank">{{ghIssues}}</a></td>
-    </tr>
-  </table>
-</p>
-
-<div class="border"></div>
-
-<h3>Commit summary (5 most recent)</h3>
-<p>
-  <table>
-    {{#ghCommits}}
-      <tr>
-        <td class="right"><em>Author:</em></td>
-        <td>{{name}}&lt;{{email}}&gt;</td>
-      </tr>
-      <tr>
-        <td class="right"><em>Date:</em></td>
-        <td>{{timefmt}}</td>
-      </tr>
-      <tr>
-        <td class="right" valign="top"><em>Message:</em></td>
-        <td>{{message}}</td>
-      </tr>
-      <tr>
-        <td colspan="2">&nbsp;</td>
-      </tr>
-    {{/ghCommits}}
-  </table>
 </p>

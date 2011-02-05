@@ -37,7 +37,7 @@ class Mobile_Detect {
 
         if (isset($_SERVER['HTTP_X_WAP_PROFILE'])|| isset($_SERVER['HTTP_PROFILE'])) {
             $this->isMobile = true;
-        } elseif (strpos($this->accept,'text/vnd.wap.wml') > 0 || strpos($accept,'application/vnd.wap.xhtml+xml') > 0) {
+        } elseif (strpos($this->accept,'text/vnd.wap.wml') > 0 || strpos($this->accept,'application/vnd.wap.xhtml+xml') > 0) {
             $this->isMobile = true;
         } else {
             foreach ($this->devices as $device => $regexp) {
@@ -77,7 +77,7 @@ class Mobile_Detect {
 
     protected function isDevice($device) {
         $var    = "is" . ucfirst($device);
-        $return = $this->$var === null ? (bool) preg_match("/" . $this->devices[$device] . "/i", $this->userAgent) : $this->$var;
+        $return = !isset($this->$var) || $this->$var === null ? (bool) preg_match("/" . $this->devices[$device] . "/i", $this->userAgent) : $this->$var;
 
         if ($device != 'generic' && $return == true) {
             $this->isGeneric = false;

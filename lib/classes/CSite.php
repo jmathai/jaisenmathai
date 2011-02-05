@@ -61,8 +61,7 @@
 
     private static function codeView()
     {
-      $github = json_decode(trim(file_get_contents(EPICODE_VIEWS . '/github.json')), true);
-      return array('title' => 'Code', 'ghCommits' => $github['commits'], 'ghWatchers' => $github['info']['watchers'], 'ghForks' => $github['info']['forks'], 'ghIssues' => $github['info']['issues']);
+      return array('title' => 'Code');
     }
     
     public static function contact()
