@@ -10,7 +10,7 @@
 <body>
 <div data-role="page">
   <div data-role="header">
-    <h1 id="logo-text"><a href="/" title="">Hacker::getInstance('Jaisen Mathai', '<?php echo $title; ?>')</a></h1>
+    <h1 id="logo-text"><a href="/" title=""><?php echo $title; ?></a></h1>
     <ul data-role="listview">
       <li><a href="/" title="Go Home" rel="me">Home</a></li>
       <li><a href="/resume.html" title="View My Resume">Resume</a></li>

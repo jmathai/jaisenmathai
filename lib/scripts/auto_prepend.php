@@ -96,7 +96,7 @@
     return $retval;
   }
 
-  define('CACHE_CSS_MOBILE', '/css/compress-mobile-aac.css|jquery.mobile.css|shared.css|mobile.css');
+  define('CACHE_CSS_MOBILE', '/css/compress-mobile-aad.css|jquery.mobile.css|shared.css|mobile.css');
   function getCssMobile()
   {
     $url = CACHE_CSS_MOBILE;
