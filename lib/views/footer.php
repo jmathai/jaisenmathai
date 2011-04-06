@@ -12,6 +12,7 @@
             <?php } ?>
             <li><a href="http://github.com/jmathai" target="_blank">Watch me on Github</a></li>
             <li><a href="http://twitter.com/jmathai" target="_blank">Follow me on Twitter</a></li>
+            <li><a href="http://www.linkedin.com/in/jaisenmathai" target="_blank">View my LinkedIn profile</a></li>
           </ul>
         </div>
               
@@ -133,5 +134,6 @@
     }
   });
 </script>
+<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
 </body>
 </html>
