@@ -42,6 +42,7 @@
               <strong><xsl:value-of select="date-start" /> - <xsl:value-of select="date-stop" /></strong>
             </li>
           </ul>
+          <br/>
           <div>
             <ul>
               <xsl:for-each select="accomplishments/task">

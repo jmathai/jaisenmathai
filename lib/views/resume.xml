@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="/resume.xsl"?>
 <resume>
   <objective>
-    Work with an exceptional team to build tools and software that is second to none
+    Work with an exceptional team building software that people love to use
   </objective>
   <contact>
     <name>Jaisen Mathai</name>
@@ -21,13 +21,55 @@
       <pager></pager>
     </phone>
   </contact>
+
+  <job>
+    <company>Melts My Heart</company>
+    <title>Founder</title>
+    <description department="">Everything</description>
+    <date-start>Dec. 2010</date-start>
+    <date-stop>Present</date-stop>
+    <accomplishments>
+      <task>
+        Developed a native mobile application for Android and iOS using Appcelerator Titanium
+      </task>
+      <task>
+        Created a desktop and mobile version of the website using HTML5
+      </task>
+      <task>
+        Wrote an commenting system using SMTP as the transport mechanism allowing users to comment by replying to an email
+      </task>
+    </accomplishments>
+    <details>
+    </details>
+  </job>
   
+  <job>
+    <company>Yahoo!</company>
+    <title>Technical Lead / Software Engineer</title>
+    <description department="">Engineer</description>
+    <date-start>Nov. 2007</date-start>
+    <date-stop>Present</date-stop>
+    <accomplishments>
+      <task>
+        On the Mobile Presentation Platform team responsible for deploying Yahoo!'s services across thousands of mobile devices
+      </task>
+      <task>
+        Designated as the Local Paranoid responsible for all aspects of security including Cross Site Scripting (XSS) and Cross Site Request Forgery (XSRF)
+      </task>
+      <task>
+        Developing software which supports over 30 languages through internationalization and localization
+      </task>
+    </accomplishments>
+    <details>
+    </details>
+  </job>
+
   <job>
     <company>Textbook Revolt / The Scholar App</company>
     <title>Co-founder</title>
     <description department="">Senior Developer</description>
     <date-start>Aug. 2007</date-start>
-    <date-stop>Present</date-stop>
+    <date-stop>Mar. 2011</date-stop>
     <accomplishments>
       <task>
         Added telephony and SMS support by using APIs provided by Twilio
@@ -60,27 +102,6 @@
         <skills>PHP, Ajax, MySql</skills>
         <screenshot><img src="/images/screenshots/socialbib_receive_s.png" width="200" height="117" border="0" /></screenshot>
       </detail>
-    </details>
-  </job>
-  
-  <job>
-    <company>Yahoo!</company>
-    <title>Software Engineer</title>
-    <description department="">Engineer</description>
-    <date-start>Nov. 2007</date-start>
-    <date-stop>Present</date-stop>
-    <accomplishments>
-      <task>
-        Designated as the Local Paranoid responsible for all aspects of security including Cross Site Scripting (XSS) and Cross Site Request Forgery (XSRF)
-      </task>
-      <task>
-        Unobtrusively combat spam and abuse by intelligently using CAPTCHA and pattern based rate limiting
-      </task>
-      <task>
-        Developing software which supports over 30 languages through internationalization and localization
-      </task>
-    </accomplishments>
-    <details>
     </details>
   </job>
 
@@ -133,12 +154,13 @@
   </job>
 
   <skills>
+    <skill name="Mobile">Mobile websites using HTML5, native applications for Android and iOS using Appcelerator Titanium</skill>
     <skill name="AJAX">Mashups using Facebook Platform, Amazon AWS, Yahoo Search, Google Maps, Flickr and Twitter</skill>
     <skill name="JSON">Web services, cross domain scripting, data exchange between PHP, MySQL, Flash and JavaScript</skill>
     <skill name="PHP">Configuration, security, object-oriented programming, creating web services, custom frameworks</skill>
     <skill name="MySQL">Configuration, query optimization, full-text search indexing, de-normalization</skill>
     <skill name="JavaScript">Object oriented JavaScript, module pattern, jQuery</skill>
-    <skill name="Additional">Git, OAuth, asynchronous HTTP APIs, unit tests with mock objects</skill>
+    <skill name="Additional">Git, OAuth, asynchronous HTTP APIs, unit tests</skill>
   </skills>
   
   <publications>
