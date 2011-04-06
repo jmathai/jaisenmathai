@@ -83,7 +83,7 @@
     return $retval;
   }
 
-  define('CACHE_CSS', '/css/compress-aal.css|reset.css|screen.css|FreshPick.css|shared.css|styles.css|resume.css|SyntaxHighlighter.css');
+  define('CACHE_CSS', '/css/compress-aam.css|reset.css|screen.css|FreshPick.css|shared.css|styles.css|resume.css|SyntaxHighlighter.css');
   function getCss()
   {
     $url = CACHE_CSS;
