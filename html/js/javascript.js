@@ -1,6 +1,7 @@
 var jm = (function() {
   var rand = parseInt(Math.random()*10);
   var tpls = {};
+  var prod = true;
   $("div#nav ul li").each(function(i, el){
     var a = $(el).children().filter("a");
     if($(a).attr("tpl"))
@@ -130,7 +131,8 @@ var jm = (function() {
 
         // fetch view
         $.get(ajax, {}, function(response) {
-          _gaq.push(['jm._trackPageview', ident]);
+          if(jm.isProd())
+            _gaq.push(['jm._trackPageview', ident]);
           var body = Mustache.to_html(templates[tpl], response, partials);
           if(response['featured-title']) {
             var featured = Mustache.to_html(partials['featured'], response, partials);
@@ -152,6 +154,12 @@ var jm = (function() {
           // code highlight
           dp.SyntaxHighlighter.HighlightAll('code');
         }, 'json');
+      },
+      isProd: function() {
+        if(arguments.length == 1)
+          prod = arguments[0];
+
+        return prod;
       }
   };
 })();

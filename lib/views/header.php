@@ -2,21 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <link rel="alternate" type="application/rss+xml" title="Jaisen's Blog RSS Feed" href="http://feeds.feedburner.com/jaisenmathai" />
-  <?php if(strstr($_SERVER['REQUEST_URI'], '/blog') !== false){ ?>
-    <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
-    <?php wp_head(); ?>
-  <?php } ?>
   <?php echo getCss(); ?>
   <link rel="shortcut icon"  href="/jm_logo.gif" type="image/x-icon" />
   <title><?php echo $title; ?> :: Jaisen Mathai</title>
-  <?php if(function_exists('is_single') && is_single()) { ?>
-    <meta name="og:title" content="<?php the_title(); ?>"/>
-    <meta name="og:type" content="article"/>
-    <meta name="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/jm_logo.gif"/>
-    <meta name="og:url" content="http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REDIRECT_URL']; ?>"/>
-    <meta name="og:site_name" content="Jaisen Mathai's Blog"/>
-    <meta name="fb:app_id" content="140052122696614"/>
-  <?php } ?>
   <meta name="description" content="Web developer/engineer.  Proficient with PHP, MySQL, Apache and Linux (LAMP) as well as JavaScript, dHTML, AJAX and JSON." />
   <meta name="keywords" content="Jaisen, Mathai, Jaisen Mathai, jmathai.com, Portfolio, Resume, PHP Developer, PHP, AJAX, JSON, MySQL, Linux, JavaScript, dHTML, LAMP, Frameworks, Mashups, Facebook, Amazon, Google, Yahoo, APIs, Yahoo Employee, Yahoo Engineer, Yahoo Resume" />
 </head>

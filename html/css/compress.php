@@ -20,8 +20,8 @@
         $cache .= $tmp->getCss() . "\n";
       }
     }
-
-    file_put_contents(PATH_DOC . "/css/static/{$hash}.css", "/* Cache of {$_SERVER['REQUEST_URI']} */\n{$cache}");
+    if(PROD)
+      file_put_contents(PATH_DOC . "/css/static/{$hash}.css", "/* Cache of {$_SERVER['REQUEST_URI']} */\n{$cache}");
     echo $cache;
   }
 ?>

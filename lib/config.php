@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Los_Angeles');
 /*
 * Configuration array that sets up the application.
 * Enviornment specific variables are handled by unique HTTP_HOST values.
@@ -32,6 +33,8 @@ switch($_['constMode'])
      */
     define('HOST_SCRIPT', $_['constMode']);
     define('HOST_MEDIA', $_['constMode']);
+
+    define('PROD', false);
     break;
   case 'scripts.jaisenmathai.com':
   case 'scripts.jaisenmathai.com':
@@ -57,6 +60,8 @@ switch($_['constMode'])
      */
     define('HOST_SCRIPT', 'scripts.jaisenmathai.com');
     define('HOST_MEDIA', 'media.jaisenmathai.com');
+
+    define('PROD', true);
     break;
   case 'jaisenmathai.com':
   case 'jmathai.com':

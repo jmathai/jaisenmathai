@@ -1,4 +1,4 @@
-      </div>
+      </div><!-- id="left" -->
       <div id="right">
               
         <div class="sidemenu">  
@@ -12,6 +12,7 @@
             <?php } ?>
             <li><a href="http://github.com/jmathai" target="_blank">Watch me on Github</a></li>
             <li><a href="http://twitter.com/jmathai" target="_blank">Follow me on Twitter</a></li>
+            <li><a href="http://www.linkedin.com/in/jaisenmathai" target="_blank">View my LinkedIn profile</a></li>
           </ul>
         </div>
               
@@ -54,7 +55,7 @@
       <h3>About</h3>      
       
       <p>
-      <a href="index.html"><img src="http://www.gravatar.com/avatar/e4d1f099d40e3b453be3355349b90457?s=40" width="40" height="40" alt="firefox" class="float-left" /></a>
+      <a href="/"><img src="http://www.gravatar.com/avatar/e4d1f099d40e3b453be3355349b90457?s=40" width="40" height="40" alt="firefox" class="float-left" /></a>
       I created this site to express my technical and creative sides. 
       Very little of my personal life is on this site (or on the Internet for that matter).
       I do, however, have a lot of involvement in various technology groups and advocate free open source software.
@@ -62,7 +63,7 @@
       </p>
       <p>
       I'm also an entrepreneur having successfully launched a handful of companies and raising angel funding for one and selling another.
-      I continue to invest a portion of my time persuing ventures.
+      I continue to invest a portion of my time pursuing ventures.
       </p>
     </div>    
   
@@ -82,20 +83,22 @@
       <p>    
         <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | 
         <a href="http://validator.w3.org/check/referer">XHTML</a>  |      
-        <a href="/">Home</a> |
+        <a href="/">Home</a>
       </p>
     </div>
   <!-- footer-bottom ends -->    
   </div>
   
 <!-- wrap ends here -->
-</div>
+</div><!-- id="wrap" -->
 <?php echo getJs(); ?>
 <script src="/mustaches.js" type="text/javascript"></script>
 <script src="http://photos.jaisenmathai.com/js/api.js" id="__PTG"></script>
 <script>
   var ptg;
-  var _gaq = _gaq || [];
+  <?php if(PROD) { ?>
+    var _gaq = _gaq || [];
+  <?php } ?>
   $(document).ready(function() {
     $("div#nav ul li a").click(function() {
       var el = this;
@@ -113,18 +116,24 @@
     }
     dp.SyntaxHighlighter.ClipboardSwf = '/swf/clipboard.swf';
     dp.SyntaxHighlighter.HighlightAll('code');
-
-    ptg = new PTG("656ff15dffa1a18c53c94b242da917f9");
-    jm.ptg.load();
-
-    _gaq.push(function() { var pageTracker = _gat._createTracker('UA-88708-4', 'jm'); });
-    _gaq.push(['jm._trackPageview']);
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+    
+    if(typeof PTG == 'function')
+    {
+      ptg = new PTG("656ff15dffa1a18c53c94b242da917f9");
+      jm.ptg.load();
+    }
+    jm.isProd(<?php echo json_encode(PROD); ?>);
+    if(jm.isProd()) {
+      _gaq.push(function() { var pageTracker = _gat._createTracker('UA-88708-4', 'jm'); });
+      _gaq.push(['jm._trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    }
   });
 </script>
+<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
 </body>
 </html>

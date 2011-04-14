@@ -15,7 +15,7 @@ body {
 	color: #666666; 	
 	margin: 0; 
 	padding: 0; 
-	background: #FFF url(../images/bg.gif) repeat-x;
+	background: #FFF url(/images/bg.gif) repeat-x;
 	text-align: center;
 }
 
@@ -98,7 +98,7 @@ blockquote {
 	margin: 10px 20px;
  	padding: 10px 10px 10px 32px;  
    border: 1px solid #F0F0F0;
-	background: #f8f8f8 url(../images/quote.gif) no-repeat 12px 12px;
+	background: #f8f8f8 url(/images/quote.gif) no-repeat 12px 12px;
 	font-weight: normal;
 	font-size: 17px;
 	line-height: 1.5em;
@@ -266,7 +266,7 @@ input.button {
 	border-right: 1px solid #EEE;
 }
 #header #nav ul li#current a {	
-	background: transparent url(../images/current.gif) repeat-x left bottom;	
+	background: transparent url(/images/current.gif) repeat-x left bottom;	
 	color: #222;	
 }
 
@@ -340,12 +340,12 @@ input.button {
 	float: left;
 	width: 920px;
 	margin: 0; padding: 0;
-	background: transparent url(../images/hor-line.gif) repeat-y center 0;				
+	background: transparent url(/images/hor-line.gif) repeat-y center 0;				
 }
 #content-wrap {
 	float: left;
 	width: 920px;
-	background: transparent url(../images/dotted-lines.gif) repeat-x;	
+	background: transparent url(/images/dotted-lines.gif) repeat-x;	
 }
 #content {
 	float: left;
@@ -384,7 +384,7 @@ input.button {
 	border: none; 
 }
 #left .entry {
-	background: url(../images/dotted-lines.gif) repeat-x left bottom; 
+	background: url(/images/dotted-lines.gif) repeat-x left bottom; 
 	padding-bottom: 15px;
 }
 #left .entry h3 a {
@@ -396,7 +396,7 @@ input.button {
 #right form#quick-search {
 	padding: 0; margin: 10px 0 0 10px;
 	width: 270px; height: 33px;
-	background: #fff url(../images/header-search.gif) no-repeat;
+	background: #fff url(/images/header-search.gif) no-repeat;
 	border: none;	
 }
 #right form#quick-search p {
@@ -433,7 +433,7 @@ input.button {
 }
 .sidemenu ul li {
 	list-style: none;
-	background: url(../images/dotted-lines.gif) repeat-x left bottom; 
+	background: url(/images/dotted-lines.gif) repeat-x left bottom; 
 	padding: 7px 5px;
 	margin: 0;		
 }
@@ -462,7 +462,7 @@ input.button {
 	clear: both;
 	float: left;
 	width: 920px;		
-	background: url(../images/dotted-lines.gif) repeat-x;	
+	background: url(/images/dotted-lines.gif) repeat-x;	
 	font-size: .9em;		
 	color: #777;	
 }
@@ -492,7 +492,7 @@ input.button {
 	margin-left: 20px;	
 }
 #footer-outer .footer-list ul li {
-	background: url(../images/dotted-lines.gif) repeat-x left bottom;
+	background: url(/images/dotted-lines.gif) repeat-x left bottom;
 }
 #footer-outer .footer-list ul li a {
 	display: block;
@@ -518,7 +518,7 @@ input.button {
 #footer-bottom {
 	float: left;
 	clear: both;
-	background: url(../images/dotted-lines.gif) repeat-x;
+	background: url(/images/dotted-lines.gif) repeat-x;
 	width: 920px;
 	margin: 30px auto 0 auto;	
 	font-family: 'Trebuchet MS', 'Helvetica Neue', Arial, sans-serif;
@@ -539,7 +539,7 @@ input.button {
 /* post */
 .post {
 	margin-bottom: 15px;
-	background: url(../images/dotted-lines.gif) repeat-x left bottom; 
+	background: url(/images/dotted-lines.gif) repeat-x left bottom; 
 	padding-bottom: 15px;
 }
 .post .image-section {
@@ -614,13 +614,13 @@ ol.commentlist {
 
 /* archives */
 ul.archive {
-	background: url(../images/dotted-lines.gif) repeat-x left top; 
+	background: url(/images/dotted-lines.gif) repeat-x left top; 
 	margin: 15px 20px 20px 20px;
 	padding: 0;	
 }
 ul.archive li {
 	list-style: none;
-	background: url(../images/dotted-lines.gif) repeat-x left bottom; 
+	background: url(/images/dotted-lines.gif) repeat-x left bottom; 
 	margin: 0;
 	padding: 10px 5px;
 }
