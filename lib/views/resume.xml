@@ -36,7 +36,7 @@
         Created a desktop and mobile version of the website using HTML5
       </task>
       <task>
-        Wrote an commenting system using SMTP as the transport mechanism allowing users to comment by replying to an email
+        Wrote a commenting system using SMTP as the transport mechanism allowing users to comment by replying to an email
       </task>
     </accomplishments>
     <details>
@@ -154,7 +154,7 @@
   </job>
 
   <skills>
-    <skill name="Mobile">Mobile websites using HTML5, native applications for Android and iOS using Appcelerator Titanium</skill>
+    <skill name="Mobile">Mobile websites using HTML5 and native applications for Android/iOS using Appcelerator Titanium</skill>
     <skill name="AJAX">Mashups using Facebook Platform, Amazon AWS, Yahoo Search, Google Maps, Flickr and Twitter</skill>
     <skill name="JSON">Web services, cross domain scripting, data exchange between PHP, MySQL, Flash and JavaScript</skill>
     <skill name="PHP">Configuration, security, object-oriented programming, creating web services, custom frameworks</skill>
