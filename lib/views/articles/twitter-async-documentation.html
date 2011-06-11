@@ -39,7 +39,7 @@
 
 <h4>Getting started</h4>
 <p>
-Twitter-async lets you easily integrate with Twitter's REST API using either basic authentication or OAuth.  In addition to being easy to use, it supports asynchronous calls. You can <a href="http://github.com/jmathai/twitter-async" target="_blank">download it here</a> (<a href="http://github.com/jmathai/twitter-async/zipball/master">zip</a> or <a href="http://github.com/jmathai/twitter-async/tarball/master">tar.gz</a>).
+Twitter-async lets you easily integrate with Twitter's REST API using OAuth.  In addition to being easy to use, it supports asynchronous calls. You can <a href="http://github.com/jmathai/twitter-async" target="_blank">download it here</a> (<a href="http://github.com/jmathai/twitter-async/zipball/master">zip</a> or <a href="http://github.com/jmathai/twitter-async/tarball/master">tar.gz</a>).
 </p>
 <p>
 If you would like a walk-through tutorial then you can read the following blog posts.
@@ -59,27 +59,14 @@ If you would like a walk-through tutorial then you can read the following blog p
 
 <h4><a name="usage_and_examples"></a>Usage  and examples</h4>
 <p>
-Some of the Twitter API endpoints require authentication while others don't.  For authenticated API calls you can provide credentials using either basic authentication or OAuth.  Basic authentication requires that you send the username and password of the account you want to use.  OAuth let's you pass tokens, instead of passwords, to make authenticated calls.  Twitter-async makes it easy by exposing an extremely simple API.
+Some of the Twitter API endpoints require authentication while others don't.  For authenticated API calls you can provide credentials using OAuth.  Basic authentication requires that you send the username and password of the account you want to use.  OAuth let's you pass tokens, instead of passwords, to make authenticated calls.  Twitter-async makes it easy by exposing an extremely simple API.
 <ul>
   <li><span class="code">get($endpoint[, $params])</span> - GET request using OAuth</li>
   <li><span class="code">post($endpoint[, $params])</span> - POST request using OAuth</li>
   <li><span class="code">delete($endpoint[, $params])</span> - DELETE request using OAuth</li>
-  <li><span class="code">get_basic($endpoint[, $params, $username, $passwords])</span> - GET request using none or basic authentication</li>
-  <li><span class="code">post_basic($endpoint[, $params, $username, $passwords])</span> - POST request using none or basic authentication</li>
-  <li><span class="code">delete_basic($endpoint[, $params, $username, $passwords])</span> - DELETE request using none or basic authentication</li>
   <li><a href="#methodnames">A method based API</a> also exists</li>
 </ul>
 <pre name="code" class="php">  // Calls which do not require authentication
-  $twitterObj = new EpiTwitter();
-  $trends = $twitterObj->get_basic('/trends.json');
-  echo $trends->responseText;
-
-  // Calls requiring authentication
-  // Basic authentication
-  $twitterObj = new EpiTwitter();
-  $creds = $twitterObj->get_basic('/account/verify_credentials.json', null, 'username', 'password');
-  echo $creds->responseText;
-  // OAuth
   $twitterObj = new EpiTwitter($consumerKey, $consumerSecret, $oauthToken, $oauthSecret);
   $creds = $twitterObj->get('/account/verify_credentials.json');
   echo $creds->responseText;</pre>
@@ -222,7 +209,7 @@ You can access the response headers for your request by checking the <span class
 
 <h4><a name="multipart"></a>Uploading images using multipart</h4>
 
-<p>Twitter-async supports uploading images via the Twitter API <strong>using OAuth</strong>.  To specify the <em>image</em> parameter to the <span class="code">account/update_profile*image</span> endpoints you'll need to prepend the key and value with an <em>@</em>.  The path to the file must be the absolute path to the file on the server.  <strong>This is not yet supported with basic authentication.</strong></p>
+<p>Twitter-async supports uploading images via the Twitter API <strong>using OAuth</strong>.  To specify the <em>image</em> parameter to the <span class="code">account/update_profile*image</span> endpoints you'll need to prepend the key and value with an <em>@</em>.  The path to the file must be the absolute path to the file on the server.</p>
 
 <pre name="code" class="php">  $twitterObj->post('/account/update_profile_image.json', array('@image' => '@/tmp/myfile.jpg'));
 // http://github.com/jmathai/twitter-async/issues#issue/68
