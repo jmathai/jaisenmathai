@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="/resume.xsl"?>
 <resume>
   <objective>
-    Work with an exceptional team building software that people love to use
+    Work with an exceptional team building software that people love to use.
   </objective>
   <contact>
     <name>Jaisen Mathai</name>
@@ -23,11 +23,32 @@
   </contact>
 
   <job>
+    <company>OpenPhoto</company>
+    <title>Founder</title>
+    <description department="">Everything</description>
+    <date-start>May 2011</date-start>
+    <date-stop>Present</date-stop>
+    <accomplishments>
+      <task>
+        Building an open source photo service which integrates with numerous cloud services
+      </task>
+      <task>
+        Lead collaboration of software development using git and Github
+      </task>
+      <task>
+        Writing open specifications for API and underlying data storage
+      </task>
+    </accomplishments>
+    <details>
+    </details>
+  </job>
+
+  <job>
     <company>Melts My Heart</company>
     <title>Founder</title>
     <description department="">Everything</description>
     <date-start>Dec. 2010</date-start>
-    <date-stop>Present</date-stop>
+    <date-stop>May 2011</date-stop>
     <accomplishments>
       <task>
         Developed a native mobile application for Android and iOS using Appcelerator Titanium
@@ -48,7 +69,7 @@
     <title>Technical Lead / Software Engineer</title>
     <description department="">Engineer</description>
     <date-start>Nov. 2007</date-start>
-    <date-stop>Present</date-stop>
+    <date-stop>May 2011</date-stop>
     <accomplishments>
       <task>
         On the Mobile Presentation Platform team responsible for deploying Yahoo!'s services across thousands of mobile devices

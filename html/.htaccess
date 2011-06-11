@@ -3,4 +3,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)\?*$ index.php?__route__=$1 [L,QSA]
 
-php_value auto_prepend_file "/Users/jmathai/Y/jm/lib/scripts/auto_prepend.php"
+php_value auto_prepend_file "/www/jaisenmathai.com/www/lib/scripts/auto_prepend.php"
