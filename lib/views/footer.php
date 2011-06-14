@@ -19,7 +19,7 @@
         <div class="sidemenu">
           <h3>Work</h3>
           <ul>
-            <li>I'm currently working as an engineer at <img src="/images/yahoo_logo-a.gif" border="0" alt="Yahoo!" class="plain" /> and living in Sunnyvale, CA.</li>
+            <li>I'm bootstrapping an <a href="http://openphoto.me">open source photo service named OpenPhoto</a> and living in Sunnyvale, CA.</li>
           </ul>
         </div>
         
