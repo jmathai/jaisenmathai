@@ -2,6 +2,7 @@
   header('Content-Type: text/css');
   ini_set('include_path', '.');
   require '../../lib/config.php';
+  require '../../lib/scripts/auto_prepend.php';
   require '../../lib/scripts/cssmin.php';
 
   $cache = '';
