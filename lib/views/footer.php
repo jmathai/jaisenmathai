@@ -46,7 +46,7 @@
   <!-- footer starts here -->  
   <div id="footer-outer" class="clear"><div id="footer-wrap">
     <div class="col-a">
-      <h3>Photos</h3>          
+      <h3>Photos (via OpenPhoto)</h3>          
       <p class="thumbs"></p>  
     </div>
   
@@ -74,7 +74,7 @@
   <div id="footer-bottom">
     <div class="bottom-left">
       <p>
-      &copy; 2010 <strong>Your Copyright Info Here</strong>&nbsp; &nbsp; &nbsp;
+      &copy; <?php echo date('Y');?> <strong>Jaisen Mathai</strong>&nbsp; &nbsp; &nbsp;
       <a href="http://www.bluewebtemplates.com/" title="Website Templates">website templates</a> by <a href="http://www.styleshout.com/">styleshout</a>
       </p>
     </div>
@@ -93,7 +93,7 @@
 </div><!-- id="wrap" -->
 <?php echo getJs(); ?>
 <script src="/mustaches.js" type="text/javascript"></script>
-<script src="http://photos.jaisenmathai.com/js/api.js" id="__PTG"></script>
+<script src="/js/OpenPhoto.js" data-site="http://photos.jaisenmathai.com"></script>
 <script>
   var ptg;
   <?php if(PROD) { ?>
@@ -117,11 +117,7 @@
     dp.SyntaxHighlighter.ClipboardSwf = '/swf/clipboard.swf';
     dp.SyntaxHighlighter.HighlightAll('code');
     
-    if(typeof PTG == 'function')
-    {
-      ptg = new PTG("656ff15dffa1a18c53c94b242da917f9");
-      jm.ptg.load();
-    }
+    OpenPhoto.Api.load('/photos/tags-favorites/list.json?pageSize=45&returnSizes=40x40xCR,800x600', jm.op.render);
     jm.isProd(<?php echo json_encode(PROD); ?>);
     if(jm.isProd()) {
       _gaq.push(function() { var pageTracker = _gat._createTracker('UA-88708-4', 'jm'); });

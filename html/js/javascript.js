@@ -8,7 +8,6 @@ var jm = (function() {
       tpls[$(a).attr("href")] = $(a).attr("tpl");
   });
   var tpls = {"/":"home","/resume.html":"resume","/portfolio.html":"portfolio","/code.html":"code","/articles.html":"articles","/contact.html":"contact"};
-  //var _ptg = new PTG("656ff15dffa1a18c53c94b242da917f9");
   return {
     typer: function()
       {
@@ -92,27 +91,19 @@ var jm = (function() {
         var regt = /\>/g;
         start();
       },
-      ptg: {
-        load: function(){
-          var limit = 45;
-          $.getJSON('http://photos.jaisenmathai.com/api/json?action=image.search&privacy=1&tags=favorites&limit='+limit+'&offset=0&order=dateTaken&callback=?&authenticationKey=656ff15dffa1a18c53c94b242da917f9', function(data) {
-            var photoGroup = $("#footer-outer p.thumbs");
-            $.each(data, function(i, photo) {
-              if(photo.name == null){ photo.name = 'This photo has no title.'; }
-              var lsrc = ptg.html.customImageLockSrc(photo.thumbnailPath, photo.key, photo.width, photo.height, 800, 600);
-              var tsrc = ptg.html.customImageSrc(photo.thumbnailPath, photo.key, 40, 40)
-              $(photoGroup).append('<a href="'+lsrc+'" title="'+photo.name+'" target="_blank"><img src="'+tsrc+'" width="40" height="40"></a>');
-              if(i == (limit-1))
-                setupZoom();
-            });
-          });
-        },
+      op: {
         render: function(response){
-          var p, i;
-          for(i in response) {
-            p = response[i];
-            console.log(p.thumbnailPath);
+          var photos = response.result,
+              photo,
+              photoGroup = $("#footer-outer p.thumbs");
+          for(i in photos) {
+            if(photos.hasOwnProperty(i)) {
+              photo = photos[i];
+              if(photo.title == null){ photo.title = 'This photo has no title.'; }
+              photoGroup.append('<a href="'+photo["path800x600"]+'" title="'+photo.title+'" target="_blank"><img src="'+photo["path40x40xCR"]+'" width="40" height="40"></a>');
+            }
           }
+          setupZoom();
         }
       },
       click: function(ident, loc) {
