@@ -13,6 +13,7 @@
             <li><a href="http://github.com/jmathai" target="_blank">Watch me on Github</a></li>
             <li><a href="http://twitter.com/jmathai" target="_blank">Follow me on Twitter</a></li>
             <li><a href="http://www.linkedin.com/in/jaisenmathai" target="_blank">View my LinkedIn profile</a></li>
+            <li><a href="http://theopenphotoproject.org" target="_blank">The OpenPhoto Project</a></li>
           </ul>
         </div>
               

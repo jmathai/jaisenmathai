@@ -35,7 +35,7 @@ div#resume div#resume-header h3{
 
 .home-images div div
 {
-  background:url(/images/sprite-home-aad.jpg) no-repeat top left;
+  background:url(/images/sprite-home-aae.jpg) no-repeat top left;
   width:200px;
   height:112px;
   float:none;
@@ -60,6 +60,10 @@ div#resume div#resume-header h3{
 .home-images div div.l4 { background-position:0px -448px; }
 .home-images div div.m4 { background-position:-200px -448px; }
 .home-images div div.r4 { background-position:-400px -448px; }
+
+.home-images div div.l5 { background-position:0px -561px; }
+.home-images div div.m5 { background-position:-200px -561px; }
+.home-images div div.r5 { background-position:-400px -561px; }
 
 .home-images div p
 {

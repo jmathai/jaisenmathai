@@ -83,7 +83,7 @@
     return $retval;
   }
 
-  define('CACHE_CSS', '/css/compress-aam.css|reset.css|screen.css|FreshPick.css|shared.css|styles.css|resume.css|SyntaxHighlighter.css');
+  define('CACHE_CSS', '/css/compress-aan.css|reset.css|screen.css|FreshPick.css|shared.css|styles.css|resume.css|SyntaxHighlighter.css');
   function getCss()
   {
     $url = CACHE_CSS;
@@ -96,7 +96,7 @@
     return $retval;
   }
 
-  define('CACHE_CSS_MOBILE', '/css/compress-mobile-aad.css|jquery.mobile.css|shared.css|mobile.css');
+  define('CACHE_CSS_MOBILE', '/css/compress-mobile-aae.css|jquery.mobile.css|shared.css|mobile.css');
   function getCssMobile()
   {
     $url = CACHE_CSS_MOBILE;
