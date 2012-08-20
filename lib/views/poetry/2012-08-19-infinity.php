@@ -3,8 +3,8 @@ Infinity
 a regeneration of which i wasn't aware.
 my soul's been ripped from itself,
 and taken residence elsewhere.
-my existence resides no longer in me.
-any purpose i have is with another.
+my own existence resides no longer in myself.
+purpose became parallel.
 the cavern measures to infinty,
 it's filled with fear and despair.
 and love.
