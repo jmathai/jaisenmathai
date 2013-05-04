@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <style type="text/css">
+      html, body {
+        height:100%;
+      }
+      body:before {
+        content:"";
+        height:100%;
+        float:left;
+        width:0;
+        margin-top:-32767px;/
+      }
+      body {
+        font-family: 'Lato', sans-serif;
+        font-weight:400;
+        padding:0;
+      }
+      h1 {
+        font-weight:700;
+        text-align:center;
+        letter-spacing:1px;
+        border-bottom:solid 1px #ddd;
+        padding:0 0 10px;
+        color:#000;
+      }
+      h2 {
+        font-weight:400;
+        font-size:10px;;
+        text-align:center;
+        letter-spacing:.25px;
+        line-height:20px;
+        padding:0;
+        margin:0 0 10px;
+        color:#000;
+      }
+      a {
+        text-decoration:none;
+        transition-property: color;  /* Standard */
+        transition-duration: .25s;
+        text-shadow: 2px 2px 2px #bbb;
+      }
+      a:hover {
+        color:#aaa;
+        text-decoration:none;
+      }
+      
+      .profile {
+        margin:15px 0;
+      }
+
+      .photo {
+        width:250px;
+        height:250px;
+        position:relative;
+        margin:auto;
+        border-radius:50%;
+        border:solid 10px #ccc;
+        background:url("images/profile.jpg") no-repeat 50% 50%;
+        background-size:100%;
+        box-shadow: 0 0 10px #bbb;
+      }
+      .wrap {
+        min-height: 100%;
+      }
+      .content {
+        text-align:center;
+        min-height: 100%;
+        overflow:auto;
+        padding-bottom: 50px;
+      }
+      .content ul li {
+        float:left;
+        margin-bottom:20px;
+        width:33%;
+      }
+      .content ul li a {
+        display:inline-block;
+        text-align:center;
+        margin:0 10px;
+      }
+      .content a img {
+        width:64px;
+        height:64px;
+        border-radius:50%;
+        box-shadow: 0 0 10px #bbb;
+      }
+      .content a span {
+        display:block;
+      }
+      .footer {
+        position: relative;
+        margin-top: -50px; /* negative value of footer height */
+        height:50px;
+        clear:both;
+        border-top:solid 1px #bbb;
+        background-color:#eee;
+      }
+
+      @media only screen and (min-width : 767px) 
+      {
+        .bg {
+          position:absolute;
+          background:url("images/bg.jpg") no-repeat;
+          width:100%;
+          background-size:100%;
+        }
+        .content {
+          position:relative;
+        }
+        h1, h2 {
+          color:#fff;
+          text-shadow: 2px 2px 2px #000;
+          padding:0;
+          border-bottom:0;
+        }
+        h2 {
+          font-size:12px;
+          line-height:12px;
+          letter-spacing:1px;
+        }
+        .content h1 a, .content h2 a {
+          color:#fff;
+          margin:0;
+        }
+      }
+
+      /* portrait tablet */
+      @media only screen and (min-width : 768px) and (max-width : 1023px) {
+
+        .bg {
+          height:300px;
+          background-position: 0 -80px;
+        }
+        .header {
+          height:300px;
+        }
+        .profile {
+          width:270px;
+        }
+        .photo {
+          width:150px;
+          height:150px;
+        }
+        h1 {
+          font-size:25pt;;
+        }
+        .content ul li {
+          width:25%;
+        }
+      }
+
+
+      /* landscape tablet */
+      @media only screen and (min-width : 1024px) and (max-width : 1224px) {
+        .bg {
+          height:350px;
+          background-position: 0 -110px;
+        }
+        .header {
+          height:350px;
+        }
+        .profile {
+          width:270px;
+        }
+        .photo {
+          width:200px;
+          height:200px;
+        }
+        h1 {
+          font-size:25pt;;
+        }
+        .content ul li {
+          width:25%;
+        }
+      }
+
+      @media only screen and (min-width: 1223px) {
+        .bg {
+          height:450px;
+          background-position: 0 -150px;
+        }
+        .content ul li {
+          width:25%;
+        }
+        .header {
+          height:450px;
+        }
+        .profile {
+          width:270px;
+        }
+        h1, h2 {
+          border-bottom:0;
+          color:#fff;
+          text-shadow: 2px 2px 2px #000;
+          padding:0;
+        }
+        h2 {
+          font-size:12px;
+          line-height:12px;
+        }
+        .photo {
+          margin:0;
+        }
+	    }
+    </style>
+  </head>
+  <body>
+    <div class="bg"></div>
+    <div class="container wrap">
+      <div class="row">
+        <div class="span12 content">
+          <div class="header">
+            <div class="profile">
+              <div class="photo"></div>
+              <h1>Jaisen Mathai</h1>
+              <h2>There is neither Jew nor Greek...</h2>
+            </div>
+          </div>
+          <ul class="unstyled">
+            <li><a href="http://www.shuttleworthfoundation.org/fellows/jaisen-mathai/"><img src="images/icons/Shuttleworth.png"><span>Shuttleworth</span></a></li>
+            <li><a href="https://github.com/jmathai"><img src="images/icons/Github.png"><span>Github</span></a></li>
+            <li><a href="https://twitter.com/jmathai"><img src="images/icons/Twitter.png"><span>Twitter</span></a></li>
+            <li class="hidden-phone"><a href="https://www.linkedin.com/in/jaisenmathai"><img src="images/icons/LinkedIn.png"><span>LinkedIn</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer"></div>
+  </body>
+</html>
